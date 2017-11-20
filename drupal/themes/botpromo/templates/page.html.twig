@@ -1,0 +1,23 @@
+{% if page.top %}
+<div class="above-header">
+    {{page.top}}
+</div>
+{% endif %}
+
+{% if page.header %}
+<header>{{page.header}}</header>
+{% endif %}
+
+<div class="grid__container">
+{% if page.content %}
+<main>{{page.content}}</main>
+{% endif %}
+</div>
+
+{% if page.sidebar %}
+<aside>{{page.sidebar}}</aside>
+{% endif %}
+
+{% if page.footer %}
+<footer>{{page.footer}}</footer>
+{% endif %}

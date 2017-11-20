@@ -1,0 +1,16 @@
+name: Bot Promo
+type: theme
+base theme: classy
+description: 'My own theme'
+package: Core
+version: 1.0.0
+core: 8.x
+
+libraries:
+  - botpromo/global-styling
+regions:
+  top: 'Above header'
+  header: 'Header'
+  content: 'Content'
+  sidebar: 'Sidebar Right'
+  footer: 'Footer'
