@@ -1,0 +1,6 @@
+name: My REST Api
+type: module
+description: "Custom Rest API module"
+dependencies:
+  - system (>=8.2.0)
+core: '8.x'

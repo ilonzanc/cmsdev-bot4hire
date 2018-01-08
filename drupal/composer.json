@@ -9,7 +9,8 @@
         "drush/drush": "dev-master",
         "drupal/console": "^1.1",
         "drupal/restui": "^1.15",
-        "drupal/devel": "^1.2"
+        "drupal/devel": "^1.2",
+        "drupal/ds": "^3.1"
     },
     "replace": {
         "drupal/core": "^8.4"

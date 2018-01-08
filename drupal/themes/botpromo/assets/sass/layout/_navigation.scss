@@ -1,0 +1,54 @@
+ul.menu {
+    margin: 0;
+}
+
+nav.menu--main {
+    z-index: 10;
+
+    .fa-bars {
+        float: right;
+        font-size: 1.4rem;
+        text-decoration: none;
+        z-index: 25;
+    }
+
+    .fa-times {
+        font-size: 1.4rem;
+        position: absolute;
+        top: 1rem;
+        right: 2.6rem;
+    }
+
+    ul.menu {
+        width: 80%;
+        position: absolute;
+        background: $primary-color;
+        top: 0;
+        height: 100vh;
+        //left: 20%;
+        left: 110%;
+        z-index: 30;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        
+        li.menu-item {
+            padding: 1rem 0;
+        }
+
+        &.nav-open {
+            left: 25%;
+            box-shadow: -9px 0px 50px rgba(0,0,0,0.5);
+        }
+        
+    }
+}
+
+.nav-cover {
+    position: absolute;
+    z-index: 35;
+    background: rgba(0,0,0,0.2);
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100vh;
+}

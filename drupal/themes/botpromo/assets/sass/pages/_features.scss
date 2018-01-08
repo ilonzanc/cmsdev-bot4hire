@@ -1,0 +1,23 @@
+.view-features .ds-2col > .group-left {
+    width: 16.66666%;
+
+    .fa {
+        font-size: 1.3rem;
+        color: $secundary-color;
+    }
+}
+
+.node--type-screenshot {
+    span.field--label-hidden {
+        display: none;
+    }
+}
+
+.view-features .ds-2col > .group-right {
+    width: 83.33333%;
+
+    p {
+        margin-bottom: 1rem;
+    }
+}
+

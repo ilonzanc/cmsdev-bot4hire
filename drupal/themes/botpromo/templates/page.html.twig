@@ -8,11 +8,13 @@
 <header>{{page.header}}</header>
 {% endif %}
 
+{% block replaceable %}
 <div class="grid__container">
 {% if page.content %}
 <main>{{page.content}}</main>
 {% endif %}
 </div>
+{% endblock %}
 
 {% if page.sidebar %}
 <aside>{{page.sidebar}}</aside>
