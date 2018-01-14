@@ -10,6 +10,7 @@ window.axios = axios;
 window.axios.defaults.headers.common = {
     'Accept': 'application/hal+json',
     'Content-Type': 'application/hal+json',
+    'X-CSRF-Token': 'YTuai2HyHUKFHj4xgbf2aZ273luir45GF4hoYW6CYJM'
 };
 
 Vue.config.productionTip = false

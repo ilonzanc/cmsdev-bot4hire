@@ -1,15 +1,15 @@
 <template>
   <div class="neiwu">
       <h1>Nieuw voertuig</h1>
-        <form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/node?_format=hal_json" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+        <form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/vehicle?_format=hal_json" @submit.prevent="onSubmit">
           <label for="title">Naam</label>
-          <input type="text" id="title" name="title" placeholder="Naam van je voertuig" v-model="form.title.value">
+          <input type="text" id="title" name="title" placeholder="Naam van je voertuig" v-model="vehicle.name.value">
           <label for="body">Beschrijving</label>
-          <textarea id="body" name="body" placeholder="Beschrijving van voertuig" v-model="form.body"></textarea>
+          <!-- <textarea id="body" name="body" placeholder="Beschrijving van voertuig" v-model="form.body"></textarea>
           <select class="form-control" name="party_id" v-model="form.tid" >
               <option value="">- Selecteer een type -</option>
               <option v-for="vehicle_type in vehicle_types" :value="vehicle_type.tid">{{vehicle_type.name}}</option>
-          </select>
+          </select> -->
           <button type="submit" class="btn widebtn">Voertuig toevoegen</button>
         </form>
   </div>
@@ -23,23 +23,18 @@ export default {
   name: 'neiwu',
   data () {
     return {
-      form: new Form ({
-          _links: {
-            type: {
-              href: "http://localhost/cmsdev-bot4hire/drupal/rest/type/node/vehicles"
-            }
-          },
-          title: [{
-            value: ''
-          }],
-          type: [{
-            target_id: 'voertuig'
-          }],
-          body: '',
-          tid: ''
-        
-      }),
-      vehicle_types: {}
+		user: this.$parent.user,
+      	vehicle: {
+			_links: {
+				type: {
+					href: "http://localhost/cmsdev-bot4hire/drupal/rest/type/vehicle/vehicle"
+				}
+			},
+			name: {
+				value: "Nieuw voertuig 2"
+			}
+      },                 
+      vehicle_types: {},
     }
   },
   mounted() {
@@ -51,9 +46,22 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.form.submit('post', 'http://localhost/cmsdev-bot4hire/drupal/node?_format=hal_json').then(function(response){
-          alert('Nieuw voertuig aangemaakt');
+      var self = this;
+      axios({
+        method: 'post',
+        url: "http://localhost/cmsdev-bot4hire/drupal/entity/vehicle?_format=hal_json",
+        headers: {
+		  	"Authorization": "Basic YWRtaW46c2VjcmV0",
+        },
+        data: self.vehicle
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function(error) {
+        console.log(error);
       });
+      /* axios.post('http://localhost/cmsdev-bot4hire/drupal/entity/vehicle?_format=hal+json', {
+        name: this.vehicle.name.value,
+      }) */
     },
   }
 }

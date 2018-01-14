@@ -1,0 +1,14 @@
+
+# Vehicle menu items definition
+entity.vehicle.collection:
+  title: 'Vehicle list'
+  route_name: entity.vehicle.collection
+  description: 'List Vehicle entities'
+  parent: system.admin_structure
+  weight: 100
+
+vehicle.admin.structure.settings:
+  title: Vehicle settings
+  description: 'Configure Vehicle entities'
+  route_name: vehicle.settings
+  parent: system.admin_structure
