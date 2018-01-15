@@ -11,7 +11,7 @@
 								<div class="column column-sm-9 column-12">
 									<i class="fa fa-angle-right"></i>
 									<h2>{{vehicle.name}}</h2>
-									<p>{{vehicle.field_vehicle_type}}</p>
+									<p>{{vehicle.vehicle_type}}</p>
 								</div>						
 							</div>      
 						</router-link>

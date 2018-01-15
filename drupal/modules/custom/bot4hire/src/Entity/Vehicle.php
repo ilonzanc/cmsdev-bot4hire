@@ -85,6 +85,81 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
   /**
    * {@inheritdoc}
    */
+  public function getVehicleType() {
+    return $this->get('vehicle_type')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setVehicleType($vehicle_type) {
+    $this->set('vehicle_type', $vehicle_type);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPrice() {
+    return $this->get('price')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setPrice($price) {
+    $this->set('price', $price);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getSeats() {
+    return $this->get('seats')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setSeats($seats) {
+    $this->set('seats', $seats);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getAge() {
+    return $this->get('age')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setAge($age) {
+    $this->set('age', $age);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPickupLocation() {
+    return $this->get('pickup_location')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setPickupLocation($pickup_location) {
+    $this->set('pickup_location', $pickup_location);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
@@ -149,8 +224,8 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the Vehicle entity.'))
+      ->setLabel(t('Aangemaakt door'))
+      ->setDescription(t('De user ID van de auteur van de Vehicle Entity.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
@@ -174,8 +249,8 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Vehicle entity.'))
+      ->setLabel(t('Naam'))
+      ->setDescription(t('Naam van de Vehicle entity.'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -184,14 +259,132 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
-        'weight' => -4,
+        'weight' => -6,
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
+        'weight' => -6,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE);
+
+	  $fields['vehicle_type'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Type Voertuig'))
+      ->setDescription(t('Het type voertuig van de Vehicle Entity.'))
+      ->setRevisionable(TRUE)
+	  ->setSetting('target_type', 'taxonomy_term')
+	  ->setSetting('handler', 'default:taxonomy_term')
+      ->setSetting('handler_settings',
+	  [
+		'target_bundles' => [
+		  'type' => 'type'
+		]
+	  ]
+	)
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'string',
+        'weight' => -5,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_select',
+    	'weight' => -5,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE);
+	  
+	$fields['price'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Prijs'))
+      ->setDescription(t('De prijs van de Vehicle entity.'))
+      ->setSettings([
+        'min' => 1,
+		'max' => 10000,
+		'prefix' => '',
+		'suffix' => ' Shanix'
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'number_integer',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'number',
         'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+	  ->setDisplayConfigurable('view', TRUE); 
+
+	$fields['seats'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Zitplaatsen'))
+      ->setDescription(t('Hoeveelheid zitplaatsen van de Vehicle entity.'))
+      ->setSettings([
+        'min' => 1,
+		'max' => 500,
+		'prefix' => '',
+		'suffix' => ' zitplaatsen'
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'number_integer',
+        'weight' => -3,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'number',
+        'weight' => -3,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE); 
+
+	$fields['age'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Leeftijd'))
+      ->setDescription(t('Leeftijd van de Vehicle entity.'))
+      ->setSettings([
+        'min' => 1,
+		'max' => 500,
+		'prefix' => '',
+		'suffix' => ' miljoen jaar'
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'number_integer',
+        'weight' => -2,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'number',
+        'weight' => -2,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE); 
+
+	  $fields['pickup_location'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Ophaallocatie'))
+      ->setDescription(t('De ophaallocatie van de Vehicle Entity.'))
+      ->setRevisionable(TRUE)
+	  ->setSetting('target_type', 'taxonomy_term')
+	  ->setSetting('handler', 'default:taxonomy_term')
+      ->setSetting('handler_settings',
+	  [
+		'target_bundles' => [
+		  'places' => 'places'
+		]
+	  ]
+	)
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'string',
+        'weight' => -1,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_select',
+    	'weight' => -1,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE);
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
@@ -204,7 +397,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the entity was last edited.'));
+	  ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
   }

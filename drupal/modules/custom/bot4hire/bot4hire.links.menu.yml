@@ -27,3 +27,17 @@ rental.admin.structure.settings:
   description: 'Configure Rental entities'
   route_name: rental.settings
   parent: system.admin_structure
+
+# Review menu items definition
+entity.review.collection:
+  title: 'Review list'
+  route_name: entity.review.collection
+  description: 'List Review entities'
+  parent: system.admin_structure
+  weight: 100
+
+review.admin.structure.settings:
+  title: Review settings
+  description: 'Configure Review entities'
+  route_name: review.settings
+  parent: system.admin_structure

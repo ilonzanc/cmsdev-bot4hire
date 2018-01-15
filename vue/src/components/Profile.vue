@@ -2,6 +2,7 @@
   <div id="profile">
 	  	<div class="container">
 			<h1>{{user.name[0].value}}</h1>
+			<h2>Voertuigen</h2>
 			<div class="row">
 				<div class="column column-sm-12 column-4" v-for="vehicle in vehicles">
 					<section class="section__vehicle">
@@ -11,7 +12,7 @@
 								<div class="column column-sm-9 column-12">
 									<i class="fa fa-angle-right"></i>
 									<h2>{{vehicle.name}}</h2>
-									<p>{{vehicle.field_vehicle_type}}</p>
+									<p>{{vehicle.vehicle_type}}</p>
 								</div>						
 							</div>      
 						</router-link>
@@ -19,6 +20,7 @@
 				</div>
 			</div>
 			<router-link v-if="activeuser.current_user.uid == user.uid[0].value"class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
+			<h2>Lopende huur</h2>
 	  	</div>
   </div>
 </template>
