@@ -12,3 +12,18 @@ vehicle.admin.structure.settings:
   description: 'Configure Vehicle entities'
   route_name: vehicle.settings
   parent: system.admin_structure
+
+
+# Rental menu items definition
+entity.rental.collection:
+  title: 'Rental list'
+  route_name: entity.rental.collection
+  description: 'List Rental entities'
+  parent: system.admin_structure
+  weight: 100
+
+rental.admin.structure.settings:
+  title: Rental settings
+  description: 'Configure Rental entities'
+  route_name: rental.settings
+  parent: system.admin_structure

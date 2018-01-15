@@ -26,7 +26,8 @@ export default {
   name: "overview",
   data() {
     return {
-      vehicles: []
+		user: this.$parent.user,
+      	vehicles: []
     };
   },
   mounted() {
@@ -36,6 +37,7 @@ export default {
       url:
         "http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles?_format=hal_json",
       headers: {
+		"X-CSRF-Token": self.user.csrf_token,
         Authorization: "Basic YWRtaW46c2VjcmV0"
       }
     })

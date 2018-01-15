@@ -2,14 +2,14 @@
   <div id="detail">
 	  	<div class="container">
 			<router-link class="breadcrumbs" to="/overzicht">Terug naar overzicht</router-link>
-			<h1>{{vehicle.name[0].value}}</h1>
-			<p>{{vehicle.field_description[0].value}}</p>
-			<p>Eigenaar: <router-link to="/profiel/id">Admin</router-link></p>
+			<h1>{{vehicle.name}}</h1>
+			<p>{{vehicle.field_description}}</p>
+			<p>Eigenaar: <router-link :to="'/profiel/' + vehicle.uid">{{vehicle.user_id}}</router-link></p>
 			<h2>Specs</h2>
 			<div><span>Kracht</span><div :class="'specbar specbarsize-2 ' + vehicle.field_kracht"></div></div>
 			<div><span>Snelheid</span><div :class="'specbar specbarsize-3 ' + vehicle.field_snelheid"></div></div>
 			<img :src='"http://localhost/" + vehicle.field_afbeelding'>
-			<button class="btn">Huren</button>
+			<router-link :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
 	  	</div>
   </div>
 </template>
@@ -24,12 +24,12 @@ export default {
       vehicle: {}
     }
   },
-  mounted () {
+  	mounted () {
 	  console.log('Detail Component Mounted');
-	axios.get('http://localhost/cmsdev-bot4hire/drupal/admin/structure/vehicle/' + this.$route.params.id + '?_format=hal_json')
+		axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
 		.then(response => {
-			console.log(response)
-			this.vehicle = response.data;
+			console.log(response.data[0])
+			this.vehicle = response.data[0];
 		})
 		.catch(error => {
 			console.log(error);

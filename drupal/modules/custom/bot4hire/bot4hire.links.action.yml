@@ -3,3 +3,8 @@ entity.vehicle.add_form:
   title: 'Add Vehicle'
   appears_on:
     - entity.vehicle.collection
+entity.rental.add_form:
+  route_name: entity.rental.add_form
+  title: 'Add Rental'
+  appears_on:
+    - entity.rental.collection

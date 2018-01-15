@@ -1,8 +1,20 @@
 <template>
   <div id="profile">
 	  	<div class="container">
-			<h1>{{user.current_user.name}}</h1>
-			<router-link class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
+			<h1>{{user.name[0].value}}</h1>
+			<section class="section__vehicle" v-for="vehicle in vehicles">
+				<router-link :to='"/overzicht/voertuig/" + vehicle.id'>
+					<div class="row">						
+						<div class="column column-sm-3"><img src="" :alt="vehicle.name + ' image'"></div>
+						<div class="column column-sm-9">
+							<i class="fa fa-angle-right"></i>
+							<h2>{{vehicle.name}}</h2>
+							<p>{{vehicle.field_vehicle_type}}</p>
+						</div>						
+					</div>      
+				</router-link>
+			</section>
+			<router-link v-if="activeuser.current_user.uid == user.uid[0].value"class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
 	  	</div>
   </div>
 </template>
@@ -12,15 +24,57 @@ import axios from 'axios';
 
 
 export default {
-  name: 'detail',
-  data () {
-    return {
-      user: this.$parent.user
-    }
+  	name: 'detail',
+  	data () {
+		return {
+			activeuser: this.$parent.user,
+			user: {},
+			vehicles: []
+		}
   },
   mounted () {
-	  console.log('Profile Component Mounted'); 
-	  console.log(this.user);   
+
+	  	let self = this;
+		console.log('Profile Component Mounted');
+
+		axios({
+        method: 'get',
+        url: "http://localhost/cmsdev-bot4hire/drupal/user/" + this.$route.params.id + "?_format=hal_json",
+        headers: {
+			//'X-CSRF-Token': self.user.csrf_token,
+			'Accept': 'application/hal+json',
+			'Content-Type': 'application/hal+json',
+			'X-CSRF-Token': self.activeuser.csrf_token,
+		},
+		auth: {
+			username: self.activeuser.current_user.name,
+			password: "secret"
+		},
+	  })
+	  .then(response => {
+			console.log(response)
+			self.user = response.data;
+			this.getVehiclesByUser();
+		})
+		.catch(error => {
+			console.log(error);
+		});   
+				
+  },
+  methods: {
+	  getVehiclesByUser() {
+		  axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles?_format=hal_json')
+			.then(response => {
+				console.log(response)
+				for (let i = 0; i < response.data.length; i++){
+					if (response.data[i].uid == this.user.uid[0].value)
+						this.vehicles.push(response.data[i])
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	  }
   }
 }
 </script>

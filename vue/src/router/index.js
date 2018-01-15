@@ -7,6 +7,7 @@ import CreateVehicle from '@/components/CreateVehicle'
 import Profile from '@/components/Profile'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import RentVehicle from '@/components/RentVehicle'
 
 Vue.use(Router)
 
@@ -17,7 +18,8 @@ let routes = [
     { path: '/overzicht', component: Overview },
     { path: '/profiel/:id', component: Profile },    
     { path: '/voertuig/nieuw', component: CreateVehicle },
-    { path: '/overzicht/voertuig/:id', component: Detail },
+	{ path: '/overzicht/voertuig/:id', component: Detail },
+	{ path: '/overzicht/voertuig/:id/huren', component: RentVehicle },
 ];
 
 export default new Router({

@@ -19,4 +19,25 @@ entity.vehicle.delete_form:
   base_route:  entity.vehicle.canonical
   title: Delete
   weight: 10
+# Rental routing definition
+rental.settings_tab:
+  route_name: rental.settings
+  title: 'Settings'
+  base_route: rental.settings
+
+entity.rental.canonical:
+  route_name: entity.rental.canonical
+  base_route: entity.rental.canonical
+  title: 'View'
+
+entity.rental.edit_form:
+  route_name: entity.rental.edit_form
+  base_route: entity.rental.canonical
+  title: 'Edit'
+
+entity.rental.delete_form:
+  route_name:  entity.rental.delete_form
+  base_route:  entity.rental.canonical
+  title: Delete
+  weight: 10
 
