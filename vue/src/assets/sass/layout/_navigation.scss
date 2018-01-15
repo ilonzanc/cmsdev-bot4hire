@@ -43,30 +43,38 @@ nav {
                 font-weight: bold;
             }
         }
-    }
-
-    
-}
-
-nav.dashboard__nav {
-    float: left;
-    width: 17%;
-    padding: 2rem;
-
-    h1 {
-        font-size: 1.5rem;
-    }
-    li {
-        list-style-type: none;
-        margin-bottom: 2rem;
-        font-weight: 700;
-    }
-
-    .fa {
-        width: 52px;
-        font-size: 1.5rem;
-    }
+    }    
 }
 
 @media (min-width: 42.5rem) {
+	.toggleBars {
+		display: none;
+	}
+
+	nav {
+		position: static;
+		width: auto;
+		float: right;
+		height: auto;
+		padding: 0;
+
+		li {
+			list-style-type: none;
+			display: inline-block;
+			
+			a {
+				font-size: 1.1rem;
+				padding: 0 0.5rem;
+				display: block;
+				margin: 0 0.5rem;
+		
+				&:hover {
+				}
+	
+				&.router-link-exact-active {
+					font-weight: bold;
+				}
+			}
+		} 
+	}
 }

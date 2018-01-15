@@ -2,18 +2,22 @@
   <div id="profile">
 	  	<div class="container">
 			<h1>{{user.name[0].value}}</h1>
-			<section class="section__vehicle" v-for="vehicle in vehicles">
-				<router-link :to='"/overzicht/voertuig/" + vehicle.id'>
-					<div class="row">						
-						<div class="column column-sm-3"><img src="" :alt="vehicle.name + ' image'"></div>
-						<div class="column column-sm-9">
-							<i class="fa fa-angle-right"></i>
-							<h2>{{vehicle.name}}</h2>
-							<p>{{vehicle.field_vehicle_type}}</p>
-						</div>						
-					</div>      
-				</router-link>
-			</section>
+			<div class="row">
+				<div class="column column-sm-12 column-4" v-for="vehicle in vehicles">
+					<section class="section__vehicle">
+						<router-link :to='"/overzicht/voertuig/" + vehicle.id'>
+							<div class="row">						
+								<div class="column column-sm-3 column-12"><img src="" :alt="vehicle.name + ' image'"></div>
+								<div class="column column-sm-9 column-12">
+									<i class="fa fa-angle-right"></i>
+									<h2>{{vehicle.name}}</h2>
+									<p>{{vehicle.field_vehicle_type}}</p>
+								</div>						
+							</div>      
+						</router-link>
+					</section>
+				</div>
+			</div>
 			<router-link v-if="activeuser.current_user.uid == user.uid[0].value"class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
 	  	</div>
   </div>

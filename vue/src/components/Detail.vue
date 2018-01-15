@@ -1,15 +1,20 @@
 <template>
   <div id="detail">
 	  	<div class="container">
-			<router-link class="breadcrumbs" to="/overzicht">Terug naar overzicht</router-link>
-			<h1>{{vehicle.name}}</h1>
-			<p>{{vehicle.field_description}}</p>
-			<p>Eigenaar: <router-link :to="'/profiel/' + vehicle.uid">{{vehicle.user_id}}</router-link></p>
-			<h2>Specs</h2>
-			<div><span>Kracht</span><div :class="'specbar specbarsize-2 ' + vehicle.field_kracht"></div></div>
-			<div><span>Snelheid</span><div :class="'specbar specbarsize-3 ' + vehicle.field_snelheid"></div></div>
-			<img :src='"http://localhost/" + vehicle.field_afbeelding'>
-			<router-link :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
+			<router-link class="breadcrumbs" to="/overzicht"><i class="fa fa-chevron-left"></i> terug naar overzicht</router-link>
+			<div class="row"></div>
+			<div class="column column-sm-12 column-6">
+				<img :src='"http://localhost/" + vehicle.field_afbeelding'>
+			</div>
+			<div class="column column-sm-12 column-6">
+				<h1>{{vehicle.name}}</h1>
+				<p>{{vehicle.field_description}}</p>
+				<p>Eigenaar: <router-link :to="'/profiel/' + vehicle.uid">{{vehicle.user_id}}</router-link></p>
+				<h2>Specs</h2>
+				<div><span>Kracht</span><div :class="'specbar specbarsize-2 ' + vehicle.field_kracht"></div></div>
+				<div><span>Snelheid</span><div :class="'specbar specbarsize-3 ' + vehicle.field_snelheid"></div></div>			
+				<router-link :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
+			</div>
 	  	</div>
   </div>
 </template>

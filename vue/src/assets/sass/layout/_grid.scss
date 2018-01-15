@@ -60,7 +60,7 @@
 	}
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 42.5rem) {
 	.column-3 {
 		width: 25%;
 	}
@@ -79,5 +79,9 @@
 	
 	.column-9 {
 		width: 75%;
+	}
+
+	.column-12 {
+		width: 100%;
 	}
 }

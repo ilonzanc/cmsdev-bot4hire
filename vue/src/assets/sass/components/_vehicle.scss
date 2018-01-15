@@ -1,6 +1,42 @@
+
 #detail span {
 	width: 80px;
 	display: inline-block;
 	height: 40px;
 	padding: 0.5rem 0;
+}
+
+.section__vehicle {
+	margin: 0 0.8rem;
+	padding-top: 0.8rem;
+	border-bottom: 2px solid rgba($text-color, 0.2);
+
+	p {
+		margin-bottom: 0;
+	}
+
+	img {
+		border-radius: 5px;
+		width: 100%;
+		display: block;
+		overflow: hidden;
+		border: 2px solid rgba($text-color, 0.2);
+	}
+
+	.fa-angle-right {
+		float: right;
+		font-size: 2rem;
+		color: $primary-color;
+		vertical-align: middle;
+		margin-top: 8px;
+	}
+}
+
+@media (min-width: 42.5rem) {
+	.section__vehicle {
+		margin: 0;
+		padding: 0.8rem 0.8rem 0.3rem;
+		border: 2px solid rgba($text-color, 0.2);
+		border-radius: 5px;
+	}
 }
