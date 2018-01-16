@@ -29,6 +29,17 @@
 					</div>
 				</div>
 			</section>
+			<section class="section__newreview">
+				<form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/review?_format=hal_json" @submit.prevent="onSubmit">
+					<label for="title">Titel</label>
+					<input type="text" id="title" name="title" placeholder="Titel van je review..." v-model="newReview.title.value">
+					<label for="rating">Rating</label>
+					<input type="text" id="rating" name="rating" placeholder="Rating van je review..." v-model="newReview.rating.value">
+					<label for="body">Beschrijving</label>
+					<textarea id="body" name="body" placeholder="Jouw review..." v-model="newReview.body.value"></textarea>
+					<button type="submit" class="btn widebtn">Review toevoegen</button>
+				</form>
+			</section>
 	  	</div>
   </div>
 </template>
@@ -37,34 +48,79 @@
 import axios from 'axios';
 
 export default {
-  name: 'detail',
-  data () {
-    return {
-	  vehicle: {},
-	  reviews: []
-    }
-  },
+	name: 'detail',
+	data () {
+		return {
+			user: this.$parent.user,
+			password: 'secret',
+			vehicle: {},
+			reviews: [],
+			newReview: {
+				_links: {
+					type: {
+						href: "http://localhost/cmsdev-bot4hire/drupal/rest/type/review/review"
+					}
+				},
+				title: {
+					value: ''
+				},
+				body: {
+					value: ''
+				},
+				rating: {
+					value: ''
+				},
+				vehicle_id:[{
+					target_id: 2,
+					target_type: "vehicle",	
+				}]
+			}
+		}
+	},
   	mounted () {
 	  	console.log('Detail Component Mounted');
 		axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
 		.then(response => {
-			console.log(response.data[0])
 			this.vehicle = response.data[0];
+			//this.newReview.vehicle_id.target_id = response.data[0].id;
 		})
 		.catch(error => {
 			console.log(error);
 		});
 
-		axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/reviews?_format=hal_json')
+		axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicle/' + this.$route.params.id + '/reviews?_format=hal_json')
 		.then(response => {
 			console.log(response.data[0])
 			this.reviews = response.data;
 		})
 		.catch(error => {
 			console.log(error);
-		});
-    
-  }
+		});    
+	},
+	methods: {
+		onSubmit() {
+			var self = this;
+			axios({
+				method: 'post',
+				url: "http://localhost/cmsdev-bot4hire/drupal/entity/review?_format=hal_json",
+				headers: {
+					//'X-CSRF-Token': self.user.csrf_token,
+					'Accept': 'application/hal+json',
+					'Content-Type': 'application/hal+json',
+					'X-CSRF-Token': self.user.csrf_token,
+				},
+				auth: {
+					username: self.user.current_user.name,
+					password: self.password
+				},
+				data: self.newReview
+			}).then(function (response) {
+				console.log(response);
+			}).catch(function(error) {
+				console.log(error);
+			});
+		}
+	}  
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

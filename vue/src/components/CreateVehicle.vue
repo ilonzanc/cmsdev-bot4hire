@@ -71,9 +71,6 @@ export default {
       }).catch(function(error) {
         console.log(error);
       });
-      /* axios.post('http://localhost/cmsdev-bot4hire/drupal/entity/vehicle?_format=hal+json', {
-        name: this.vehicle.name.value,
-      }) */
     },
   }
 }
@@ -82,25 +79,3 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 </style>
-
-<!--
-{
-  "_links": {
-    "type": {
-      "href": "http://localhost/cmsdev-bot4hire/drupal/rest/type/node/vehicles"
-    }
-  },
-  "title": {
-    "value": "Teeessttt"
-  },
-  "field_prijs": {
-	"value": 1
-  },
-  "field_beschikbaar": {
-	"value": false
-  },
-  "type": {
-    "target_id": "voertuig"
-  }
-}
--->
