@@ -188,5 +188,5 @@ AddEncoding gzip svgz
   RequestHeader unset Proxy
   # Allow all headers for cross origin posting
   Header set Access-Control-Allow-Origin "*"
-  Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+  Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT,PATCH"
 </IfModule>

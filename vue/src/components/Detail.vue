@@ -8,12 +8,13 @@
 			</div>
 			<div class="column column-sm-12 column-6">
 				<h1>{{vehicle.name}}</h1>
-				<p>{{vehicle.field_description}}</p>
+				<p>{{vehicle.description}}</p>
 				<p>Eigenaar: <router-link :to="'/profiel/' + vehicle.uid">{{vehicle.user_id}}</router-link></p>
 				<h2>Specs</h2>
 				<div><span>Kracht</span><div :class="'specbar specbarsize-2 ' + vehicle.field_kracht"></div></div>
 				<div><span>Snelheid</span><div :class="'specbar specbarsize-3 ' + vehicle.field_snelheid"></div></div>			
-				<router-link :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
+				<router-link v-if="activeuser.current_user.uid !== vehicle.uid" :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
+				<router-link v-if="activeuser.current_user.uid == vehicle.uid" :to="'/voertuig/' + vehicle.id + '/bewerken'" class="btn smallbtn">Bewerken</router-link>
 			</div>
 			<h2>Reviews</h2>
 			<section v-for="review in reviews" class="section__review">
@@ -29,7 +30,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="section__newreview">
+			<section v-if="activeuser.current_user.uid !== vehicle.uid" class="section__newreview">
 				<form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/review?_format=hal_json" @submit.prevent="onSubmit">
 					<label for="title">Titel</label>
 					<input type="text" id="title" name="title" placeholder="Titel van je review..." v-model="newReview.title.value">
@@ -51,7 +52,7 @@ export default {
 	name: 'detail',
 	data () {
 		return {
-			user: this.$parent.user,
+			activeuser: this.$parent.user,
 			password: 'secret',
 			vehicle: {},
 			reviews: [],
@@ -107,10 +108,10 @@ export default {
 					//'X-CSRF-Token': self.user.csrf_token,
 					'Accept': 'application/hal+json',
 					'Content-Type': 'application/hal+json',
-					'X-CSRF-Token': self.user.csrf_token,
+					'X-CSRF-Token': self.activeuser.csrf_token,
 				},
 				auth: {
-					username: self.user.current_user.name,
+					username: self.activeuser.current_user.name,
 					password: self.password
 				},
 				data: self.newReview

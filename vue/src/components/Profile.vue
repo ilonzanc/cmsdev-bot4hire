@@ -19,7 +19,7 @@
 					</section>
 				</div>
 			</div>
-			<router-link v-if="activeuser.current_user.uid == user.uid[0].value"class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
+			<router-link v-if="activeuser.current_user.uid == user.uid[0].value" class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
 			<h2>Lopende huur</h2>
 	  	</div>
   </div>
