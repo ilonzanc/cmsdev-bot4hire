@@ -85,21 +85,6 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
   /**
    * {@inheritdoc}
    */
-  public function getVehicleType() {
-    return $this->get('vehicle_type')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setVehicleType($vehicle_type) {
-    $this->set('vehicle_type', $vehicle_type);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getPrice() {
     return $this->get('price')->value;
   }
@@ -266,6 +251,28 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         'weight' => -6,
       ])
       ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE);
+
+	  $fields['description'] = BaseFieldDefinition::create('string_long')
+      ->setLabel(t('Beschrijving'))
+      ->setDescription(t('De beschrijving van de Vehicle entity.'))
+	  ->setSettings([
+		'default_value' => '',
+		'text_processing' => 0,
+	  ])
+	  ->setDisplayOptions('form', [
+        'type' => 'string_textarea',
+        'weight' => 0,
+        'settings' => [
+          'rows' => 4,
+	  	],
+      ])
+	  ->setDisplayOptions('view', [
+		'label' => 'above',
+        'type' => 'string',
+        'weight' => -6,
+	  ])
+	  ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE);
 
 	  $fields['vehicle_type'] = BaseFieldDefinition::create('entity_reference')

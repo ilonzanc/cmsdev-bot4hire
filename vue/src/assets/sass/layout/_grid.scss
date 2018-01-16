@@ -45,22 +45,15 @@
 	.column-sm-3 { width: 25%; }	
 	.column-sm-4 { width: 33.33333%; }
 	
-	.column-sm-6 {
-		width: 50%;
-	}
-	
+	.column-sm-6 { width: 50%; }	
 	.column-sm-7 { width: 58.33333%; }
-	
-	.column-sm-9 {
-		width: 75%;
-	}
-
-	.column-sm-12 {
-		width: 100%;
-	}
+	.column-sm-8 { width: 66.66666%; }	
+	.column-sm-9 { width: 75%; }
+	.column-sm-12 { width: 100%; }
 }
 
 @media (min-width: 42.5rem) {
+	
 	.column-3 {
 		width: 25%;
 	}

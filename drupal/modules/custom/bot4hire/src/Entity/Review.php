@@ -84,6 +84,36 @@ class Review extends ContentEntityBase implements ReviewInterface {
   /**
    * {@inheritdoc}
    */
+  public function getBody() {
+    return $this->get('body')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setBody($body) {
+    $this->set('body', $body);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getRating() {
+    return $this->get('rating')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setRating($rating) {
+    $this->set('rating', $rating);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
@@ -217,7 +247,7 @@ class Review extends ContentEntityBase implements ReviewInterface {
       ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE);
 
-	$fields['body'] = BaseFieldDefinition::create('string')
+	$fields['body'] = BaseFieldDefinition::create('string_long')
       ->setLabel(t('Body'))
       ->setDescription(t('De body van de Review entity.'))
 	  ->setSettings([
@@ -225,18 +255,16 @@ class Review extends ContentEntityBase implements ReviewInterface {
 		'text_processing' => 0,
 	  ])
 	  ->setDisplayOptions('form', [
-		'type' => 'text_textarea_with_summary',
-		'settings' => [
-		  'rows' => 4,
-		],
-		'weight' => -2,
-	  ])
+        'type' => 'string_textarea',
+        'weight' => 0,
+        'settings' => [
+          'rows' => 4,
+	  	],
+      ])
 	  ->setDisplayOptions('view', [
-		'type' => 'text_summary_or_trimmed',
-		'settings' => [
-		  'trim_length' => 600,
-		],
-		'weight' => -2,
+		'label' => 'above',
+        'type' => 'string',
+        'weight' => -6,
 	  ])
 	  ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE);

@@ -15,6 +15,20 @@
 				<div><span>Snelheid</span><div :class="'specbar specbarsize-3 ' + vehicle.field_snelheid"></div></div>			
 				<router-link :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
 			</div>
+			<h2>Reviews</h2>
+			<section v-for="review in reviews" class="section__review">
+				<div class="row">
+					<div class="column column-sm-4">
+						<img class="user_profile">
+						<p>{{review.user_username}}</p>
+					</div>
+					<div class="column column-sm-8">
+						<h3>{{review.title}}</h3>
+						<p>{{review.rating}}</p>
+						<p>{{review.body}}</p>
+					</div>
+				</div>
+			</section>
 	  	</div>
   </div>
 </template>
@@ -26,15 +40,25 @@ export default {
   name: 'detail',
   data () {
     return {
-      vehicle: {}
+	  vehicle: {},
+	  reviews: []
     }
   },
   	mounted () {
-	  console.log('Detail Component Mounted');
+	  	console.log('Detail Component Mounted');
 		axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
 		.then(response => {
 			console.log(response.data[0])
 			this.vehicle = response.data[0];
+		})
+		.catch(error => {
+			console.log(error);
+		});
+
+		axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/reviews?_format=hal_json')
+		.then(response => {
+			console.log(response.data[0])
+			this.reviews = response.data;
 		})
 		.catch(error => {
 			console.log(error);

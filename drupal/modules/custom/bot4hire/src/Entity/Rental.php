@@ -85,6 +85,36 @@ class Rental extends ContentEntityBase implements RentalInterface {
   /**
    * {@inheritdoc}
    */
+  public function getStartDate() {
+    return $this->get('start_date')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setStartDate($start_date) {
+    $this->set('start_date', $start_date);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEndDate() {
+    return $this->get('end_date')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setEndDate($end_date) {
+    $this->set('end_date', $end_date);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
@@ -191,7 +221,77 @@ class Rental extends ContentEntityBase implements RentalInterface {
         'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+	  ->setDisplayConfigurable('view', TRUE);
+
+	$fields['vehicle_id'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Voertuig ID'))
+      ->setDescription(t('De voertuig ID van de Vehicle Entity die overeen komt met de Review entity.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'vehicle')
+      ->setSetting('handler', 'default')
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'string',
+        'weight' => 0,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 5,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'vehicle',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE);
+	  
+	  $fields['start_date'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Start Uitleenperiode'))
+      ->setDescription(t('De startdatum van de Rental entity.'))
+	  ->setSettings([
+		'datetime_type' => 'date'
+	  ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+		'label' => 'above',
+		'type' => 'datetime_default',
+		'settings' => [
+		  'format_type' => 'medium',
+		],
+		'weight' => 14,
+	  ])
+      ->setDisplayOptions('form', [
+		'type' => 'datetime_default',
+		'weight' => 14,
+	  ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE);
+
+	  $fields['end_date'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Einde Uitleenperiode'))
+      ->setDescription(t('De einddatum van de Rental entity.'))
+	  ->setSettings([
+		'datetime_type' => 'date'
+	  ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+		'label' => 'above',
+		'type' => 'datetime_default',
+		'settings' => [
+		  'format_type' => 'medium',
+		],
+		'weight' => 14,
+	  ])
+      ->setDisplayOptions('form', [
+		'type' => 'datetime_default',
+		'weight' => 14,
+	  ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE);
+
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
