@@ -2,25 +2,43 @@
   <div id="profile">
 	  	<div class="container">
 			<h1>{{user.name[0].value}}</h1>
-			<h2>Voertuigen</h2>
-			<div class="row">
-				<div class="column column-sm-12 column-4" v-for="vehicle in vehicles">
-					<section class="section__vehicle">
-						<router-link :to='"/overzicht/voertuig/" + vehicle.id'>
-							<div class="row">						
-								<div class="column column-sm-3 column-12"><img src="" :alt="vehicle.name + ' image'"></div>
-								<div class="column column-sm-9 column-12">
-									<i class="fa fa-angle-right"></i>
-									<h2>{{vehicle.name}}</h2>
-									<p>{{vehicle.vehicle_type}}</p>
-								</div>						
-							</div>      
-						</router-link>
-					</section>
+			<section class="section__vehicles-list">
+				<h2>Voertuigen</h2>
+				<div class="row">
+					<div class="column column-sm-12 column-4" v-for="vehicle in vehicles">
+						<section class="section__vehicle">
+							<router-link :to='"/overzicht/voertuig/" + vehicle.id'>
+								<div class="row">						
+									<div class="column column-sm-3 column-12"><img src="" :alt="vehicle.name + ' image'"></div>
+									<div class="column column-sm-9 column-12">
+										<i class="fa fa-angle-right"></i>
+										<h2>{{vehicle.name}}</h2>
+										<p>{{vehicle.vehicle_type}}</p>
+									</div>						
+								</div>      
+							</router-link>
+						</section>
+					</div>
 				</div>
-			</div>
+			</section>
 			<router-link v-if="activeuser.current_user.uid == user.uid[0].value" class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
 			<h2>Lopende huur</h2>
+			<section class="section__rentals">
+				<div class="row">
+					<div class="column column-sm-12 column-4" v-for="rental in rentals">					
+						<div class="row">						
+							<div class="column column-sm-3 column-12"></div>
+							<div class="column column-sm-9 column-12">
+								<h3>{{rental.name}}</h3>
+								<p>{{rental.start_date}} <i class="fa fa-arrow-right"></i> {{rental.end_date}}</p>
+								<section v-if="activeuser.current_user.name == rental.vehicle_user_username" class="owner__buttons">
+									<button @click="deleteRental(rental.id)" class="btn">Verwijderen</button>
+								</section>
+							</div>						
+						</div>      					
+					</div>
+				</div>
+			</section>
 	  	</div>
   </div>
 </template>
@@ -35,7 +53,9 @@ export default {
 		return {
 			activeuser: this.$parent.user,
 			user: {},
-			vehicles: []
+			vehicles: [],
+			rentals: [],
+			password: 'secret'
 		}
   },
   mounted () {
@@ -64,7 +84,16 @@ export default {
 		})
 		.catch(error => {
 			console.log(error);
-		});   
+		});  
+		
+		axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/user/' + this.$route.params.id + '/rentals?_format=hal_json')
+		.then(response => {
+			console.log(response.data[0])
+			this.rentals = response.data;
+		})
+		.catch(error => {
+			console.log(error);
+		}); 
 				
   },
   methods: {
@@ -80,6 +109,27 @@ export default {
 			.catch(error => {
 				console.log(error);
 			});
+	  },
+	  deleteRental(rental_id) {
+		  let self = this;
+		  axios({
+			method: 'delete',
+			url: "http://localhost/cmsdev-bot4hire/drupal/admin/structure/rental/" + rental_id + "?_format=hal_json",
+			headers: {
+				//'X-CSRF-Token': self.user.csrf_token,
+				'Accept': 'application/hal+json',
+				'Content-Type': 'application/hal+json',
+				'X-CSRF-Token': self.activeuser.csrf_token,
+			},
+			auth: {
+				username: self.activeuser.current_user.name,
+				password: self.password
+			}
+		}).then(function (response) {
+			console.log(response);
+		}).catch(function(error) {
+			console.log(error);
+		});
 	  }
   }
 }

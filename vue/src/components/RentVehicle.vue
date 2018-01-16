@@ -4,14 +4,14 @@
 			<h1>Voertuig huren</h1>
 			<h2>Voertuig Details</h2>
 			<p>Naam: {{vehicle.name}}</p>
-			<p>Type: {{vehicle.field_vehicle_type}}</p>
+			<p>Type: {{vehicle.vehicle_type}}</p>
 			<p>Eigenaar: {{vehicle.user_id}}</p>
 			<h2>Huur Details</h2>
 			<form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/rental?_format=hal_json" @submit.prevent="onSubmit">
 				<label for="start_date">Start datum</label>
-				<input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="start_date" name="start_date" value="2018-01-15" size="12" v-model="rental_details.field_start_date.value">
+				<input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="start_date" name="start_date" value="2018-01-15" size="12" v-model="rental_details.start_date.value">
 				<label for="end_date">End datum</label>
-				<input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="end_date" name="end_date" value="2018-01-22" size="12" v-model="rental_details.field_end_date.value">
+				<input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="end_date" name="end_date" value="2018-01-22" size="12" v-model="rental_details.end_date.value">
 				<button type="submit" class="btn widebtn">Huur bevestigen</button>
 			</form>
 		</div>
@@ -39,15 +39,16 @@ export default {
 			name: {
 				value: ''
 			},
-			field_end_date: {
+			end_date: {
                 value: ""
 			},
-			field_start_date: {
+			start_date: {
                 value: ""
 			},
-			field_rented_vehicle: {
-				target_id: 17,
-			}
+			vehicle_id:[{
+				target_id: "",
+				target_type:"vehicle"
+			}]
 		},
     }
   },
@@ -59,7 +60,7 @@ export default {
 				let vehiclename = this.vehicle.name.toLowerCase();
 				vehiclename = vehiclename.split(' ').join('_');
 				this.rental_details.name.value = vehiclename;
-				this.rental_details.field_rented_vehicle.target_id = this.vehicle.id;
+				this.rental_details.vehicle_id[0].target_id = this.vehicle.id;
 			})
 			.catch(error => {
 				console.log(error);
@@ -89,7 +90,8 @@ export default {
 		},
         data: self.rental_details
       }).then(function (response) {
-        console.log(response);
+		console.log(response);
+		location.href = '/profiel/' + self.user.current_user.uid;
       }).catch(function(error) {
         console.log(error);
       });
