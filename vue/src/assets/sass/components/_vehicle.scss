@@ -6,9 +6,12 @@
 	padding: 0.5rem 0;
 }
 
+.section__vehicles-list {
+	margin-bottom: 1rem;
+}
+
 .section__vehicle {
-	margin: 0 0.8rem;
-	padding-top: 0.8rem;
+	padding: 0.5rem 0;
 	border-bottom: 2px solid rgba($text-color, 0.2);
 
 	p {

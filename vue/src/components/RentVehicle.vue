@@ -27,7 +27,7 @@ export default {
   data () {
     return {
 		user: this.$parent.user,
-		password: 'secret',
+		password: this.$parent.user_password,
       	vehicle: { },                 
 		vehicle_types: { },
 		rental_details: {

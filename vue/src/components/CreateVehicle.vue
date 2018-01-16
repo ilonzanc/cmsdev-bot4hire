@@ -38,7 +38,7 @@ export default {
   data () {
     return {
 		user: this.$parent.user,
-		password: 'secret',
+		password: this.$parent.user_password,
       	vehicle: {
 			_links: {
 				type: {

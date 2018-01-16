@@ -17,6 +17,10 @@ h1 {
 	font-size: 1.8rem;
 }
 
+h2 {
+	margin-bottom: 1rem;
+}
+
 p {
 	margin-bottom: 1rem;
 	a {
@@ -32,4 +36,11 @@ p {
 	font-weight: 700;
 	margin-bottom: 1rem;
 	display: block;
+}
+
+.vehicle__type {
+	text-align: center;
+	color: $primary-color;
+	font-weight: 700;
+	text-transform: lowercase;
 }

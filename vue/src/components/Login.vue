@@ -47,6 +47,7 @@ export default {
 			.then((response) => {
 				console.log(response.data);
 				localStorage.setItem('loggedInUser', JSON.stringify(response.data));
+				localStorage.setItem('password', self.user.pass);
 				location.href = '/profiel/' + response.data.current_user.uid;
 			})
 			.catch((error) => {

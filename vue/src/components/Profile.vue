@@ -23,8 +23,8 @@
 						</section>
 					</div>
 				</div>
-			</section>
-			<router-link v-if="activeuser.current_user.uid == user.uid[0].value" class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
+				<router-link v-if="activeuser.current_user.uid == user.uid[0].value" class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
+			</section>			
 			<h2>Lopende huur</h2>
 			<section class="section__rentals">
 				<div class="row">
@@ -41,6 +41,7 @@
 						</div>      					
 					</div>
 				</div>
+				<p v-if="rentals.length == 0">Deze gebruiker huurt op dit moment geen voertuigen.</p>
 			</section>
 	  	</div>
   </div>
@@ -55,6 +56,7 @@ export default {
   	data () {
 		return {
 			activeuser: this.$parent.user,
+			password: this.$parent.user_password,
 			user: {},
 			vehicles: [],
 			rentals: [],

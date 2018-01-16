@@ -31,6 +31,7 @@ export default {
   data() {
     return {
 		user: this.$parent.user,
+		password: this.$parent.user_password,
       	vehicles: []
     };
   },

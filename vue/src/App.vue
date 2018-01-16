@@ -33,12 +33,15 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
 	name: 'app',
 	data() {
 		return {
 			navOpen: false,
-			user: JSON.parse(localStorage.getItem('loggedInUser'))
+			user: JSON.parse(localStorage.getItem('loggedInUser')),
+			user_password: localStorage.getItem('password')
 		}    
 	},
 	watch: {
@@ -61,6 +64,7 @@ export default {
 		},
 		logOut() {
 			localStorage.removeItem('loggedInUser');
+			localStorage.removeItem('password');
 			location.href = '/';
 		}
 	}

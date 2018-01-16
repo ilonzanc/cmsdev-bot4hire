@@ -2,40 +2,49 @@
   <div id="detail">
 	  	<div class="container">
 			<router-link class="breadcrumbs" to="/overzicht"><i class="fa fa-chevron-left"></i> terug naar overzicht</router-link>
-			<div class="row"></div>
-			<div class="column column-sm-12 column-6">
-				<img :src='"http://localhost/" + vehicle.field_afbeelding'>
-			</div>
-			<div class="column column-sm-12 column-6">
-				<h1>{{vehicle.name}}</h1>
-				<p>{{vehicle.description}}</p>
-				<p>Eigenaar: <router-link :to="'/profiel/' + vehicle.uid">{{vehicle.user_id}}</router-link></p>
-				<h2>Specs</h2>
-				<div><span>Kracht</span><div :class="'specbar specbarsize-2 ' + vehicle.field_kracht"></div></div>
-				<div><span>Snelheid</span><div :class="'specbar specbarsize-3 ' + vehicle.field_snelheid"></div></div>			
-				<router-link v-if="activeuser.current_user.uid !== vehicle.uid" :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
-				<router-link v-if="activeuser.current_user.uid == vehicle.uid" :to="'/voertuig/' + vehicle.id + '/bewerken'" class="btn smallbtn">Bewerken</router-link>
+			<div class="row">
+				<div class="column column-sm-12 column-6">
+					<img :src='"http://localhost/" + vehicle.field_afbeelding'>
+				</div>
+				<div class="column column-sm-12 column-6">
+					<h1>{{vehicle.name}}</h1>
+					<p class="vehicle__type">{{vehicle.vehicle_type}}</p>
+					<p>{{vehicle.description}}</p>
+					<p>Eigenaar: <router-link :to="'/profiel/' + vehicle.uid">{{vehicle.user_id}}</router-link></p>
+					<p>Zitplaatsen: {{vehicle.seats}}</p>
+					<p>Prijs: {{vehicle.price}} Shanix/dag</p>
+					<p>Leeftijd: {{vehicle.age}} miljoen jaar</p>
+					<!-- <h2>Specs</h2>
+					<div><span>Kracht</span><div :class="'specbar specbarsize-2 ' + vehicle.field_kracht"></div></div>
+					<div><span>Snelheid</span><div :class="'specbar specbarsize-3 ' + vehicle.field_snelheid"></div></div>	 -->		
+					<router-link v-if="activeuser.current_user.uid !== vehicle.uid" :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
+					<router-link v-if="activeuser.current_user.uid == vehicle.uid" :to="'/voertuig/' + vehicle.id + '/bewerken'" class="btn smallbtn"><i class="fa fa-pencil"></i> edit</router-link>
+				</div>
 			</div>
 			<h2>Reviews</h2>
-			<section v-for="review in reviews" class="section__review">
-				<div class="row">
-					<div class="column column-sm-4">
-						<img class="user_profile">
-						<p>{{review.user_username}}</p>
+			<section class="section__review-list">
+				<section v-for="review in reviews" class="section__review">
+					<div class="row">
+						<div class="column column-sm-4">
+							<i class="fa fa-user-circle"></i>
+							<p>{{review.user_username}}</p>
+						</div>
+						<div class="column column-sm-8">
+							<h3>{{review.title}}</h3>
+							<star-rating :value="review.rating" :disabled="true"></star-rating>
+							<p>{{review.body}}</p>
+						</div>
 					</div>
-					<div class="column column-sm-8">
-						<h3>{{review.title}}</h3>
-						<p>{{review.rating}}</p>
-						<p>{{review.body}}</p>
-					</div>
-				</div>
-			</section>
+				</section>
+				<p v-if="reviews.length == 0">Dit voertuig heeft nog geen reviews.</p>
+			</section>			
 			<section v-if="activeuser.current_user.uid !== vehicle.uid" class="section__newreview">
+				<h2>Nieuw review toevoegen</h2>
 				<form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/review?_format=hal_json" @submit.prevent="onSubmit">
 					<label for="title">Titel</label>
 					<input type="text" id="title" name="title" placeholder="Titel van je review..." v-model="newReview.title.value">
 					<label for="rating">Rating</label>
-					<input type="text" id="rating" name="rating" placeholder="Rating van je review..." v-model="newReview.rating.value">
+					<input type="text" name="rating" placeholder="Rating op 5..." v-model="newReview.rating.value">
 					<label for="body">Beschrijving</label>
 					<textarea id="body" name="body" placeholder="Jouw review..." v-model="newReview.body.value"></textarea>
 					<button type="submit" class="btn widebtn">Review toevoegen</button>
@@ -46,14 +55,16 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import StarRating from './tags/StarRating';
 
 export default {
 	name: 'detail',
+	components: { StarRating },
 	data () {
 		return {
 			activeuser: this.$parent.user,
-			password: 'secret',
+			password: this.$parent.user_password,
 			vehicle: {},
 			reviews: [],
 			newReview: {
@@ -72,7 +83,7 @@ export default {
 					value: ''
 				},
 				vehicle_id:[{
-					target_id: 2,
+					target_id: "",
 					target_type: "vehicle",	
 				}]
 			}
@@ -83,7 +94,7 @@ export default {
 		axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
 		.then(response => {
 			this.vehicle = response.data[0];
-			//this.newReview.vehicle_id.target_id = response.data[0].id;
+			this.newReview.vehicle_id[0].target_id = response.data[0].id;
 		})
 		.catch(error => {
 			console.log(error);
@@ -117,9 +128,16 @@ export default {
 				data: self.newReview
 			}).then(function (response) {
 				console.log(response);
+				location.reload();
 			}).catch(function(error) {
 				console.log(error);
 			});
+		},
+		displayStarRating(count) {
+			let starArray;
+
+			let star = "<h1>Hello</h1>";
+			return star;
 		}
 	}  
 }

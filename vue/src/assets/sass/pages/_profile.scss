@@ -7,3 +7,18 @@
 		}
 	}
 }
+
+.section__review {
+	padding: 0.5rem 0;
+	border-bottom: 2px solid rgba($text-color, 0.2);
+	.column:first-child {	
+		text-align: center;
+		.fa-user-circle {
+			font-size: 2rem;
+		}
+	}
+} 
+
+.section__review-list {
+	margin-bottom: 1rem;
+}

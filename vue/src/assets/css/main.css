@@ -367,7 +367,8 @@ a {
   color: inherit; }
 
 body {
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  padding-bottom: 2rem; }
 
 body {
   font-family: 'Raleway', Arial, sans-serif;
@@ -386,6 +387,9 @@ h1 {
   text-align: center;
   font-size: 1.8rem; }
 
+h2 {
+  margin-bottom: 1rem; }
+
 p {
   margin-bottom: 1rem; }
   p a {
@@ -398,6 +402,12 @@ p {
   font-weight: 700;
   margin-bottom: 1rem;
   display: block; }
+
+.vehicle__type {
+  text-align: center;
+  color: #ff6661;
+  font-weight: 700;
+  text-transform: lowercase; }
 
 nav {
   position: absolute;
@@ -621,9 +631,39 @@ form textarea {
   width: 100%;
   padding: 0.5rem;
   text-transform: uppercase;
-  text-align: center; }
+  text-align: center;
+  margin: 0.5rem 0; }
   .btn.secundary-btn {
     background: #ffcc33; }
+  .btn.smallbtn {
+    display: inline-block;
+    width: auto;
+    float: right; }
+
+.star-rating__checkbox {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0; }
+
+.star-rating__star {
+  display: inline-block;
+  padding-right: 0.5rem;
+  vertical-align: middle;
+  line-height: 1;
+  font-size: 1.5em;
+  color: #ABABAB;
+  transition: color .2s ease-out; }
+  .star-rating__star:hover {
+    cursor: pointer; }
+  .star-rating__star.is-selected {
+    color: #FFD700; }
+  .star-rating__star.is-disabled:hover {
+    cursor: default; }
 
 #detail span {
   width: 80px;
@@ -631,9 +671,11 @@ form textarea {
   height: 40px;
   padding: 0.5rem 0; }
 
+.section__vehicles-list {
+  margin-bottom: 1rem; }
+
 .section__vehicle {
-  margin: 0 0.8rem;
-  padding-top: 0.8rem;
+  padding: 0.5rem 0;
   border-bottom: 2px solid rgba(85, 88, 94, 0.2); }
   .section__vehicle p {
     margin-bottom: 0; }
@@ -672,5 +714,16 @@ form textarea {
   #profile .section__profile .fa-user-circle {
     font-size: 5rem;
     margin-bottom: 1rem; }
+
+.section__review {
+  padding: 0.5rem 0;
+  border-bottom: 2px solid rgba(85, 88, 94, 0.2); }
+  .section__review .column:first-child {
+    text-align: center; }
+    .section__review .column:first-child .fa-user-circle {
+      font-size: 2rem; }
+
+.section__review-list {
+  margin-bottom: 1rem; }
 
 /*# sourceMappingURL=main.css.map */

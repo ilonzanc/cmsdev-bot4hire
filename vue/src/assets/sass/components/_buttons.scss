@@ -7,8 +7,15 @@
 	padding: 0.5rem;
 	text-transform: uppercase;
 	text-align: center;
+	margin: 0.5rem 0;
 
 	&.secundary-btn {
 		background: $secundary-color;
+	}
+
+	&.smallbtn {
+		display: inline-block;
+		width: auto;
+		float: right;
 	}
 }
