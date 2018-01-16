@@ -28,9 +28,9 @@ export default {
 						href: "http://localhost/cmsdev-bot4hire/drupal/rest/type/user/user"
 					}
 				},
-				name:{value:"test9"},
-				mail:{value:"test+9@test.com"},
-				pass:{value:"test"}
+				name:{value:""},
+				mail:{value:""},
+				pass:{value:""}
 			}, 
 		}
 	},
@@ -52,12 +52,38 @@ export default {
 			})
 			.then((response) => {
 				console.log(response.data);
-				localStorage.setItem('loggedInUser', JSON.stringify(response.data))
+				/* localStorage.setItem('loggedInUser', JSON.stringify(response.data));
+				location.href = '/profiel/' + response.data.current_user.uid; */
+				self.loginUser();
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 		},
+		loginUser() {
+			let registeredUser = {
+				name: this.user.name.value,
+				pass: this.user.pass.value
+			}
+			axios({
+				method: 'post',
+				url: "http://localhost/cmsdev-bot4hire/drupal/user/login?_format=hal_json",
+				headers: {
+					'Accept': 'application/hal+json',
+    				'Content-Type': 'application/hal+json',
+					"X-CSRF-Token": "T48cuYVRu1CRiXoV7-O35YUNV5A_j7Ro9jT5z5St0OA",
+				},
+				data: registeredUser
+			})
+			.then((response) => {
+				console.log(response.data);
+				localStorage.setItem('loggedInUser', JSON.stringify(response.data));
+				location.href = '/profiel/' + response.data.current_user.uid;
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+		}
 	}
 }
 </script>

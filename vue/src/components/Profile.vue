@@ -1,7 +1,10 @@
 <template>
   <div id="profile">
 	  	<div class="container">
-			<h1>{{user.name[0].value}}</h1>
+			<section class="section__profile">
+				<i class="fa fa-user-circle"></i>
+				<h1>{{user.name[0].value}}</h1>
+			</section>			
 			<section class="section__vehicles-list">
 				<h2>Voertuigen</h2>
 				<div class="row">
