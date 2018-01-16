@@ -2,7 +2,7 @@
     background: $primary-color;
     color: #fff;
 }
-.field--type-link {
+.field--type-link div a{
     display: block;
     text-align: center;
     margin: 1rem auto;
@@ -14,7 +14,7 @@
     font-weight: 600;
 }
 
-.node .field--type-link:last-child {
+.node .field--type-link:last-child div a{
     background: $secundary-color;
     border-color: $secundary-color;
 }
@@ -36,4 +36,30 @@
         font-style: italic;
         margin-bottom: 2rem;
     }
+}
+
+@media (min-width: 42.5rem) {
+	#page__front {
+		background: $primary-color;
+		color: #fff;
+		main {
+			margin: auto;
+			width: 70%;			
+		}
+	}
+
+	main {
+		min-height: 78vh;
+	}
+
+	.field--type-link {
+		width: 40%;
+		display: inline-block;
+		float: left;
+		margin: 0 5% 2rem;
+	}
+
+	.text-formatted p {
+		margin-bottom: 2rem;
+	}
 }

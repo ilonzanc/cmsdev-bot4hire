@@ -1,0 +1,25 @@
+.button {
+	display: block;
+    text-align: center;
+    margin: 1rem auto;
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid white;
+    text-transform: uppercase;
+    border-radius: 4px;
+	font-weight: 600;	
+	background: #ffcc33;
+	border-color: #ffcc33;
+	color: #fff;
+}
+
+#edit-actions {
+	.button {
+		display: inline-block;
+		width: auto;
+		float: left;
+		&:first-child {
+			margin-right: 0.5rem;
+		}
+	}
+}

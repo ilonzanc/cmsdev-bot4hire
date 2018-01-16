@@ -19,8 +19,8 @@
 					<router-link v-if="user" :to="'/profiel/' + user.current_user.uid" tag="li" exact @click.prevent="toggleNav">
                         <a>Profiel</a>
                     </router-link>
-					<li v-if="user" exact @click.prevent="logOut">
-                        <a>Uitloggen</a>
+					<li v-if="user" @click.prevent="logOut">
+                        <a href="">Uitloggen</a>
                     </li>
                 </ul>
             </nav>

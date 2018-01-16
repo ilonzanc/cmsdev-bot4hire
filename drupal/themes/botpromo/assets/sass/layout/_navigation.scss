@@ -33,7 +33,11 @@ nav.menu--main {
         
         li.menu-item {
             padding: 1rem 0;
-        }
+		}
+		
+		a.is-active {
+			color: $secundary-color;
+		}
 
         &.nav-open {
             left: 25%;
@@ -41,6 +45,10 @@ nav.menu--main {
         }
         
     }
+}
+
+ul.menu a.is-active {
+	color: $secundary-color;
 }
 
 .nav-cover {
@@ -51,4 +59,45 @@ nav.menu--main {
     top: 0;
     left: 0;
     height: 100vh;
+}
+
+@media (min-width: 42.5rem) {
+	nav.menu--main .fa-bars,
+	nav.menu--main .fa-times {
+		display: none;
+	}
+
+	nav.menu--main {
+		ul.menu{
+			position: static;
+			width: auto;
+			float: right;
+			height: auto;
+			padding: 0;
+			background: none;
+	
+			li.menu-item {
+				padding: 0;
+			}
+	
+			li {
+				list-style-type: none;
+				display: inline-block;
+				
+				a {
+					font-size: 1.1rem;
+					padding: 0 0.5rem;
+					display: block;
+					margin: 0 0.5rem;
+			
+					&:hover {
+					}
+		
+					&.router-link-exact-active {
+						font-weight: bold;
+					}
+				}
+			} 
+		} 
+	}
 }

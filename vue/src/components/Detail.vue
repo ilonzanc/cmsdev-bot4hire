@@ -4,7 +4,7 @@
 			<router-link class="breadcrumbs" to="/overzicht"><i class="fa fa-chevron-left"></i> terug naar overzicht</router-link>
 			<div class="row">
 				<div class="column column-sm-12 column-6">
-					<img :src='"http://localhost/" + vehicle.field_afbeelding'>
+					<img :src="vehicle.image">
 				</div>
 				<div class="column column-sm-12 column-6">
 					<h1>{{vehicle.name}}</h1>

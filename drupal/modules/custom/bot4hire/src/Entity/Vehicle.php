@@ -244,11 +244,11 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
-        'weight' => -6,
+        'weight' => -8,
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'weight' => -6,
+        'weight' => -8,
       ])
       ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE);
@@ -262,7 +262,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
 	  ])
 	  ->setDisplayOptions('form', [
         'type' => 'string_textarea',
-        'weight' => 0,
+        'weight' => -7,
         'settings' => [
           'rows' => 4,
 	  	],
@@ -270,7 +270,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
 	  ->setDisplayOptions('view', [
 		'label' => 'above',
         'type' => 'string',
-        'weight' => -6,
+        'weight' => -7,
 	  ])
 	  ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE);
@@ -292,11 +292,11 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'string',
-        'weight' => -5,
+        'weight' => -6,
       ])
       ->setDisplayOptions('form', [
         'type' => 'options_select',
-    	'weight' => -5,
+    	'weight' => -6,
       ])
       ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE);
@@ -314,11 +314,11 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
-        'weight' => -4,
+        'weight' => -5,
       ])
       ->setDisplayOptions('form', [
         'type' => 'number',
-        'weight' => -4,
+        'weight' => -5,
       ])
       ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE); 
@@ -336,11 +336,11 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
-        'weight' => -3,
+        'weight' => -4,
       ])
       ->setDisplayOptions('form', [
         'type' => 'number',
-        'weight' => -3,
+        'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE); 
@@ -358,11 +358,11 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
-        'weight' => -2,
+        'weight' => -3,
       ])
       ->setDisplayOptions('form', [
         'type' => 'number',
-        'weight' => -2,
+        'weight' => -3,
       ])
       ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE); 
@@ -384,14 +384,32 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'string',
-        'weight' => -1,
+        'weight' => -2,
       ])
       ->setDisplayOptions('form', [
         'type' => 'options_select',
-    	'weight' => -1,
+    	'weight' => -2,
       ])
       ->setDisplayConfigurable('form', TRUE)
 	  ->setDisplayConfigurable('view', TRUE);
+
+	  $fields['image'] = BaseFieldDefinition::create('uri')
+      ->setLabel(t('Afbeelding'))
+      ->setDescription(t('De afbeelding van de Vehicle entity.'))
+      ->setSetting('max_length', 255)
+	  ->setSetting('case_sensitive', TRUE)
+	  ->addConstraint('FileUriUnique')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -1,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string',
+        'weight' => -1,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+	  ->setDisplayConfigurable('view', TRUE); 
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))

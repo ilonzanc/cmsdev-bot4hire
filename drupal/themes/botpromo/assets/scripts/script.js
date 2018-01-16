@@ -1,6 +1,6 @@
 (function(){
     console.log("'assets/scripts/script.js' loaded");
-    const togglenav = document.querySelectorAll('.toggleNav');
+    const togglenav = document.querySelectorAll('.toggleBars');
     for (let i = 0; i < togglenav.length; i++){
         togglenav[i].addEventListener('click', function(e){
             e.preventDefault();
