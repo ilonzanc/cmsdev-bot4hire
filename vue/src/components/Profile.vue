@@ -12,7 +12,9 @@
 						<section class="section__vehicle">
 							<router-link :to='"/overzicht/voertuig/" + vehicle.id'>
 								<div class="row">						
-									<div class="column column-sm-3 column-12"><img src="" :alt="vehicle.name + ' image'"></div>
+									<div class="column column-sm-3 column-12">
+										<div class="vehicle__image" :style='"background: url(" + vehicle.image + ") no-repeat center; background-size: contain"'></div>
+										</div>
 									<div class="column column-sm-9 column-12">
 										<i class="fa fa-angle-right"></i>
 										<h2>{{vehicle.name}}</h2>
@@ -28,17 +30,24 @@
 			<h2>Lopende huur</h2>
 			<section class="section__rentals">
 				<div class="row">
-					<div class="column column-sm-12 column-4" v-for="rental in rentals">					
-						<div class="row">						
-							<div class="column column-sm-3 column-12"></div>
-							<div class="column column-sm-9 column-12">
-								<h3>{{rental.name}}</h3>
-								<p>{{rental.start_date}} <i class="fa fa-arrow-right"></i> {{rental.end_date}}</p>
-								<section v-if="activeuser.current_user.name == rental.vehicle_user_username" class="owner__buttons">
-									<button @click="deleteRental(rental.id)" class="btn">Verwijderen</button>
-								</section>
-							</div>						
-						</div>      					
+					<div class="column column-sm-12 column-4" v-for="rental in rentals">
+						<section class="section__vehicle">
+							<router-link :to='"/overzicht/voertuig/" + rental.vehicle_id'>
+								<div class="row">						
+									<div class="column column-sm-3 column-12">
+										<div class="vehicle__image" :style='"background: url(" + rental.image + ") no-repeat center; background-size: contain"'></div>
+									</div>
+									<div class="column column-sm-9 column-12">
+										<p>{{rental.vehicle_id}}</p>
+										<p>{{rental.start_date}} <i class="fa fa-arrow-right"></i> {{rental.end_date}}</p>
+									</div>						
+								</div>      
+							</router-link>
+							<section v-if="activeuser.current_user.name == rental.vehicle_user_username" class="owner__buttons">
+							<button @click="deleteRental(rental.id)" class="btn">Verwijderen</button>
+						</section> 
+						</section>
+						   					
 					</div>
 				</div>
 				<p v-if="rentals.length == 0">Deze gebruiker huurt op dit moment geen voertuigen.</p>
@@ -107,7 +116,7 @@ export default {
 			.then(response => {
 				console.log(response)
 				for (let i = 0; i < response.data.length; i++){
-					if (response.data[i].uid == this.user.uid[0].value)
+					if (response.data[i].user_id == this.user.uid[0].value)
 						this.vehicles.push(response.data[i])
 				}
 			})
@@ -132,6 +141,7 @@ export default {
 			}
 		}).then(function (response) {
 			console.log(response);
+			location.reload();
 		}).catch(function(error) {
 			console.log(error);
 		});

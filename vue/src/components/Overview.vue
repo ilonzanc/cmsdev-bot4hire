@@ -7,7 +7,9 @@
 					<section class="section__vehicle">
 						<router-link :to='"overzicht/voertuig/" + vehicle.id'>
 							<div class="row">						
-								<div class="column column-sm-3 column-12"><img :src="vehicle.image" :alt="vehicle.name + ' image'"></div>
+								<div class="column column-sm-3 column-12">
+									<div class="vehicle__image" :style='"background: url(" + vehicle.image + ") no-repeat center; background-size: contain"'></div>
+								</div>
 								<div class="column column-sm-9 column-12">
 									<i class="fa fa-angle-right"></i>
 									<h2>{{vehicle.name}}</h2>
@@ -42,8 +44,6 @@ export default {
       url:
         "http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles?_format=hal_json",
       headers: {
-		"X-CSRF-Token": self.user.csrf_token,
-        Authorization: "Basic YWRtaW46c2VjcmV0"
       }
     })
       .then(function(response) {

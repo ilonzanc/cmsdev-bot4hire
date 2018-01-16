@@ -1,25 +1,35 @@
 <template>
   	<div id="home">
 		<div class="hero__image">
-			<router-link class="btn secundary-btn" to="/overzicht">Bekijk de catalogus</router-link>
-		</div>
-		<h2>Nieuwste voertuigen</h2>
-		<div class="row">
-			<div class="column column-sm-12 column-4" v-for="vehicle in vehicles">
-				<section class="section__vehicle">
-					<router-link :to='"overzicht/voertuig/" + vehicle.id'>
-						<div class="row">						
-							<div class="column column-sm-3 column-12"><img src="" :alt="vehicle.name + ' image'"></div>
-							<div class="column column-sm-9 column-12">
-								<i class="fa fa-angle-right"></i>
-								<h2>{{vehicle.name}}</h2>
-								<p>{{vehicle.vehicle_type}}</p>
-							</div>						
-						</div>      
-					</router-link>
-				</section>
+			<div class="container">
+				<div class="hero__image-text">
+					<h1>Bot4Hire</h1>
+					<p>Wissel je wagen uit met anderen. Super handig en goed voor het milieu!</p>
+					<router-link class="btn secundary-btn" to="/overzicht">Bekijk de catalogus</router-link>
+				</div>			
 			</div>
-		</div>	
+		</div>
+		<div class="container">
+			<h2>Nieuwste voertuigen</h2>		
+			<div class="row">
+				<div class="column column-sm-12 column-4" v-for="vehicle in vehicles">
+					<section class="section__vehicle">
+						<router-link :to='"overzicht/voertuig/" + vehicle.id'>
+							<div class="row">						
+								<div class="column column-sm-3 column-12">
+									<div class="vehicle__image" :style='"background: url(" + vehicle.image + ") no-repeat center; background-size: contain"'></div>
+								</div>
+								<div class="column column-sm-9 column-12">
+									<i class="fa fa-angle-right"></i>
+									<h2>{{vehicle.name}}</h2>
+									<p>{{vehicle.vehicle_type}}</p>
+								</div>						
+							</div>      
+						</router-link>
+					</section>
+				</div>
+			</div>	
+		</div>
   </div>
 </template>
 
@@ -40,8 +50,6 @@ export default {
 		url:
 			"http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles?_format=hal_json",
 		headers: {
-			"X-CSRF-Token": self.user.csrf_token,
-			Authorization: "Basic YWRtaW46c2VjcmV0"
 		}
 		})
 		.then(function(response) {

@@ -9,9 +9,9 @@
 			<h2>Huur Details</h2>
 			<form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/rental?_format=hal_json" @submit.prevent="onSubmit">
 				<label for="start_date">Start datum</label>
-				<input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="start_date" name="start_date" value="2018-01-15" size="12" v-model="rental_details.start_date.value">
+				<input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="start_date" required name="start_date" value="2018-01-15" size="12" v-model="rental_details.start_date.value">
 				<label for="end_date">End datum</label>
-				<input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="end_date" name="end_date" value="2018-01-22" size="12" v-model="rental_details.end_date.value">
+				<input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="end_date" name="end_date" required value="2018-01-22" size="12" v-model="rental_details.end_date.value">
 				<button type="submit" class="btn widebtn">Huur bevestigen</button>
 			</form>
 		</div>

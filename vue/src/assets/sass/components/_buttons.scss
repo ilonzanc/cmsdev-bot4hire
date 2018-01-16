@@ -8,14 +8,33 @@
 	text-transform: uppercase;
 	text-align: center;
 	margin: 0.5rem 0;
+	font-weight: 700;
+	border: 2px solid $primary-color;
+
+	&:hover {
+		background: rgba($primary-color, 0.2);
+		color: $primary-color;
+	}
 
 	&.secundary-btn {
 		background: $secundary-color;
+		border: 2px solid $secundary-color;
+
+		&:hover {
+			background: rgba($secundary-color, 0.2);
+			color: $secundary-color;
+		}
 	}
 
 	&.smallbtn {
 		display: inline-block;
 		width: auto;
 		float: right;
+	}
+}
+
+@media (min-width: 42.5rem) {
+	.btn {
+		width: 300px;
 	}
 }

@@ -4,11 +4,11 @@
 			<h1>Registreren</h1>
 			<form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/user/register?_format=hal_json" @submit.prevent="onSubmit">
 				<label for="name">Username</label>
-				<input type="text" id="name" name="name" placeholder="Jouw gebruikersnaam..." v-model="user.name.value">
+				<input type="text" id="name" name="name" placeholder="Jouw gebruikersnaam..." required v-model="user.name.value">
 				<label for="mail">Emailadres</label>
-				<input type="email" id="mail" name="mail" placeholder="Jouw emailadres..." v-model="user.mail.value">
+				<input type="email" id="mail" name="mail" placeholder="Jouw emailadres..." required v-model="user.mail.value">
 				<label for="pass">Wachtwoord</label>
-				<input type="password" id="pass" name="pass" placeholder="********" v-model="user.pass.value">
+				<input type="password" id="pass" name="pass" placeholder="********" required v-model="user.pass.value">
 				<button type="submit" class="btn widebtn">Registreren</button>
 			</form>
 	  	</div>

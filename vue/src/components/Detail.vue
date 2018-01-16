@@ -14,9 +14,7 @@
 					<p>Zitplaatsen: {{vehicle.seats}}</p>
 					<p>Prijs: {{vehicle.price}} Shanix/dag</p>
 					<p>Leeftijd: {{vehicle.age}} miljoen jaar</p>
-					<!-- <h2>Specs</h2>
-					<div><span>Kracht</span><div :class="'specbar specbarsize-2 ' + vehicle.field_kracht"></div></div>
-					<div><span>Snelheid</span><div :class="'specbar specbarsize-3 ' + vehicle.field_snelheid"></div></div>	 -->		
+					<p>Locatie: {{vehicle.pickup_location}}</p>		
 					<router-link v-if="activeuser.current_user.uid !== vehicle.uid" :to="vehicle.id + '/huren'" class="btn">Huren</router-link>
 					<router-link v-if="activeuser.current_user.uid == vehicle.uid" :to="'/voertuig/' + vehicle.id + '/bewerken'" class="btn smallbtn"><i class="fa fa-pencil"></i> edit</router-link>
 				</div>
@@ -25,11 +23,13 @@
 			<section class="section__review-list">
 				<section v-for="review in reviews" class="section__review">
 					<div class="row">
-						<div class="column column-sm-4">
-							<i class="fa fa-user-circle"></i>
-							<p>{{review.user_username}}</p>
+						<div class="column column-sm-4 column-2">
+							<router-link :to="'/profiel/' + review.user_id">
+								<i class="fa fa-user-circle"></i>
+								<p>{{review.user_username}}</p>
+							</router-link>							
 						</div>
-						<div class="column column-sm-8">
+						<div class="column column-sm-8 column-10">
 							<h3>{{review.title}}</h3>
 							<star-rating :value="review.rating" :disabled="true"></star-rating>
 							<p>{{review.body}}</p>
@@ -39,16 +39,20 @@
 				<p v-if="reviews.length == 0">Dit voertuig heeft nog geen reviews.</p>
 			</section>			
 			<section v-if="activeuser.current_user.uid !== vehicle.uid" class="section__newreview">
-				<h2>Nieuw review toevoegen</h2>
-				<form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/review?_format=hal_json" @submit.prevent="onSubmit">
-					<label for="title">Titel</label>
-					<input type="text" id="title" name="title" placeholder="Titel van je review..." v-model="newReview.title.value">
-					<label for="rating">Rating</label>
-					<input type="text" name="rating" placeholder="Rating op 5..." v-model="newReview.rating.value">
-					<label for="body">Beschrijving</label>
-					<textarea id="body" name="body" placeholder="Jouw review..." v-model="newReview.body.value"></textarea>
-					<button type="submit" class="btn widebtn">Review toevoegen</button>
-				</form>
+				<div class="row">
+					<div class="column column-sm-12 column-6">
+						<h2>Nieuw review toevoegen</h2>
+						<form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/review?_format=hal_json" @submit.prevent="onSubmit">
+							<label for="title">Titel</label>
+							<input type="text" id="title" name="title" placeholder="Titel van je review..." required v-model="newReview.title.value">
+							<label for="rating">Rating</label>
+							<input type="text" name="rating" placeholder="Rating op 5..." required v-model="newReview.rating.value">
+							<label for="body">Beschrijving</label>
+							<textarea id="body" name="body" placeholder="Jouw review..." required v-model="newReview.body.value"></textarea>
+							<button type="submit" class="btn widebtn">Review toevoegen</button>
+						</form>
+					</div>
+				</div>
 			</section>
 	  	</div>
   </div>

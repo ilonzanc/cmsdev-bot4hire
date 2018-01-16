@@ -1,15 +1,73 @@
 #home {
 	.hero__image {
 		height: 300px;
-		background: grey;
-		position: relative
+		background: url('../images/heroimage.jpg');
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: relative;
+		top: -2rem;
 	}
 
-	.btn {
-		width: 70%;
+	.hero__image-text {
+		width: 85%;
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+		text-align: center;
+
+		h1 {
+			color: #fff;
+			font-size: 3rem;
+			margin-bottom: 1rem;
+			line-height: 100%;
+		}
+
+		p {
+			color: #fff;
+			font-size: 1rem;
+			font-weight: 700;
+		}
+
+		.btn {
+			width: 70%;
+			margin: auto;
+		}
+	}
+
+	
+
+	
+}
+
+@media (min-width: 42.5rem) {
+	#home {
+		.hero__image {
+			height: 600px;
+			width: 100%;
+
+			.hero__image-text {
+				width: 35%;
+
+				h1 {
+					font-size: 7rem;
+					margin-bottom: 1rem;
+					line-height: 100%;
+					text-shadow: 2px 2px 2px rgba($text-color, 0.2);
+				}
+		
+				p {
+					font-size: 2rem;
+					line-height: 100%;
+					margin-bottom: 2rem;
+					text-shadow: 2px 2px 2px rgba($text-color, 0.2)
+				}
+
+				.btn {
+					width: 50%;
+					margin: auto;
+				}
+			}
+		}
 	}
 }
