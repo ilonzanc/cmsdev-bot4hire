@@ -83,6 +83,9 @@ class Utils {
 
   /**
    * Returns normalized file path.
+   *
+   * @codeCoverageIgnore
+   * @deprecated
    */
   public static function normalizePath($path) {
     $parts = [];
@@ -172,6 +175,27 @@ class Utils {
    */
   public static function getHomeDirectory() {
     return isset($_SERVER['HOME']) ? $_SERVER['HOME'] : getenv('HOME');
+  }
+
+  /**
+   * Replaces all tokens in a given string with appropriate values.
+   *
+   * @param string $text
+   *   A string potentially containing replaceable tokens.
+   * @param array $data
+   *   An array where keys are token names and values are replacements.
+   *
+   * @return string
+   *   Text with tokens replaced.
+   */
+  public static function tokenReplace($text, array $data) {
+    $tokens = [];
+    foreach ($data as $var_name => $var) {
+      if (is_string($var)) {
+        $tokens['{' . $var_name . '}'] = $var;
+      }
+    }
+    return str_replace(array_keys($tokens), array_values($tokens), $text);
   }
 
 }

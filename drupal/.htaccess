@@ -186,7 +186,4 @@ AddEncoding gzip svgz
   Header always set X-Content-Type-Options nosniff
   # Disable Proxy header, since it's an attack vector.
   RequestHeader unset Proxy
-  # Allow all headers for cross origin posting
-  Header set Access-Control-Allow-Origin "*"
-  Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT,PATCH"
 </IfModule>

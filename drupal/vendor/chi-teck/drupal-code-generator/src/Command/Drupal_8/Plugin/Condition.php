@@ -22,11 +22,17 @@ class Condition extends BaseGenerator {
   protected function interact(InputInterface $input, OutputInterface $output) {
     $questions = Utils::defaultPluginQuestions();
 
-    $vars = $this->collectVars($input, $output, $questions);
+    $vars = &$this->collectVars($input, $output, $questions);
     $vars['class'] = Utils::camelize($vars['plugin_label']);
 
-    $path = 'src/Plugin/Condition/' . $vars['class'] . '.php';
-    $this->setFile($path, 'd8/plugin/condition.twig', $vars);
+    $this->addFile()
+      ->path('src/Plugin/Condition/{class}.php')
+      ->template('d8/plugin/condition.twig');
+
+    $this->addFile()
+      ->path('config/schema/{machine_name}.schema.yml')
+      ->template('d8/plugin/condition-schema.twig')
+      ->action('append');
   }
 
 }

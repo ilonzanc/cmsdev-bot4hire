@@ -202,7 +202,7 @@ class WebAssert extends MinkWebAssert {
   public function titleEquals($expected_title) {
     $title_element = $this->session->getPage()->find('css', 'title');
     if (!$title_element) {
-      throw new ExpectationException('No title element found on the page', $this->session);
+      throw new ExpectationException('No title element found on the page', $this->session->getDriver());
     }
     $actual_title = $title_element->getText();
     $this->assert($expected_title === $actual_title, 'Title found');
@@ -451,7 +451,7 @@ class WebAssert extends MinkWebAssert {
    * @throws \Behat\Mink\Exception\ElementNotFoundException
    * @throws \Behat\Mink\Exception\ExpectationException
    */
-  public function fieldDisabled($field, TraversableElement $container = NULL)  {
+  public function fieldDisabled($field, TraversableElement $container = NULL) {
     $container = $container ?: $this->session->getPage();
     $node = $container->findField($field);
 

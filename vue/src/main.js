@@ -8,9 +8,10 @@ import axios from 'axios'
 window.axios = axios;
 
 window.axios.defaults.headers.common = {
-    'Accept': 'application/hal+json',
+    //'Accept': 'application/hal+json',
+    //'Authorization': '',
     'Content-Type': 'application/hal+json',
-    //'X-CSRF-Token': 'YTuai2HyHUKFHj4xgbf2aZ273luir45GF4hoYW6CYJM'
+    'X-CSRF-Token': '0BOSQmGYGECrK1jWnhE2Utza6dtuhXlumBJdeRZ-9Js'
 };
 
 Vue.config.productionTip = false

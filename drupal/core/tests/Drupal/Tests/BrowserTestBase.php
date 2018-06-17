@@ -35,6 +35,10 @@ use Symfony\Component\CssSelector\CssSelectorConverter;
  * Drupal\Tests\yourmodule\Functional namespace and live in the
  * modules/yourmodule/tests/src/Functional directory.
  *
+ * Tests extending this base class should only translate text when testing
+ * translation functionality. For example, avoid wrapping test text with t()
+ * or TranslatableMarkup().
+ *
  * @ingroup testing
  */
 abstract class BrowserTestBase extends TestCase {
@@ -62,6 +66,7 @@ abstract class BrowserTestBase extends TestCase {
     createUser as drupalCreateUser;
   }
   use XdebugRequestTrait;
+  use PhpunitCompatibilityTrait;
 
   /**
    * The database prefix of this test run.
@@ -316,18 +321,27 @@ abstract class BrowserTestBase extends TestCase {
     $this->mink->setDefaultSessionName('default');
     $this->registerSessions();
 
-    // According to the W3C WebDriver specification a cookie can only be set if
-    // the cookie domain is equal to the domain of the active document. When the
-    // browser starts up the active document is not our domain but 'about:blank'
-    // or similar. To be able to set our User-Agent and Xdebug cookies at the
-    // start of the test we now do a request to the front page so the active
-    // document matches the domain.
-    // @see https://w3c.github.io/webdriver/webdriver-spec.html#add-cookie
-    // @see https://www.w3.org/Bugs/Public/show_bug.cgi?id=20975
-    $session = $this->getSession();
-    $session->visit($this->baseUrl);
+    $this->initFrontPage();
 
     return $session;
+  }
+
+  /**
+   * Visits the front page when initializing Mink.
+   *
+   * According to the W3C WebDriver specification a cookie can only be set if
+   * the cookie domain is equal to the domain of the active document. When the
+   * browser starts up the active document is not our domain but 'about:blank'
+   * or similar. To be able to set our User-Agent and Xdebug cookies at the
+   * start of the test we now do a request to the front page so the active
+   * document matches the domain.
+   *
+   * @see https://w3c.github.io/webdriver/webdriver-spec.html#add-cookie
+   * @see https://www.w3.org/Bugs/Public/show_bug.cgi?id=20975
+   */
+  protected function initFrontPage() {
+    $session = $this->getSession();
+    $session->visit($this->baseUrl);
   }
 
   /**
@@ -340,12 +354,12 @@ abstract class BrowserTestBase extends TestCase {
    *   When provided default Mink driver class can't be instantiated.
    */
   protected function getDefaultDriverInstance() {
-    // Get default driver params from environment if availables.
-    if ($arg_json = getenv('MINK_DRIVER_ARGS')) {
-      $this->minkDefaultDriverArgs = json_decode($arg_json);
+    // Get default driver params from environment if available.
+    if ($arg_json = $this->getMinkDriverArgs()) {
+      $this->minkDefaultDriverArgs = json_decode($arg_json, TRUE);
     }
 
-    // Get and check default driver class from environment if availables.
+    // Get and check default driver class from environment if available.
     if ($minkDriverClass = getenv('MINK_DRIVER_CLASS')) {
       if (class_exists($minkDriverClass)) {
         $this->minkDefaultDriverClass = $minkDriverClass;
@@ -388,6 +402,18 @@ abstract class BrowserTestBase extends TestCase {
         $this->htmlOutputCounter = max(1, (int) file_get_contents($this->htmlOutputCounterStorage)) + 1;
       }
     }
+  }
+
+  /**
+   * Get the Mink driver args from an environment variable, if it is set. Can
+   * be overridden in a derived class so it is possible to use a different
+   * value for a subset of tests, e.g. the JavaScript tests.
+   *
+   *  @return string|false
+   *   The JSON-encoded argument string. False if it is not set.
+   */
+  protected function getMinkDriverArgs() {
+    return getenv('MINK_DRIVER_ARGS');
   }
 
   /**
@@ -446,6 +472,15 @@ abstract class BrowserTestBase extends TestCase {
    * {@inheritdoc}
    */
   protected function setUp() {
+    // Installing Drupal creates 1000s of objects. Garbage collection of these
+    // objects is expensive. This appears to be causing random segmentation
+    // faults in PHP 5.x due to https://bugs.php.net/bug.php?id=72286. Once
+    // Drupal is installed is rebuilt, garbage collection is re-enabled.
+    $disable_gc = version_compare(PHP_VERSION, '7', '<') && gc_enabled();
+    if ($disable_gc) {
+      gc_collect_cycles();
+      gc_disable();
+    }
     parent::setUp();
 
     $this->setupBaseUrl();
@@ -466,6 +501,16 @@ abstract class BrowserTestBase extends TestCase {
 
     // Set up the browser test output file.
     $this->initBrowserOutputFile();
+    // If garbage collection was disabled prior to rebuilding container,
+    // re-enable it.
+    if ($disable_gc) {
+      gc_enable();
+    }
+
+    // Ensure that the test is not marked as risky because of no assertions. In
+    // PHPUnit 6 tests that only make assertions using $this->assertSession()
+    // can be marked as risky.
+    $this->addToAssertionCount(1);
   }
 
   /**
@@ -548,6 +593,33 @@ abstract class BrowserTestBase extends TestCase {
   }
 
   /**
+   * Obtain the HTTP client for the system under test.
+   *
+   * Use this method for arbitrary HTTP requests to the site under test. For
+   * most tests, you should not get the HTTP client and instead use navigation
+   * methods such as drupalGet() and clickLink() in order to benefit from
+   * assertions.
+   *
+   * Subclasses which substitute a different Mink driver should override this
+   * method and provide a Guzzle client if the Mink driver provides one.
+   *
+   * @return \GuzzleHttp\ClientInterface
+   *   The client with BrowserTestBase configuration.
+   *
+   * @throws \RuntimeException
+   *   If the Mink driver does not support a Guzzle HTTP client, throw an
+   *   exception.
+   */
+  protected function getHttpClient() {
+    /* @var $mink_driver \Behat\Mink\Driver\DriverInterface */
+    $mink_driver = $this->getSession()->getDriver();
+    if ($mink_driver instanceof GoutteDriver) {
+      return $mink_driver->getClient()->getClient();
+    }
+    throw new \RuntimeException('The Mink client type ' . get_class($mink_driver) . ' does not support getHttpClient().');
+  }
+
+  /**
    * Returns WebAssert object.
    *
    * @param string $name
@@ -557,6 +629,7 @@ abstract class BrowserTestBase extends TestCase {
    *   A new web-assert option for asserting the presence of elements with.
    */
   public function assertSession($name = NULL) {
+    $this->addToAssertionCount(1);
     return new WebAssert($this->getSession($name), $this->baseUrl);
   }
 
@@ -626,11 +699,13 @@ abstract class BrowserTestBase extends TestCase {
    *   to set for example the "Accept-Language" header for requesting the page
    *   in a different language. Note that not all headers are supported, for
    *   example the "Accept" header is always overridden by the browser. For
-   *   testing REST APIs it is recommended to directly use an HTTP client such
-   *   as Guzzle instead.
+   *   testing REST APIs it is recommended to obtain a separate HTTP client
+   *   using getHttpClient() and performing requests that way.
    *
    * @return string
    *   The retrieved HTML string, also available as $this->getRawContent()
+   *
+   * @see \Drupal\Tests\BrowserTestBase::getHttpClient()
    */
   protected function drupalGet($path, array $options = [], array $headers = []) {
     $options['absolute'] = TRUE;
@@ -777,10 +852,10 @@ abstract class BrowserTestBase extends TestCase {
    *   be unchecked.
    * @param string $submit
    *   Value of the submit button whose click is to be emulated. For example,
-   *   t('Save'). The processing of the request depends on this value. For
-   *   example, a form may have one button with the value t('Save') and another
-   *   button with the value t('Delete'), and execute different code depending
-   *   on which one is clicked.
+   *   'Save'. The processing of the request depends on this value. For example,
+   *   a form may have one button with the value 'Save' and another button with
+   *   the value 'Delete', and execute different code depending on which one is
+   *   clicked.
    * @param string $form_html_id
    *   (optional) HTML ID of the form to be submitted. On some pages
    *   there are many identical forms, so just using the value of the submit
@@ -859,11 +934,11 @@ abstract class BrowserTestBase extends TestCase {
    *   @code
    *   // First step in form.
    *   $edit = array(...);
-   *   $this->drupalPostForm('some_url', $edit, t('Save'));
+   *   $this->drupalPostForm('some_url', $edit, 'Save');
    *
    *   // Second step in form.
    *   $edit = array(...);
-   *   $this->drupalPostForm(NULL, $edit, t('Save'));
+   *   $this->drupalPostForm(NULL, $edit, 'Save');
    *   @endcode
    * @param array $edit
    *   Field data in an associative array. Changes the current input fields
@@ -893,10 +968,10 @@ abstract class BrowserTestBase extends TestCase {
    *     https://www.drupal.org/node/2802401
    * @param string $submit
    *   Value of the submit button whose click is to be emulated. For example,
-   *   t('Save'). The processing of the request depends on this value. For
-   *   example, a form may have one button with the value t('Save') and another
-   *   button with the value t('Delete'), and execute different code depending
-   *   on which one is clicked.
+   *   'Save'. The processing of the request depends on this value. For example,
+   *   a form may have one button with the value 'Save' and another button with
+   *   the value 'Delete', and execute different code depending on which one is
+   *   clicked.
    *
    *   This function can also be called to emulate an Ajax submission. In this
    *   case, this value needs to be an array with the following keys:
@@ -1131,6 +1206,7 @@ abstract class BrowserTestBase extends TestCase {
   protected function clickLink($label, $index = 0) {
     $label = (string) $label;
     $links = $this->getSession()->getPage()->findAll('named', ['link', $label]);
+    $this->assertArrayHasKey($index, $links, 'The link ' . $label . ' was not found on the page.');
     $links[$index]->click();
   }
 
@@ -1269,6 +1345,28 @@ abstract class BrowserTestBase extends TestCase {
     }
 
     return $caller;
+  }
+
+  /**
+   * Transforms a nested array into a flat array suitable for drupalPostForm().
+   *
+   * @param array $values
+   *   A multi-dimensional form values array to convert.
+   *
+   * @return array
+   *   The flattened $edit array suitable for BrowserTestBase::drupalPostForm().
+   */
+  protected function translatePostValues(array $values) {
+    $edit = [];
+    // The easiest and most straightforward way to translate values suitable for
+    // BrowserTestBase::drupalPostForm() is to actually build the POST data
+    // string and convert the resulting key/value pairs back into a flat array.
+    $query = http_build_query($values);
+    foreach (explode('&', $query) as $item) {
+      list($key, $value) = explode('=', $item);
+      $edit[urldecode($key)] = urldecode($value);
+    }
+    return $edit;
   }
 
   /**

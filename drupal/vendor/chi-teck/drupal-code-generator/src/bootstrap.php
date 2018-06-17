@@ -5,14 +5,14 @@
  * Globals.
  */
 
-use DrupalCodeGenerator\Helper\Dumper;
-use DrupalCodeGenerator\Helper\InputHandler;
-use DrupalCodeGenerator\Helper\OutputHandler;
-use DrupalCodeGenerator\Helper\Renderer;
-use DrupalCodeGenerator\TwigEnvironment;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Filesystem\Filesystem;
+use DrupalCodeGenerator\ApplicationFactory;
 
+/**
+ * DCG root.
+ *
+ * @deprecated
+ *   Use DrupalCodeGenerator\ApplicationFactory::getRoot
+ */
 define('DCG_ROOT', dirname(__DIR__));
 
 /**
@@ -20,21 +20,12 @@ define('DCG_ROOT', dirname(__DIR__));
  *
  * @return \Symfony\Component\Console\Application
  *   The initialized console application.
+ *
+ * @deprecated
+ *   Use DrupalCodeGenerator\ApplicationFactory::create
+ *
+ * @codeCoverageIgnore
  */
 function dcg_create_application() {
-  $application = new Application('Drupal Code Generator', '@git-version@');
-  $helperSet = $application->getHelperSet();
-
-  $dumper = new Dumper(new Filesystem());
-  $helperSet->set($dumper);
-
-  $twig_loader = new Twig_Loader_Filesystem();
-  $renderer = new Renderer(new TwigEnvironment($twig_loader));
-  $helperSet->set($renderer);
-
-  $helperSet->set(new InputHandler());
-
-  $helperSet->set(new OutputHandler());
-
-  return $application;
+  return ApplicationFactory::create();
 }
