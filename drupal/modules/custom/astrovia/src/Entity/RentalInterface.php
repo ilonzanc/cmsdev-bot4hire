@@ -53,4 +53,25 @@ interface RentalInterface extends ContentEntityInterface, EntityChangedInterface
    */
   public function setCreatedTime($timestamp);
 
+  /**
+   * Returns the Planet published status indicator.
+   *
+   * Unpublished Planet are only visible to restricted users.
+   *
+   * @return bool
+   *   TRUE if the Planet is published.
+   */
+  public function isPublished();
+
+  /**
+   * Sets the published status of a Planet.
+   *
+   * @param bool $published
+   *   TRUE to set this Planet to published, FALSE to set it to unpublished.
+   *
+   * @return \Drupal\astrovia\Entity\PlanetInterface
+   *   The called Planet entity.
+   */
+  public function setPublished($published);
+
 }
