@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains astrovia.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function astrovia_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the astrovia module.
+    case 'help.page.astrovia':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom module for Astrovia entities') . '</p>';
+      return $output;
+
+    default:
+  }
+}

@@ -1,0 +1,87 @@
+# Vehicle routing definition
+vehicle.settings_tab:
+  route_name: vehicle.settings
+  title: 'Settings'
+  base_route: vehicle.settings
+
+entity.vehicle.canonical:
+  route_name: entity.vehicle.canonical
+  base_route: entity.vehicle.canonical
+  title: 'View'
+
+entity.vehicle.edit_form:
+  route_name: entity.vehicle.edit_form
+  base_route: entity.vehicle.canonical
+  title: 'Edit'
+
+entity.vehicle.delete_form:
+  route_name:  entity.vehicle.delete_form
+  base_route:  entity.vehicle.canonical
+  title: Delete
+  weight: 10
+# Rental routing definition
+rental.settings_tab:
+  route_name: rental.settings
+  title: 'Settings'
+  base_route: rental.settings
+
+entity.rental.canonical:
+  route_name: entity.rental.canonical
+  base_route: entity.rental.canonical
+  title: 'View'
+
+entity.rental.edit_form:
+  route_name: entity.rental.edit_form
+  base_route: entity.rental.canonical
+  title: 'Edit'
+
+entity.rental.delete_form:
+  route_name:  entity.rental.delete_form
+  base_route:  entity.rental.canonical
+  title: Delete
+  weight: 10
+
+# Review routing definition
+review.settings_tab:
+  route_name: review.settings
+  title: 'Settings'
+  base_route: review.settings
+
+entity.review.canonical:
+  route_name: entity.review.canonical
+  base_route: entity.review.canonical
+  title: 'View'
+
+entity.review.edit_form:
+  route_name: entity.review.edit_form
+  base_route: entity.review.canonical
+  title: 'Edit'
+
+entity.review.delete_form:
+  route_name:  entity.review.delete_form
+  base_route:  entity.review.canonical
+  title: Delete
+  weight: 10
+
+# Vehicle Type routing definition
+vehicle_type.settings_tab:
+  route_name: vehicle_type.settings
+  title: 'Settings'
+  base_route: vehicle_type.settings
+
+entity.vehicle_type.canonical:
+  route_name: entity.vehicle_type.canonical
+  base_route: entity.vehicle_type.canonical
+  title: 'View'
+
+entity.vehicle_type.edit_form:
+  route_name: entity.vehicle_type.edit_form
+  base_route: entity.vehicle_type.canonical
+  title: 'Edit'
+
+entity.vehicle_type.delete_form:
+  route_name:  entity.vehicle_type.delete_form
+  base_route:  entity.vehicle_type.canonical
+  title: Delete
+  weight: 10
+

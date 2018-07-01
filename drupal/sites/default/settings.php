@@ -783,13 +783,26 @@ $settings['entity_update_batch_size'] = 50;
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
-$databases['default']['default'] = array (
+/* $databases['default']['default'] = array (
   'database' => 'bot4hire',
   'username' => 'root',
   'password' => 'root',
   'prefix' => '',
   'host' => 'localhost',
   'port' => '3307',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+$settings['install_profile'] = 'standard';
+$config_directories['sync'] = 'sites/default/files/config_rZKS7OX6wR3mjwApweJLHj-roXTVBPNFKoonNTeCzDQs2jizv-5wFvQl45V0rXhn5kftfHB2Jg/sync'; */
+
+$databases['default']['default'] = array (
+  'database' => 'astroviadb',
+  'username' => 'root',
+  'password' => 'secret',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
