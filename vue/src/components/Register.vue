@@ -2,7 +2,7 @@
   <div id="register">
       <div class="container">
       <h1>Registreren</h1>
-      <form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/user/register?_format=hal_json" @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit">
         <label for="name">Username</label>
         <input type="text" id="name" name="name" placeholder="Jouw gebruikersnaam..." required v-model="user.name.value">
         <label for="mail">Emailadres</label>
@@ -25,7 +25,7 @@ export default {
       user: {
         _links: {
           type: {
-            href: "http://localhost/cmsdev-bot4hire/drupal/rest/type/user/user"
+            href: apiurl + "rest/type/user/user"
           }
         },
         name:{value:""},
@@ -42,11 +42,11 @@ export default {
       var self = this;
       axios({
         method: 'post',
-        url: "http://localhost/cmsdev-bot4hire/drupal/user/register?_format=hal_json",
+        url: apiurl + "user/register?_format=hal_json",
         headers: {
           'Accept': 'application/hal+json',
             'Content-Type': 'application/hal+json',
-          "X-CSRF-Token": "T48cuYVRu1CRiXoV7-O35YUNV5A_j7Ro9jT5z5St0OA",
+          "X-CSRF-Token": "ECWys4TAdc0FAUXf2zIbO8DSpwUh5kjl7YMgv-0qZO0",
         },
         data: self.user
       })
@@ -67,7 +67,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: "http://localhost/cmsdev-bot4hire/drupal/user/login?_format=hal_json",
+        url: apiurl + "user/login?_format=hal_json",
         headers: {
           'Accept': 'application/hal+json',
             'Content-Type': 'application/hal+json',

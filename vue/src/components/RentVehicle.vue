@@ -7,7 +7,7 @@
       <p>Type: {{vehicle.vehicle_type}}</p>
       <p>Eigenaar: {{vehicle.user_id}}</p>
       <h2>Huur Details</h2>
-      <form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/rental?_format=hal_json" @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit">
         <label for="start_date">Start datum</label>
         <input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="start_date" required name="start_date" value="2018-01-15" size="12" v-model="rental_details.start_date.value">
         <label for="end_date">End datum</label>
@@ -33,7 +33,7 @@ export default {
     rental_details: {
       _links: {
         type: {
-          href: "http://localhost/cmsdev-bot4hire/drupal/rest/type/rental/rental"
+          href: apiurl + "rest/type/rental/rental"
         }
       },
       name: {
@@ -53,7 +53,7 @@ export default {
     }
   },
   mounted() {
-      axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
+      axios.get(apiurl + 'api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
       .then(response => {
         console.log(response.data[0])
         this.vehicle = response.data[0];
@@ -66,7 +66,7 @@ export default {
         console.log(error);
       });
 
-    axios.get('http://localhost/cmsdev-bot4hire/drupal/api/vehicle_types')
+    axios.get(apiurl + 'api/vehicle_types')
       .then(response => {
         console.log(response)
         this.vehicle_types = response.data;
@@ -77,7 +77,7 @@ export default {
       var self = this;
       axios({
         method: 'post',
-        url: "http://localhost/cmsdev-bot4hire/drupal/entity/rental?_format=hal_json",
+        url: apiurl + "entity/rental?_format=hal_json",
         headers: {
       //'X-CSRF-Token': self.user.csrf_token,
       'Accept': 'application/hal+json',

@@ -46,7 +46,7 @@ export default {
   mounted() {
     axios({
       method: "get",
-      url: "http://localhost:81/cmsdev-bot4hire/drupal/api/v1.0/vehicles?_format=hal_json",
+      url: apiurl + "api/v1.0/vehicles?_format=hal_json",
     })
     .then((response) => {
       console.log(response);

@@ -42,7 +42,7 @@
         <div class="row">
           <div class="column column-sm-12 column-6">
             <h2>Nieuw review toevoegen</h2>
-            <form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/entity/review?_format=hal_json" @submit.prevent="onSubmit">
+            <form @submit.prevent="onSubmit">
               <label for="title">Titel</label>
               <input type="text" id="title" name="title" placeholder="Titel van je review..." required v-model="newReview.title.value">
               <label for="rating">Rating</label>
@@ -74,7 +74,7 @@ export default {
       newReview: {
         _links: {
           type: {
-            href: "http://localhost/cmsdev-bot4hire/drupal/rest/type/review/review"
+            href: apiurl + "rest/type/review/review"
           }
         },
         title: {
@@ -95,7 +95,7 @@ export default {
   },
     mounted () {
       console.log('Detail Component Mounted');
-    axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
+    axios.get(apiurl + 'api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
     .then(response => {
       this.vehicle = response.data[0];
       this.newReview.vehicle_id[0].target_id = response.data[0].id;
@@ -104,7 +104,7 @@ export default {
       console.log(error);
     });
 
-    axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicle/' + this.$route.params.id + '/reviews?_format=hal_json')
+    axios.get(apiurl + 'api/v1.0/vehicle/' + this.$route.params.id + '/reviews?_format=hal_json')
     .then(response => {
       console.log(response.data[0])
       this.reviews = response.data;
@@ -118,7 +118,7 @@ export default {
       var self = this;
       axios({
         method: 'post',
-        url: "http://localhost/cmsdev-bot4hire/drupal/entity/review?_format=hal_json",
+        url: apiurl + "entity/review?_format=hal_json",
         headers: {
           //'X-CSRF-Token': self.user.csrf_token,
           'Accept': 'application/hal+json',

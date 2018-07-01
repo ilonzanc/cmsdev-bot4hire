@@ -14,7 +14,9 @@ window.axios.defaults.headers.common = {
     'X-CSRF-Token': '0BOSQmGYGECrK1jWnhE2Utza6dtuhXlumBJdeRZ-9Js'
 };
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+window.apiurl = "http://localhost:8888/";
 
 /* eslint-disable no-new */
 new Vue({

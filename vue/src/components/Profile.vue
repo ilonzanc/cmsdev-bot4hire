@@ -79,7 +79,7 @@ export default {
 
     axios({
         method: 'get',
-        url: "http://localhost/cmsdev-bot4hire/drupal/user/" + this.$route.params.id + "?_format=hal_json",
+        url: apiurl + "user/" + this.$route.params.id + "?_format=hal_json",
         headers: {
       //'X-CSRF-Token': self.user.csrf_token,
       'Accept': 'application/hal+json',
@@ -100,7 +100,7 @@ export default {
       console.log(error);
     });
 
-    axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/user/' + this.$route.params.id + '/rentals?_format=hal_json')
+    axios.get(apiurl + 'api/v1.0/user/' + this.$route.params.id + '/rentals?_format=hal_json')
     .then(response => {
       console.log(response.data[0])
       this.rentals = response.data;
@@ -112,7 +112,7 @@ export default {
   },
   methods: {
     getVehiclesByUser() {
-      axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles?_format=hal_json')
+      axios.get(apiurl + 'api/v1.0/vehicles?_format=hal_json')
       .then(response => {
         console.log(response)
         for (let i = 0; i < response.data.length; i++){
@@ -128,7 +128,7 @@ export default {
       let self = this;
       axios({
       method: 'delete',
-      url: "http://localhost/cmsdev-bot4hire/drupal/admin/structure/rental/" + rental_id + "?_format=hal_json",
+      url: apiurl + "admin/structure/rental/" + rental_id + "?_format=hal_json",
       headers: {
         //'X-CSRF-Token': self.user.csrf_token,
         'Accept': 'application/hal+json',

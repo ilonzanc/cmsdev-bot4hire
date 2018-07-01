@@ -53,19 +53,19 @@ export default {
     }
   },
     mounted() {
-      axios.get('http://localhost/cmsdev-bot4hire/drupal/api/vehicle_types')
+      axios.get(apiurl + 'api/vehicle_types')
       .then(response => {
       console.log(response)
       this.vehicle_types = response.data;
     });
 
-    axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/places')
+    axios.get(apiurl + 'api/v1.0/places')
       .then(response => {
       console.log(response)
       this.places = response.data;
     });
 
-    axios.get('http://localhost/cmsdev-bot4hire/drupal/api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
+    axios.get(apiurl + 'api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
     .then(response => {
       console.log(response)
       this.vehicle = response.data[0];
@@ -81,7 +81,7 @@ export default {
     let updateVehicle = {
       _links: {
         type: {
-          href: "http://localhost/cmsdev-bot4hire/drupal/rest/type/vehicle/vehicle"
+          href: apiurl + "rest/type/vehicle/vehicle"
         }
       },
       name: {
@@ -113,7 +113,7 @@ export default {
     };
       axios({
         method: 'patch',
-        url: "http://localhost/cmsdev-bot4hire/drupal/admin/structure/vehicle/" + this.$route.params.id + "?_format=hal_json",
+        url: apiurl + "admin/structure/vehicle/" + this.$route.params.id + "?_format=hal_json",
         headers: {
       //'X-CSRF-Token': self.user.csrf_token,
       'Accept': 'application/hal+json',

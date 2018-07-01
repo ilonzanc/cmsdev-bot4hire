@@ -2,7 +2,7 @@
   <div id="login">
       <div class="container">
       <h1>Aanmelden</h1>
-      <form method="POST" action="http://localhost/cmsdev-bot4hire/drupal/user/login?_format=hal_json" @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit">
         <label for="name">Gebruikersnaam</label>
         <input type="text" id="name" name="name" placeholder="Jouw gebruikersnaam..." required v-model="user.name">
         <label for="pass">Wachtwoord</label>
@@ -36,7 +36,7 @@ export default {
       var self = this;
       axios({
         method: 'post',
-        url: "http://localhost/cmsdev-bot4hire/drupal/user/login?_format=hal_json",
+        url: apiurl + "user/login?_format=hal_json",
         headers: {
           'Accept': 'application/hal+json',
             'Content-Type': 'application/hal+json',
