@@ -18,3 +18,13 @@ entity.vehicle_type.add_form:
   title: 'Add Vehicle Type'
   appears_on:
     - entity.vehicle_type.collection
+entity.location.add_form:
+  route_name: entity.location.add_form
+  title: 'Add Location'
+  appears_on:
+    - entity.location.collection
+entity.planet.add_form:
+  route_name: entity.planet.add_form
+  title: 'Add Planet'
+  appears_on:
+    - entity.planet.collection

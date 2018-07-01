@@ -55,3 +55,31 @@ vehicle_type.admin.structure.settings:
   description: 'Configure Vehicle Type entities'
   route_name: vehicle_type.settings
   parent: system.admin_structure
+
+# Location menu items definition
+entity.location.collection:
+  title: 'Location list'
+  route_name: entity.location.collection
+  description: 'List Location entities'
+  parent: system.admin_structure
+  weight: 100
+
+location.admin.structure.settings:
+  title: 'Location settings'
+  description: 'Configure Location entities'
+  route_name: location.settings
+  parent: system.admin_structure
+
+# Planet menu items definition
+entity.planet.collection:
+  title: 'Planet list'
+  route_name: entity.planet.collection
+  description: 'List Planet entities'
+  parent: system.admin_structure
+  weight: 100
+
+planet.admin.structure.settings:
+  title: 'Planet settings'
+  description: 'Configure Planet entities'
+  route_name: planet.settings
+  parent: system.admin_structure

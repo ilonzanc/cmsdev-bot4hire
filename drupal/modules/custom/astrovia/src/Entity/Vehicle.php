@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\UserInterface;
 use VehicleTypeInterface;
+use LocationInterface;
 
 /**
  * Defines the Vehicle entity.
@@ -131,21 +132,6 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
   /**
    * {@inheritdoc}
    */
-  public function getPickupLocation() {
-    return $this->get('pickup_location')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setPickupLocation($pickup_location) {
-    $this->set('pickup_location', $pickup_location);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
@@ -213,8 +199,38 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
   /**
    * {@inheritdoc}
    */
-  public function setVehicleType(UserInterface $vehicle_type) {
+  public function setVehicleType(VehicleTypeInterface $vehicle_type) {
     $this->set('vehicle_type_id', $vehicle_type->id());
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLocation() {
+    return $this->get('location_id')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLocationId() {
+    return $this->get('location_id')->target_id;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setLocationId($id) {
+    $this->set('location_id', $id);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setLocation(LocationInterface $location) {
+    $this->set('location_id', $location->id());
     return $this;
   }
 
@@ -289,31 +305,28 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
 
-    /* $fields['vehicle_type'] = BaseFieldDefinition::create('entity_reference')
-        ->setLabel(t('Type Voertuig'))
-        ->setDescription(t('Het type voertuig van de Vehicle Entity.'))
-        ->setRevisionable(TRUE)
-        ->setSetting('target_type', 'taxonomy_term')
-        ->setSetting('handler', 'default:taxonomy_term')
-        ->setSetting('handler_settings',
-            [
-                'target_bundles' => [
-                    'vehicle_types' => 'vehicle_types'
-                ]
-            ]
-        )
-        ->setTranslatable(TRUE)
-        ->setDisplayOptions('view', [
-            'label' => 'hidden',
-            'type' => 'string',
-            'weight' => -6,
-        ])
-        ->setDisplayOptions('form', [
-            'type' => 'options_select',
-            'weight' => -6,
-        ])
+    $fields['location_id'] = BaseFieldDefinition::create('entity_reference')
+        ->setLabel(t('Location'))
+        ->setDescription(t('The current Location of the associated Vehicle.'))
+        ->setSetting('target_type', 'location')
+        ->setSetting('handler', 'default')
+        ->setDisplayOptions('view', array(
+            'label' => 'above',
+            'type' => 'entity_reference_label',
+            'weight' => -3,
+        ))
+        ->setDisplayOptions('form', array(
+            'type' => 'entity_reference_autocomplete',
+            'settings' => array(
+            'match_operator' => 'CONTAINS',
+            'size' => 60,
+            'autocomplete_type' => 'tags',
+            'placeholder' => '',
+            ),
+            'weight' => -3,
+        ))
         ->setDisplayConfigurable('form', TRUE)
-        ->setDisplayConfigurable('view', TRUE); */
+        ->setDisplayConfigurable('view', TRUE);
 
     $fields['name'] = BaseFieldDefinition::create('string')
         ->setLabel(t('Naam'))
@@ -419,32 +432,6 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('form', [
         'type' => 'number',
         'weight' => -3,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-      $fields['pickup_location'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Ophaallocatie'))
-      ->setDescription(t('De ophaallocatie van de Vehicle Entity.'))
-      ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'taxonomy_term')
-      ->setSetting('handler', 'default:taxonomy_term')
-      ->setSetting('handler_settings',
-      [
-        'target_bundles' => [
-          'places' => 'places'
-        ]
-      ]
-    )
-      ->setTranslatable(TRUE)
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'string',
-        'weight' => -2,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => -2,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);

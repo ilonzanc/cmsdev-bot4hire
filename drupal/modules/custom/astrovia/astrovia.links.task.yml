@@ -85,3 +85,47 @@ entity.vehicle_type.delete_form:
   title: Delete
   weight: 10
 
+# Location routing definition
+location.settings_tab:
+  route_name: location.settings
+  title: 'Settings'
+  base_route: location.settings
+
+entity.location.canonical:
+  route_name: entity.location.canonical
+  base_route: entity.location.canonical
+  title: 'View'
+
+entity.location.edit_form:
+  route_name: entity.location.edit_form
+  base_route: entity.location.canonical
+  title: 'Edit'
+
+entity.location.delete_form:
+  route_name:  entity.location.delete_form
+  base_route:  entity.location.canonical
+  title: Delete
+  weight: 10
+
+# Planet routing definition
+planet.settings_tab:
+  route_name: planet.settings
+  title: 'Settings'
+  base_route: planet.settings
+
+entity.planet.canonical:
+  route_name: entity.planet.canonical
+  base_route: entity.planet.canonical
+  title: 'View'
+
+entity.planet.edit_form:
+  route_name: entity.planet.edit_form
+  base_route: entity.planet.canonical
+  title: 'Edit'
+
+entity.planet.delete_form:
+  route_name:  entity.planet.delete_form
+  base_route:  entity.planet.canonical
+  title: Delete
+  weight: 10
+

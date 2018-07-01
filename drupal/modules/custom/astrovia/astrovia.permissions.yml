@@ -71,3 +71,41 @@ view published vehicle type entities:
 
 view unpublished vehicle type entities:
   title: 'View unpublished Vehicle Type entities'
+add location entities:
+  title: 'Create new Location entities'
+
+administer location entities:
+  title: 'Administer Location entities'
+  description: 'Allow to access the administration form to configure Location entities.'
+  restrict access: true
+
+delete location entities:
+  title: 'Delete Location entities'
+
+edit location entities:
+  title: 'Edit Location entities'
+
+view published location entities:
+  title: 'View published Location entities'
+
+view unpublished location entities:
+  title: 'View unpublished Location entities'
+add planet entities:
+  title: 'Create new Planet entities'
+
+administer planet entities:
+  title: 'Administer Planet entities'
+  description: 'Allow to access the administration form to configure Planet entities.'
+  restrict access: true
+
+delete planet entities:
+  title: 'Delete Planet entities'
+
+edit planet entities:
+  title: 'Edit Planet entities'
+
+view published planet entities:
+  title: 'View published Planet entities'
+
+view unpublished planet entities:
+  title: 'View unpublished Planet entities'
