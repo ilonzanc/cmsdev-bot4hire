@@ -1,5 +1,5 @@
-header {
-	background: $primary-color;
+header.navigation-header {
+	border-bottom: 1px solid $primary-color;
 	color: #fff;
 	padding: 1rem 0 0.8rem;
 
@@ -16,5 +16,15 @@ header {
         font-size: 1.3rem;
         cursor: pointer;
 	}
-	
+
+}
+
+header.title-header {
+	position: relative;
+	margin-bottom: 3rem;
+	svg {
+		position: absolute;
+		left: -1rem;
+		top: -15px;
+	}
 }

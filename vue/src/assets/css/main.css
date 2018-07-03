@@ -4,6 +4,7 @@
  * 2. Prevent iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,600,700,800,900|Orbitron:400,500,700,900");
 html {
   font-family: sans-serif;
   /* 1 */
@@ -368,47 +369,54 @@ a {
 
 body {
   overflow-x: hidden;
-  padding-bottom: 2rem; }
+  padding-bottom: 2rem;
+  background: #161e33; }
 
 main {
   padding: 2rem 0; }
 
 body {
-  font-family: 'Raleway', Arial, sans-serif;
+  font-family: 'Fira Sans', Arial, sans-serif;
   font-size: 16px;
   line-height: 150%;
-  color: #55585e;
+  color: #fff;
   font-weight: 400; }
 
 h1 {
-  color: #ffcc33;
+  color: #fff;
   font-family: 'Orbitron', Arial, sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   margin: 0;
   margin-bottom: 1rem;
-  text-align: center;
-  font-size: 1.8rem; }
+  margin-left: 60px;
+  font-size: 1.8rem;
+  letter-spacing: 2px; }
 
 h2 {
+  font-weight: 300;
   margin-bottom: 1rem; }
 
 p {
   margin-bottom: 1rem; }
   p a {
-    color: #ffcc33;
+    color: #c9ed8b;
     font-weight: 700;
     cursor: pointer; }
 
+.small {
+  color: #c9ed8b;
+  font-size: 0.8rem; }
+
 .breadcrumbs {
-  color: #ffcc33;
+  color: #c9ed8b;
   font-weight: 700;
   margin-bottom: 1rem;
   display: block; }
 
 .vehicle__type {
   text-align: center;
-  color: #ff6661;
+  color: #67b1fc;
   font-weight: 700;
   text-transform: lowercase; }
 
@@ -418,7 +426,7 @@ nav {
   height: 100vh;
   width: 80%;
   float: left;
-  background: #ff6661;
+  background: #67b1fc;
   color: #fff;
   text-align: center;
   padding: 1rem 0;
@@ -548,20 +556,28 @@ nav {
 
   .column-12 {
     width: 100%; } }
-header {
-  background: #ff6661;
+header.navigation-header {
+  border-bottom: 1px solid #67b1fc;
   color: #fff;
   padding: 1rem 0 0.8rem; }
-  header h1 {
+  header.navigation-header h1 {
     display: inline-block;
     color: #fff;
     font-size: 1.5rem;
     margin: 0;
     line-height: 100%; }
-  header .toggleBars {
+  header.navigation-header .toggleBars {
     float: right;
     font-size: 1.3rem;
     cursor: pointer; }
+
+header.title-header {
+  position: relative;
+  margin-bottom: 3rem; }
+  header.title-header svg {
+    position: absolute;
+    left: -1rem;
+    top: -15px; }
 
 nav {
   position: absolute;
@@ -569,7 +585,7 @@ nav {
   height: 100vh;
   width: 80%;
   float: left;
-  background: #ff6661;
+  background: #67b1fc;
   color: #fff;
   text-align: center;
   padding: 1rem 0;
@@ -615,43 +631,182 @@ nav {
         margin: 0 0.5rem; }
         nav li a.router-link-exact-active {
           font-weight: bold; } }
+form ::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  opacity: 0; }
+form :-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  opacity: 0; }
+form ::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  opacity: 0; }
+form :-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  opacity: 0; }
+form ::-ms-input-placeholder {
+  /* Microsoft Edge */
+  opacity: 0; }
+form ::placeholder {
+  /* Most modern browsers support this now. */
+  opacity: 0; }
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
 form input[type="date"],
+form input[type="number"],
 form textarea,
 form select {
   display: block;
-  margin: 0.5rem 0 2rem;
-  border: 2px solid #55585e;
-  padding: 0.8rem;
+  background: none;
+  color: #fff;
+  border-bottom: 1px solid #fff;
   width: 100%;
-  resize: vertical;
-  border-radius: 3px; }
+  padding-bottom: 8px;
+  margin-bottom: 1rem;
+  color: none;
+  position: relative;
+  top: -20px;
+  transition: top 0.3s ease-in-out; }
+  form input[type="text"]:focus, form input[type="text"].filled-in,
+  form input[type="email"]:focus,
+  form input[type="email"].filled-in,
+  form input[type="password"]:focus,
+  form input[type="password"].filled-in,
+  form input[type="date"]:focus,
+  form input[type="date"].filled-in,
+  form input[type="number"]:focus,
+  form input[type="number"].filled-in,
+  form textarea:focus,
+  form textarea.filled-in,
+  form select:focus,
+  form select.filled-in {
+    border-color: #c9ed8b;
+    color: #c9ed8b;
+    box-shadow: none;
+    outline: none;
+    top: 0; }
+    form input[type="text"]:focus::-webkit-input-placeholder, form input[type="text"].filled-in::-webkit-input-placeholder,
+    form input[type="email"]:focus::-webkit-input-placeholder,
+    form input[type="email"].filled-in::-webkit-input-placeholder,
+    form input[type="password"]:focus::-webkit-input-placeholder,
+    form input[type="password"].filled-in::-webkit-input-placeholder,
+    form input[type="date"]:focus::-webkit-input-placeholder,
+    form input[type="date"].filled-in::-webkit-input-placeholder,
+    form input[type="number"]:focus::-webkit-input-placeholder,
+    form input[type="number"].filled-in::-webkit-input-placeholder,
+    form textarea:focus::-webkit-input-placeholder,
+    form textarea.filled-in::-webkit-input-placeholder,
+    form select:focus::-webkit-input-placeholder,
+    form select.filled-in::-webkit-input-placeholder {
+      /* WebKit, Blink, Edge */
+      opacity: 1; }
+    form input[type="text"]:focus:-moz-placeholder, form input[type="text"].filled-in:-moz-placeholder,
+    form input[type="email"]:focus:-moz-placeholder,
+    form input[type="email"].filled-in:-moz-placeholder,
+    form input[type="password"]:focus:-moz-placeholder,
+    form input[type="password"].filled-in:-moz-placeholder,
+    form input[type="date"]:focus:-moz-placeholder,
+    form input[type="date"].filled-in:-moz-placeholder,
+    form input[type="number"]:focus:-moz-placeholder,
+    form input[type="number"].filled-in:-moz-placeholder,
+    form textarea:focus:-moz-placeholder,
+    form textarea.filled-in:-moz-placeholder,
+    form select:focus:-moz-placeholder,
+    form select.filled-in:-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      opacity: 1; }
+    form input[type="text"]:focus::-moz-placeholder, form input[type="text"].filled-in::-moz-placeholder,
+    form input[type="email"]:focus::-moz-placeholder,
+    form input[type="email"].filled-in::-moz-placeholder,
+    form input[type="password"]:focus::-moz-placeholder,
+    form input[type="password"].filled-in::-moz-placeholder,
+    form input[type="date"]:focus::-moz-placeholder,
+    form input[type="date"].filled-in::-moz-placeholder,
+    form input[type="number"]:focus::-moz-placeholder,
+    form input[type="number"].filled-in::-moz-placeholder,
+    form textarea:focus::-moz-placeholder,
+    form textarea.filled-in::-moz-placeholder,
+    form select:focus::-moz-placeholder,
+    form select.filled-in::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      opacity: 1; }
+    form input[type="text"]:focus:-ms-input-placeholder, form input[type="text"].filled-in:-ms-input-placeholder,
+    form input[type="email"]:focus:-ms-input-placeholder,
+    form input[type="email"].filled-in:-ms-input-placeholder,
+    form input[type="password"]:focus:-ms-input-placeholder,
+    form input[type="password"].filled-in:-ms-input-placeholder,
+    form input[type="date"]:focus:-ms-input-placeholder,
+    form input[type="date"].filled-in:-ms-input-placeholder,
+    form input[type="number"]:focus:-ms-input-placeholder,
+    form input[type="number"].filled-in:-ms-input-placeholder,
+    form textarea:focus:-ms-input-placeholder,
+    form textarea.filled-in:-ms-input-placeholder,
+    form select:focus:-ms-input-placeholder,
+    form select.filled-in:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      opacity: 1; }
+    form input[type="text"]:focus::-ms-input-placeholder, form input[type="text"].filled-in::-ms-input-placeholder,
+    form input[type="email"]:focus::-ms-input-placeholder,
+    form input[type="email"].filled-in::-ms-input-placeholder,
+    form input[type="password"]:focus::-ms-input-placeholder,
+    form input[type="password"].filled-in::-ms-input-placeholder,
+    form input[type="date"]:focus::-ms-input-placeholder,
+    form input[type="date"].filled-in::-ms-input-placeholder,
+    form input[type="number"]:focus::-ms-input-placeholder,
+    form input[type="number"].filled-in::-ms-input-placeholder,
+    form textarea:focus::-ms-input-placeholder,
+    form textarea.filled-in::-ms-input-placeholder,
+    form select:focus::-ms-input-placeholder,
+    form select.filled-in::-ms-input-placeholder {
+      /* Microsoft Edge */
+      opacity: 1; }
+    form input[type="text"]:focus::placeholder, form input[type="text"].filled-in::placeholder,
+    form input[type="email"]:focus::placeholder,
+    form input[type="email"].filled-in::placeholder,
+    form input[type="password"]:focus::placeholder,
+    form input[type="password"].filled-in::placeholder,
+    form input[type="date"]:focus::placeholder,
+    form input[type="date"].filled-in::placeholder,
+    form input[type="number"]:focus::placeholder,
+    form input[type="number"].filled-in::placeholder,
+    form textarea:focus::placeholder,
+    form textarea.filled-in::placeholder,
+    form select:focus::placeholder,
+    form select.filled-in::placeholder {
+      /* Most modern browsers support this now. */
+      opacity: 1; }
+  form input[type="text"].filled-in,
+  form input[type="email"].filled-in,
+  form input[type="password"].filled-in,
+  form input[type="date"].filled-in,
+  form input[type="number"].filled-in,
+  form textarea.filled-in,
+  form select.filled-in {
+    color: #fff;
+    border-color: #fff; }
 form textarea {
-  min-height: 278px; }
+  overflow: visible; }
 
 .btn {
-  border-radius: 3px;
-  background: #ff6661;
-  color: #fff;
+  border-radius: 20px;
+  color: #67b1fc;
   display: block;
   width: 100%;
   padding: 0.5rem;
-  text-transform: uppercase;
   text-align: center;
   margin: 0.5rem 0;
-  font-weight: 700;
-  border: 2px solid #ff6661; }
+  text-transform: lowercase;
+  border: 1px solid #67b1fc;
+  background: none; }
   .btn:hover {
-    background: rgba(255, 102, 97, 0.2);
-    color: #ff6661; }
+    background: rgba(103, 177, 252, 0.2);
+    color: #67b1fc; }
   .btn.secundary-btn {
-    background: #ffcc33;
-    border: 2px solid #ffcc33; }
+    background: #c9ed8b;
+    border: 2px solid #c9ed8b; }
     .btn.secundary-btn:hover {
-      background: rgba(255, 204, 51, 0.2);
-      color: #ffcc33; }
+      background: rgba(201, 237, 139, 0.2);
+      color: #c9ed8b; }
   .btn.smallbtn {
     display: inline-block;
     width: auto;
@@ -689,7 +844,7 @@ form textarea {
 
 .section__review {
   padding: 0.5rem 0;
-  border-bottom: 2px solid rgba(85, 88, 94, 0.2); }
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2); }
   .section__review .column:first-child {
     text-align: center; }
     .section__review .column:first-child .fa-user-circle {
@@ -702,52 +857,121 @@ form textarea {
 @media (min-width: 42.5rem) {
   .section__review .column:first-child .fa-user-circle {
     font-size: 3.5rem; } }
-#detail span {
-  width: 80px;
-  display: inline-block;
-  height: 40px;
-  padding: 0.5rem 0; }
+.tabs {
+  border-bottom: 1px solid #67b1fc;
+  display: flex;
+  text-align: center;
+  margin-bottom: 1rem; }
+  .tabs li {
+    flex: 2;
+    font-family: 'Orbitron', Arial, sans-serif;
+    letter-spacing: 2px;
+    font-weight: 700; }
+    .tabs li.is-active {
+      border-bottom: 2px solid #67b1fc;
+      padding-bottom: 10px;
+      color: #67b1fc; }
+
+.tabs-content {
+  margin-bottom: 1rem; }
+  .tabs-content table {
+    width: 100%; }
+    .tabs-content table tr {
+      padding-bottom: 1rem;
+      height: calc(40px + 1rem); }
+    .tabs-content table td:first-child {
+      width: 90px; }
 
 .section__vehicles-list {
   margin-bottom: 1rem; }
 
 .section__vehicle {
-  padding: 0.5rem 0;
-  border-bottom: 2px solid rgba(85, 88, 94, 0.2); }
+  padding: 0.5rem 0; }
   .section__vehicle h2 {
     margin-bottom: 0; }
-  .section__vehicle p {
-    margin-bottom: 0; }
-  .section__vehicle img {
-    border-radius: 5px;
-    width: 100%;
-    display: block;
-    overflow: hidden;
-    border: 2px solid rgba(85, 88, 94, 0.2); }
+  .section__vehicle .vehicle-image-border {
+    border: 1px solid #67b1fc;
+    padding: 5px;
+    border-radius: 6px; }
   .section__vehicle .vehicle__image {
     border-radius: 5px;
-    width: 100%;
     height: 70px;
+    width: 100%;
     display: block;
     overflow: hidden;
-    border: 2px solid rgba(85, 88, 94, 0.2);
+    border: 1px solid #67b1fc;
     background-repeat: no-repeat;
     background-position: center; }
+  .section__vehicle .important-details {
+    font-family: 'Orbitron', Arial, sans-serif;
+    font-weight: 700;
+    color: #c9ed8b; }
+  .section__vehicle .vehicle-price {
+    font-family: 'Orbitron', Arial, sans-serif;
+    font-weight: 700;
+    color: #c9ed8b;
+    position: relative; }
+    .section__vehicle .vehicle-price .vehicle-price-number {
+      line-height: 100%;
+      font-size: 1.2rem; }
+    .section__vehicle .vehicle-price .vehicle-price-suffix {
+      position: absolute;
+      font-size: 0.8rem;
+      top: 2px;
+      line-height: 100%;
+      margin-left: 5px; }
   .section__vehicle .fa-angle-right {
     float: right;
     font-size: 2rem;
-    color: #ff6661;
+    color: #67b1fc;
     vertical-align: middle;
     margin-top: 8px; }
+  .section__vehicle .vehicle-hologram {
+    position: relative; }
+  .section__vehicle #hologram {
+    width: 150%;
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%); }
+
+#vehicle-overview .section__vehicle .vehicle-image-border {
+  width: 100%; }
+
+#vehicle-detail .section__vehicle span {
+  width: 80px;
+  display: inline-block;
+  height: 40px;
+  padding: 0.5rem 0; }
+#vehicle-detail .section__vehicle .vehicle-image-border {
+  width: 90%;
+  margin: 0 auto 120px; }
+#vehicle-detail .section__vehicle .vehicle__image {
+  height: 200px; }
 
 @media (min-width: 42.5rem) {
   .section__vehicle {
     margin: 0;
     padding: 0.8rem 0.8rem 0.3rem;
-    border: 2px solid rgba(85, 88, 94, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px; }
     .section__vehicle .vehicle__image {
       height: 230px; } }
+.spec-bar {
+  width: 100%;
+  border: 1px solid #67b1fc;
+  padding: 2px 1px;
+  overflow: auto; }
+  .spec-bar .spec-block {
+    background: #67b1fc;
+    height: 30px;
+    width: 20%;
+    float: left;
+    border: 2px solid #161e33; }
+
+.icon.small-icon {
+  width: 30px; }
+
 #home .hero__image {
   height: 300px;
   background: url("../images/heroimage.jpg");
@@ -785,12 +1009,12 @@ form textarea {
         font-size: 7rem;
         margin-bottom: 1rem;
         line-height: 100%;
-        text-shadow: 2px 2px 2px rgba(85, 88, 94, 0.2); }
+        text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.2); }
       #home .hero__image .hero__image-text p {
         font-size: 2rem;
         line-height: 100%;
         margin-bottom: 2rem;
-        text-shadow: 2px 2px 2px rgba(85, 88, 94, 0.2); }
+        text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.2); }
       #home .hero__image .hero__image-text .btn {
         width: 50%;
         margin: auto; } }

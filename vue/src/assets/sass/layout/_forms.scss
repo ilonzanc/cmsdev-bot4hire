@@ -1,21 +1,79 @@
 form {
-    input[type="text"],
-    input[type="email"],
-	input[type="password"],
-	input[type="date"],
-	//input[type="number"],
-	textarea,
-	select {
-        display: block;
-        margin: 0.5rem 0 2rem;
-        border: 2px solid $text-color;
-        padding: 0.8rem;
-        width: 100%;
-		resize: vertical;
-		border-radius: 3px;
+  ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    opacity:  0;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    opacity:  0;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    opacity:  0;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    opacity:  0;
+  }
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    opacity:  0;
+  }
+
+  ::placeholder { /* Most modern browsers support this now. */
+    opacity:  0;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"],
+  input[type="number"],
+  textarea,
+  select {
+    display: block;
+    background: none;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    width: 100%;
+    padding-bottom: 8px;
+    margin-bottom: 1rem;
+    color: none;
+    position: relative;
+    top: -20px;
+    transition: top 0.3s ease-in-out;
+
+    &:focus,
+    &.filled-in {
+      border-color: $secundary-color;
+      color: $secundary-color;
+      box-shadow: none;
+      outline: none;
+      top: 0;
+
+      &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        opacity:  1;
+      }
+      &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        opacity:  1;
+      }
+      &::-moz-placeholder { /* Mozilla Firefox 19+ */
+        opacity:  1;
+      }
+      &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        opacity:  1;
+      }
+      &::-ms-input-placeholder { /* Microsoft Edge */
+        opacity:  1;
+      }
+
+      &::placeholder { /* Most modern browsers support this now. */
+        opacity:  1;
+      }
     }
 
-    textarea {
-        min-height: 278px;
+    &.filled-in {
+      color: $text-color;
+      border-color: $text-color;
     }
+  }
+
+  textarea {
+    overflow: visible;
+  }
 }

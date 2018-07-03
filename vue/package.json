@@ -1,7 +1,7 @@
 {
-  "name": "vue",
+  "name": "Astrovia",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "Rent vehicles and stuff",
   "author": "ilonzanc <ilonzanc@student.arteveldehs.be>",
   "private": true,
   "scripts": {

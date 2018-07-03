@@ -1,46 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,600,700,800,900|Orbitron:400,500,700,900');
+
+// 300: light
+// 400: regular
+// 500: medium
+// 600: semi-bold
+// 700: bold
+// 900: black
+
 body {
-    font-family: 'Raleway', Arial, sans-serif;
+    font-family: 'Fira Sans', Arial, sans-serif;
     font-size: 16px;
-	line-height: 150%;
-	color: $text-color;
-	font-weight: 400;
+  line-height: 150%;
+  color: $text-color;
+  font-weight: 400;
 }
 
 h1 {
-	color: $secundary-color;
-	font-family: 'Orbitron', Arial, sans-serif;
-	font-weight: 700;
-	text-transform: uppercase;
-	margin: 0;
-	margin-bottom: 1rem;
-	text-align: center;
-	font-size: 1.8rem;
+  color: $text-color;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 1rem;
+  margin-left: 60px;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
 }
 
 h2 {
-	margin-bottom: 1rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
 }
 
 p {
-	margin-bottom: 1rem;
-	a {
-		color: $secundary-color;
-		font-weight: 700;
-		cursor: pointer;
-	}
+  margin-bottom: 1rem;
+  a {
+    color: $secundary-color;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+.small {
+  color: $secundary-color;
+  font-size: 0.8rem;
 }
 
 
 .breadcrumbs {
-	color: $secundary-color;
-	font-weight: 700;
-	margin-bottom: 1rem;
-	display: block;
+  color: $secundary-color;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: block;
 }
 
 .vehicle__type {
-	text-align: center;
-	color: $primary-color;
-	font-weight: 700;
-	text-transform: lowercase;
+  text-align: center;
+  color: $primary-color;
+  font-weight: 700;
+  text-transform: lowercase;
 }

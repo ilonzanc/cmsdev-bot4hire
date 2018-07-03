@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <header>
+    <header class="navigation-header">
         <div class="container">
             <a href="#" v-bind:class="'fa ' + [navOpen ? 'fa-times' : 'fa-bars'] + ' toggleBars'" @click.prevent="toggleNav"></a>
-      <h1>Bot4Hire</h1>
+      <h1>Astrovia</h1>
             <router-link to="/" exact><img class="header_logo" src=""><h1></h1></router-link>
             <nav :class="{ 'nav-open': navOpen }">
                 <ul>

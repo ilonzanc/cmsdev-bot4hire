@@ -1,40 +1,39 @@
 .btn {
-	border-radius: 3px;
-	background: $primary-color;
-	color: #fff;
-	display: block;
-	width: 100%;
-	padding: 0.5rem;
-	text-transform: uppercase;
-	text-align: center;
-	margin: 0.5rem 0;
-	font-weight: 700;
-	border: 2px solid $primary-color;
+  border-radius: 20px;
+  color: $primary-color;
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+  margin: 0.5rem 0;
+  text-transform: lowercase;
+  border: 1px solid $primary-color;
+  background: none;
 
-	&:hover {
-		background: rgba($primary-color, 0.2);
-		color: $primary-color;
-	}
+  &:hover {
+    background: rgba($primary-color, 0.2);
+    color: $primary-color;
+  }
 
-	&.secundary-btn {
-		background: $secundary-color;
-		border: 2px solid $secundary-color;
+  &.secundary-btn {
+    background: $secundary-color;
+    border: 2px solid $secundary-color;
 
-		&:hover {
-			background: rgba($secundary-color, 0.2);
-			color: $secundary-color;
-		}
-	}
+    &:hover {
+      background: rgba($secundary-color, 0.2);
+      color: $secundary-color;
+    }
+  }
 
-	&.smallbtn {
-		display: inline-block;
-		width: auto;
-		float: right;
-	}
+  &.smallbtn {
+    display: inline-block;
+    width: auto;
+    float: right;
+  }
 }
 
 @media (min-width: 42.5rem) {
-	.btn {
-		width: 300px;
-	}
+  .btn {
+    width: 300px;
+  }
 }
