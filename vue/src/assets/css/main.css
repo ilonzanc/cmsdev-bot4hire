@@ -577,7 +577,7 @@ header.title-header {
   header.title-header svg {
     position: absolute;
     left: -1rem;
-    top: -15px; }
+    bottom: -20px; }
 
 nav {
   position: absolute;
@@ -843,16 +843,18 @@ form textarea {
       cursor: default; }
 
 .section__review {
-  padding: 0.5rem 0;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2); }
+  padding: 1rem 0;
+  border-bottom: 1px solid #67b1fc; }
   .section__review .column:first-child {
     text-align: center; }
     .section__review .column:first-child .fa-user-circle {
       font-size: 2rem;
       margin-bottom: 0.5rem; }
+  .section__review p {
+    margin-bottom: 0; }
 
 .section__review-list {
-  margin-bottom: 1rem; }
+  margin-bottom: 3rem; }
 
 @media (min-width: 42.5rem) {
   .section__review .column:first-child .fa-user-circle {
@@ -884,6 +886,10 @@ form textarea {
 
 .section__vehicles-list {
   margin-bottom: 1rem; }
+
+.important-details {
+  line-height: 100%;
+  font-size: 1.2rem; }
 
 .section__vehicle {
   padding: 0.5rem 0; }
@@ -938,25 +944,18 @@ form textarea {
 #vehicle-overview .section__vehicle .vehicle-image-border {
   width: 100%; }
 
-#vehicle-detail .section__vehicle span {
-  width: 80px;
-  display: inline-block;
-  height: 40px;
-  padding: 0.5rem 0; }
 #vehicle-detail .section__vehicle .vehicle-image-border {
   width: 90%;
   margin: 0 auto 120px; }
 #vehicle-detail .section__vehicle .vehicle__image {
   height: 200px; }
+#vehicle-detail .section__vehicle .vehicle-price {
+  text-align: right;
+  margin-right: 50px; }
 
 @media (min-width: 42.5rem) {
-  .section__vehicle {
-    margin: 0;
-    padding: 0.8rem 0.8rem 0.3rem;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 5px; }
-    .section__vehicle .vehicle__image {
-      height: 230px; } }
+  .section__vehicle .vehicle__image {
+    height: 230px; } }
 .spec-bar {
   width: 100%;
   border: 1px solid #67b1fc;
@@ -964,7 +963,7 @@ form textarea {
   overflow: auto; }
   .spec-bar .spec-block {
     background: #67b1fc;
-    height: 30px;
+    height: 20px;
     width: 20%;
     float: left;
     border: 2px solid #161e33; }

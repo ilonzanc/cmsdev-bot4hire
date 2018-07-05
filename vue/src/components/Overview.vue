@@ -3,9 +3,9 @@
     <div class="container">
       <header class="title-header">
         <h1>Overview</h1>
-        <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-          viewBox="0 0 220 89" style="enable-background:new 0 0 220 89;" xml:space="preserve">
-          <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="200,35 40,35 25,19.9 0,19.9 "/>
+        <svg version="1.1" id="title-line" x="0px" y="0px"
+          viewBox="0 0 250 89" style="enable-background:new 0 0 250 89;" xml:space="preserve">
+          <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,85 40,85 25,69.9 0,69.9 "/>
         </svg>
       </header>
       <div class="row">

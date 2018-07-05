@@ -2,6 +2,11 @@
   margin-bottom: 1rem;
 }
 
+.important-details {
+  line-height: 100%;
+      font-size: 1.2rem;
+}
+
 .section__vehicle {
   padding: 0.5rem 0;
 
@@ -71,6 +76,8 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
+
 }
 
 #vehicle-overview .section__vehicle {
@@ -80,13 +87,6 @@
 }
 
 #vehicle-detail .section__vehicle {
-  span {
-    width: 80px;
-    display: inline-block;
-    height: 40px;
-    padding: 0.5rem 0;
-  }
-
   .vehicle-image-border {
     width: 90%;
     margin: 0 auto 120px;
@@ -95,14 +95,15 @@
   .vehicle__image {
     height: 200px;
   }
+
+  .vehicle-price {
+    text-align: right;
+    margin-right: 50px;
+  }
 }
 
 @media (min-width: 42.5rem) {
   .section__vehicle {
-    margin: 0;
-    padding: 0.8rem 0.8rem 0.3rem;
-    border: 2px solid rgba($text-color, 0.2);
-    border-radius: 5px;
 
     .vehicle__image {
       height: 230px;

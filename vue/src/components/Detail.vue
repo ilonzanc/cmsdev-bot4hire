@@ -5,9 +5,9 @@
       <section class="section__vehicle">
         <header class="title-header">
           <h1>{{vehicle.name}}</h1>
-          <svg version="1.1" id="title-line" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 220 89" style="enable-background:new 0 0 220 89;" xml:space="preserve">
-            <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="200,35 40,35 25,19.9 0,19.9 "/>
+          <svg version="1.1" id="title-line" x="0px" y="0px"
+            viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
+            <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
           </svg>
         </header>
         <div class="row">
@@ -51,7 +51,8 @@
             </section>
             <div class="row important-details">
               <div class="column column-sm-6 column-2">
-                <img class="icon small-icon" src="../assets/images/marker.svg">
+                <!-- <img class="icon small-icon" src="../assets/images/marker.svg"> -->
+                <i class="fa fa-map-marker"></i>
                 {{vehicle.location_name}}
               </div>
               <div class="column column-sm-6 column-10">
@@ -127,15 +128,19 @@
       <section class="section__review-list">
         <section v-for="review in reviews" v-bind:key="review.id" class="section__review">
           <div class="row">
-            <div class="column column-sm-4 column-2">
+            <div class="column column-sm-3 column-2">
               <router-link :to="'/profiel/' + review.user_id">
                 <i class="fa fa-user-circle"></i>
-                <p>{{review.user_username}}</p>
+
               </router-link>
             </div>
-            <div class="column column-sm-8 column-10">
-              <h3>{{review.title}}</h3>
-              <star-rating :value="review.rating" :disabled="true"></star-rating>
+            <div class="column column-sm-9 column-10">
+              <h3>{{review.user_name}}</h3>
+              <!-- <h3>{{review.title}}</h3> -->
+              <section class="vehicle-rating">
+                <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i>
+              </section>
+
               <p>{{review.body}}</p>
             </div>
           </div>
@@ -145,7 +150,7 @@
       <section v-if="activeuser.current_user.uid !== vehicle.uid" class="section__newreview">
         <div class="row">
           <div class="column column-sm-12 column-6">
-            <h2>Add a new review</h2>
+            <h2><i class="fa fa-plus"></i> Add a new review</h2>
             <form @submit.prevent="onSubmit">
               <label for="title">Title</label>
               <input type="text" id="title" name="title" placeholder="Title of your review..." required ref="title" v-bind:class="{ 'filled-in': newReview.title.value }" v-model="newReview.title.value" @focus.prevent="onFocus()">
@@ -164,7 +169,6 @@
 
 <script>
 import axios from "axios";
-import StarRating from './tags/StarRating';
 import Tabs from './Tabs.vue';
 import Tab from './Tab.vue';
 
@@ -202,8 +206,9 @@ export default {
       }
     }
   },
-    mounted () {
-      console.log('Detail Component Mounted');
+  mounted () {
+    console.log('Detail Component Mounted');
+    this.makeTitleSmaller();
     axios.get(apiurl + 'api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
     .then(response => {
       this.vehicle = response.data[0];
@@ -215,8 +220,10 @@ export default {
 
     axios.get(apiurl + 'api/v1.0/vehicle/' + this.$route.params.id + '/reviews?_format=hal_json')
     .then(response => {
-      console.log(response.data[0])
       this.reviews = response.data;
+      for(let review of this.reviews) {
+        review.rating = parseInt(review.rating);
+      }
     })
     .catch(error => {
       console.log(error);
@@ -249,34 +256,17 @@ export default {
     onFocus() {
       this.$refs.title.classList.toggle('hey');
     },
+    makeTitleSmaller() {
+      let title = document.querySelector('.title-header h1');
+      console.log(title.clientWidth);
+      if (title.clientWidth > 280) {
+        //title.style.fontSize = "1.4rem";
+      }
+    }
   }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-    .specbar {
-        border: 1px solid black;
-        display: block;
-        height: 30px;
-    }
+<style lang="scss">
 
-    .specbarsize-1 {
-        width: 30px;
-    }
-
-    .specbarsize-2 {
-        width: 60px;
-    }
-
-    .specbarsize-3 {
-        width: 90px;
-    }
-
-    .specbarsize-4 {
-        width: 120px;
-    }
-
-    .specbarsize-5 {
-        width: 150px;
-    }
 </style>
