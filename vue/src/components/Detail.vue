@@ -13,7 +13,7 @@
         <div class="row">
           <div class="column column-sm-12 column-6">
             <section class="vehicle-hologram">
-              <div class="vehicle-image-border">
+              <div class="image-border">
                 <div class="vehicle__image" :style='"background: url(" + vehicle.image + ") no-repeat center; background-size: contain"'></div>
               </div>
               <svg version="1.1" id="hologram" x="0px" y="0px"

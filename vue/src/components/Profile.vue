@@ -2,8 +2,16 @@
   <div id="profile">
       <div class="container">
       <section class="section__profile">
-        <i class="fa fa-user-circle"></i>
-        <h1>{{user.name[0].value}}</h1>
+        <header class="title-header">
+          <h1>{{user.name}}</h1>
+          <svg version="1.1" id="title-line" x="0px" y="0px"
+            viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
+            <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
+          </svg>
+        </header>
+        <div class="image-border">
+          <div class="profile-image" :style='"background: url( http://localhost:8888/sites/default/files" + user.uri + ") no-repeat center; background-size: contain"'></div>
+        </div>
       </section>
       <section class="section__vehicles-list">
         <h2>Voertuigen</h2>
@@ -27,31 +35,6 @@
         </div>
         <router-link v-if="activeuser.current_user.uid == user.uid[0].value" class="btn" to="/voertuig/nieuw">Nieuw voertuig toevoegen</router-link>
       </section>
-      <h2>Lopende huur</h2>
-      <section class="section__rentals">
-        <div class="row">
-          <div class="column column-sm-12 column-4" v-bind:key="rental.index" v-for="rental in rentals">
-            <section class="section__vehicle">
-              <router-link :to='"/overzicht/voertuig/" + rental.vehicle_id'>
-                <div class="row">
-                  <div class="column column-sm-3 column-12">
-                    <div class="vehicle__image" :style='"background: url(" + rental.image + ") no-repeat center; background-size: contain"'></div>
-                  </div>
-                  <div class="column column-sm-9 column-12">
-                    <p>{{rental.vehicle_id}}</p>
-                    <p>{{rental.start_date}} <i class="fa fa-arrow-right"></i> {{rental.end_date}}</p>
-                  </div>
-                </div>
-              </router-link>
-              <section v-if="activeuser.current_user.name == rental.vehicle_user_username" class="owner__buttons">
-              <button @click="deleteRental(rental.id)" class="btn">Verwijderen</button>
-            </section>
-            </section>
-
-          </div>
-        </div>
-        <p v-if="rentals.length == 0">Deze gebruiker huurt op dit moment geen voertuigen.</p>
-      </section>
       </div>
   </div>
 </template>
@@ -73,27 +56,28 @@ export default {
     }
   },
   mounted () {
-
-      let self = this;
     console.log('Profile Component Mounted');
-
     axios({
-        method: 'get',
-        url: apiurl + "user/" + this.$route.params.id + "?_format=hal_json",
-        headers: {
-      //'X-CSRF-Token': self.user.csrf_token,
+      method: 'get',
+      //url: apiurl + "user/" + this.$route.params.id + "?_format=hal_json",
+      url: apiurl + "api/v1.0/users/" + this.$route.params.id + "?_format=hal_json",
+      headers: {
+      //'X-CSRF-Token': this.user.csrf_token,
       'Accept': 'application/hal+json',
       'Content-Type': 'application/hal+json',
-      'X-CSRF-Token': self.activeuser.csrf_token,
-    },
-    auth: {
-      username: self.activeuser.current_user.name,
-      password: "secret"
-    },
+      'X-CSRF-Token': this.activeuser.csrf_token,
+      },
+      auth: {
+        username: this.activeuser.current_user.name,
+        password: "secret"
+      },
     })
     .then(response => {
       console.log(response)
-      self.user = response.data;
+      this.user = response.data[0];
+      let slashPos = this.user.uri.indexOf("/");
+      console.log(slashPos);
+      this.user.uri = this.user.uri.substring(slashPos + 1, this.user.uri.length);
       this.getVehiclesByUser();
     })
     .catch(error => {
@@ -125,24 +109,23 @@ export default {
       });
     },
     deleteRental(rental_id) {
-      let self = this;
       axios({
       method: 'delete',
       url: apiurl + "admin/structure/rental/" + rental_id + "?_format=hal_json",
       headers: {
-        //'X-CSRF-Token': self.user.csrf_token,
+        //'X-CSRF-Token': this.user.csrf_token,
         'Accept': 'application/hal+json',
         'Content-Type': 'application/hal+json',
-        'X-CSRF-Token': self.activeuser.csrf_token,
+        'X-CSRF-Token': this.activeuser.csrf_token,
       },
       auth: {
-        username: self.activeuser.current_user.name,
-        password: self.password
+        username: this.activeuser.current_user.name,
+        password: this.password
       }
-    }).then(function (response) {
+    }).then((response) => {
       console.log(response);
       location.reload();
-    }).catch(function(error) {
+    }).catch((error) => {
       console.log(error);
     });
     }

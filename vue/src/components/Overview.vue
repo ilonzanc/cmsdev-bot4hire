@@ -14,7 +14,7 @@
             <router-link :to='"overzicht/voertuig/" + vehicle.id'>
               <div class="row">
                 <div class="column column-sm-3 column-12">
-                  <div class="vehicle-image-border">
+                  <div class="image-border">
                     <div class="vehicle__image" :style='"background: url(" + vehicle.image + ") no-repeat center; background-size: contain"'></div>
                   </div>
                 </div>
