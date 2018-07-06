@@ -1,34 +1,42 @@
 <template>
   <div id="create-vehicle">
       <div class="container">
-        <h1>Nieuw voertuig</h1>
+        <header class="title-header">
+          <h1>New vehicle</h1>
+          <svg version="1.1" id="title-line" x="0px" y="0px"
+            viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
+            <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
+          </svg>
+        </header>
         <form @submit.prevent="onSubmit">
         <div class="row">
           <div class="column column-sm-12 column-6">
-            <label for="name">Naam</label>
-            <input type="text" id="name" name="name" placeholder="Naam van je voertuig..." v-model="vehicle.name.value">
-            <label for="body">Beschrijving</label>
-            <textarea id="body" name="body" placeholder="Beschrijving van voertuig..." v-model="vehicle.description.value"></textarea>
-            <label for="price">Prijs (Shanix/dag)</label>
-            <input type="text" id="price" name="price" placeholder="Prijs van je voertuig..." v-model="vehicle.price.value">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" placeholder="Name of your vehicle..." v-model="vehicle.name.value">
+            <label for="body">Description</label>
+            <textarea id="body" name="body" placeholder="Description of your vehicle..." v-model="vehicle.description.value"></textarea>
+            <label for="price">Price *</label>
+            <input type="number" id="price" name="price" placeholder="Price of your vehicle per day..." v-model="vehicle.price.value">
           </div>
           <div class="column column-sm-12 column-6">
-            <label for="seats">Zitplaatsen</label>
-            <input type="text" id="seats" name="seats" placeholder="Zitplaatsen van je voertuig..." v-model="vehicle.seats.value">
-            <label for="age">Leeftijd (in miljoen jaar)</label>
-            <input type="text" id="age" name="age" placeholder="Leeftijd van je voertuig..." v-model="vehicle.age.value">
-            <label for="vehicle_type">Type</label>
+            <label for="seats">Seats *</label>
+            <input type="text" id="seats" name="seats" placeholder="Number of seats in your vehicle..." v-model="vehicle.seats.value">
+            <label for="age">Age</label>
+            <input type="text" id="age" name="age" placeholder="Age of your vehicle..." v-model="vehicle.age.value">
+            <label for="vehicle_type">Type of vehicle*</label>
             <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id[0].target_id" >
-            <option value="" selected>- Selecteer een type -</option>
+              <option value="" selected>- Select a type -</option>
               <option v-for="vehicle_type in vehicle_types" v-bind:key="vehicle_type.id" :value="vehicle_type.id">{{vehicle_type.name}}</option>
             </select>
-            <label for="locations">Ophaallocatie</label>
+            <label for="locations">Pickup Location</label>
             <select class="form-control" name="vehicle_type_id" v-model="vehicle.location_id[0].target_id" >
               <option selected value="">- Selecteer een plaats -</option>
               <option v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
+            <router-link class="btn" to="/">Go to map</router-link>
             <label for="image">Afbeelding</label>
             <input type="text" id="image" name="image" placeholder="Link naar afbeelding..." v-model="vehicle.image.value">
+            <input type="file">
             <button type="submit" class="btn widebtn">Voertuig toevoegen</button>
           </div>
         </div>

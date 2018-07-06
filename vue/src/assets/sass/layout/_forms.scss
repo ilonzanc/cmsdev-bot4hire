@@ -19,13 +19,26 @@ form {
     opacity:  0;
   }
 
+  select {
+    display: block;
+    background: $background-color;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    width: 100%;
+    padding-bottom: 8px;
+    margin-bottom: 1rem;
+    color: none;
+    position: relative;
+    outline: none;
+  }
+
   input[type="text"],
   input[type="email"],
   input[type="password"],
   input[type="date"],
   input[type="number"],
   textarea,
-  select {
+  {
     display: block;
     background: none;
     color: #fff;
@@ -37,13 +50,13 @@ form {
     position: relative;
     top: -20px;
     transition: top 0.3s ease-in-out;
+    outline: none;
 
     &:focus,
     &.filled-in {
       border-color: $secundary-color;
       color: $secundary-color;
       box-shadow: none;
-      outline: none;
       top: 0;
 
       &::-webkit-input-placeholder { /* WebKit, Blink, Edge */

@@ -660,13 +660,23 @@ form ::-ms-input-placeholder {
 form ::placeholder {
   /* Most modern browsers support this now. */
   opacity: 0; }
+form select {
+  display: block;
+  background: #161e33;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  padding-bottom: 8px;
+  margin-bottom: 1rem;
+  color: none;
+  position: relative;
+  outline: none; }
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
 form input[type="date"],
 form input[type="number"],
-form textarea,
-form select {
+form textarea {
   display: block;
   background: none;
   color: #fff;
@@ -677,7 +687,8 @@ form select {
   color: none;
   position: relative;
   top: -20px;
-  transition: top 0.3s ease-in-out; }
+  transition: top 0.3s ease-in-out;
+  outline: none; }
   form input[type="text"]:focus, form input[type="text"].filled-in,
   form input[type="email"]:focus,
   form input[type="email"].filled-in,
@@ -688,13 +699,10 @@ form select {
   form input[type="number"]:focus,
   form input[type="number"].filled-in,
   form textarea:focus,
-  form textarea.filled-in,
-  form select:focus,
-  form select.filled-in {
+  form textarea.filled-in {
     border-color: #c9ed8b;
     color: #c9ed8b;
     box-shadow: none;
-    outline: none;
     top: 0; }
     form input[type="text"]:focus::-webkit-input-placeholder, form input[type="text"].filled-in::-webkit-input-placeholder,
     form input[type="email"]:focus::-webkit-input-placeholder,
@@ -706,9 +714,7 @@ form select {
     form input[type="number"]:focus::-webkit-input-placeholder,
     form input[type="number"].filled-in::-webkit-input-placeholder,
     form textarea:focus::-webkit-input-placeholder,
-    form textarea.filled-in::-webkit-input-placeholder,
-    form select:focus::-webkit-input-placeholder,
-    form select.filled-in::-webkit-input-placeholder {
+    form textarea.filled-in::-webkit-input-placeholder {
       /* WebKit, Blink, Edge */
       opacity: 1; }
     form input[type="text"]:focus:-moz-placeholder, form input[type="text"].filled-in:-moz-placeholder,
@@ -721,9 +727,7 @@ form select {
     form input[type="number"]:focus:-moz-placeholder,
     form input[type="number"].filled-in:-moz-placeholder,
     form textarea:focus:-moz-placeholder,
-    form textarea.filled-in:-moz-placeholder,
-    form select:focus:-moz-placeholder,
-    form select.filled-in:-moz-placeholder {
+    form textarea.filled-in:-moz-placeholder {
       /* Mozilla Firefox 4 to 18 */
       opacity: 1; }
     form input[type="text"]:focus::-moz-placeholder, form input[type="text"].filled-in::-moz-placeholder,
@@ -736,9 +740,7 @@ form select {
     form input[type="number"]:focus::-moz-placeholder,
     form input[type="number"].filled-in::-moz-placeholder,
     form textarea:focus::-moz-placeholder,
-    form textarea.filled-in::-moz-placeholder,
-    form select:focus::-moz-placeholder,
-    form select.filled-in::-moz-placeholder {
+    form textarea.filled-in::-moz-placeholder {
       /* Mozilla Firefox 19+ */
       opacity: 1; }
     form input[type="text"]:focus:-ms-input-placeholder, form input[type="text"].filled-in:-ms-input-placeholder,
@@ -751,9 +753,7 @@ form select {
     form input[type="number"]:focus:-ms-input-placeholder,
     form input[type="number"].filled-in:-ms-input-placeholder,
     form textarea:focus:-ms-input-placeholder,
-    form textarea.filled-in:-ms-input-placeholder,
-    form select:focus:-ms-input-placeholder,
-    form select.filled-in:-ms-input-placeholder {
+    form textarea.filled-in:-ms-input-placeholder {
       /* Internet Explorer 10-11 */
       opacity: 1; }
     form input[type="text"]:focus::-ms-input-placeholder, form input[type="text"].filled-in::-ms-input-placeholder,
@@ -766,9 +766,7 @@ form select {
     form input[type="number"]:focus::-ms-input-placeholder,
     form input[type="number"].filled-in::-ms-input-placeholder,
     form textarea:focus::-ms-input-placeholder,
-    form textarea.filled-in::-ms-input-placeholder,
-    form select:focus::-ms-input-placeholder,
-    form select.filled-in::-ms-input-placeholder {
+    form textarea.filled-in::-ms-input-placeholder {
       /* Microsoft Edge */
       opacity: 1; }
     form input[type="text"]:focus::placeholder, form input[type="text"].filled-in::placeholder,
@@ -781,9 +779,7 @@ form select {
     form input[type="number"]:focus::placeholder,
     form input[type="number"].filled-in::placeholder,
     form textarea:focus::placeholder,
-    form textarea.filled-in::placeholder,
-    form select:focus::placeholder,
-    form select.filled-in::placeholder {
+    form textarea.filled-in::placeholder {
       /* Most modern browsers support this now. */
       opacity: 1; }
   form input[type="text"].filled-in,
@@ -791,8 +787,7 @@ form select {
   form input[type="password"].filled-in,
   form input[type="date"].filled-in,
   form input[type="number"].filled-in,
-  form textarea.filled-in,
-  form select.filled-in {
+  form textarea.filled-in {
     color: #fff;
     border-color: #fff; }
 form textarea {
