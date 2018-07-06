@@ -1,7 +1,29 @@
 <template>
   <div id="dashboard">
       <div class="container">
-      <h1></h1>
+      <header class="title-header">
+          <h1>Dashboard</h1>
+          <svg version="1.1" id="title-line" x="0px" y="0px"
+            viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
+            <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
+          </svg>
+        </header>
+        <section class="actions">
+          <h2>What do you want to do?</h2>
+          <router-link to="/dashboard/vehicles/new" class="btn">Add a new vehicle</router-link>
+          <router-link to="/dashboard/vehicles" class="btn">Manage your vehicles</router-link>
+          <router-link to="/dashboard/profile/edit" class="btn">Edit your profile</router-link>
+          <router-link to="/dashboard/rental-contracts" class="btn">Manage your rental contracts</router-link>
+        </section>
+        <section class="statistics">
+          <h2>Statistics</h2>
+          <section class="stat-top">
+            <article class="stat-numbers"><h3>Current available vehicles</h3></article>
+            <article class="stat-numbers"><h3>Current rented out vehicles</h3></article>
+            <article class="stat-numbers"><h3>Most popular vehicle</h3></article>
+          </section>
+          <article class="stat-graph"><h3>Rented vehicles this year</h3></article>
+        </section>
       </div>
   </div>
 </template>

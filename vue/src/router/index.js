@@ -20,7 +20,7 @@ let routes = [
   { path: '/overzicht', component: Overview },
   { path: '/profiel/:id', component: Profile },
   { path: '/dashboard', component: Dashboard },
-  { path: '/voertuig/nieuw', component: CreateVehicle },
+  { path: '/dashboard/vehicles/new', component: CreateVehicle },
   { path: '/voertuig/:id/bewerken', component: UpdateVehicle },
   { path: '/overzicht/voertuig/:id', component: Detail },
   { path: '/overzicht/voertuig/:id/huren', component: RentVehicle },
