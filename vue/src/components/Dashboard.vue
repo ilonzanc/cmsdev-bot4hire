@@ -1,0 +1,111 @@
+<template>
+  <div id="dashboard">
+      <div class="container">
+      <h1></h1>
+      </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+
+export default {
+    name: 'dashboard',
+    data () {
+    return {
+      activeuser: this.$parent.user,
+      password: this.$parent.user_password,
+      user: {},
+      vehicles: [],
+      rentals: [],
+      password: 'secret'
+    }
+  },
+  mounted () {
+    console.log('Profile Component Mounted');
+    axios({
+      method: 'get',
+      //url: apiurl + "user/" + this.$route.params.id + "?_format=hal_json",
+      url: apiurl + "api/v1.0/users/" + this.$route.params.id + "?_format=hal_json",
+      headers: {
+      //'X-CSRF-Token': this.user.csrf_token,
+      'Accept': 'application/hal+json',
+      'Content-Type': 'application/hal+json',
+      'X-CSRF-Token': this.activeuser.csrf_token,
+      },
+      auth: {
+        username: this.activeuser.current_user.name,
+        password: "secret"
+      },
+    })
+    .then(response => {
+      console.log(response)
+      this.user = response.data[0];
+      let slashPos = this.user.uri.indexOf("/");
+      console.log(slashPos);
+      this.user.uri = this.user.uri.substring(slashPos + 1, this.user.uri.length);
+      this.getVehiclesByUser();
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+    axios.get(apiurl + 'api/v1.0/user/' + this.$route.params.id + '/rentals?_format=hal_json')
+    .then(response => {
+      console.log(response.data[0])
+      this.rentals = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+  },
+  methods: {
+    getVehiclesByUser() {
+      axios.get(apiurl + 'api/v1.0/vehicles?_format=hal_json')
+      .then(response => {
+        console.log(response)
+        for (let i = 0; i < response.data.length; i++){
+          if (response.data[i].user_id == this.user.uid[0].value)
+            this.vehicles.push(response.data[i])
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    },
+    deleteRental(rental_id) {
+      axios({
+      method: 'delete',
+      url: apiurl + "admin/structure/rental/" + rental_id + "?_format=hal_json",
+      headers: {
+        //'X-CSRF-Token': this.user.csrf_token,
+        'Accept': 'application/hal+json',
+        'Content-Type': 'application/hal+json',
+        'X-CSRF-Token': this.activeuser.csrf_token,
+      },
+      auth: {
+        username: this.activeuser.current_user.name,
+        password: this.password
+      }
+    }).then((response) => {
+      console.log(response);
+      location.reload();
+    }).catch((error) => {
+      console.log(error);
+    });
+    }
+  }
+}
+</script>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+    dt, dd {
+      float: left;
+
+    }
+    dt {
+      clear: left;
+    }
+</style>

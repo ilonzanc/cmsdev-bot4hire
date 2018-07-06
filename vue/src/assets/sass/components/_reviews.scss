@@ -1,4 +1,4 @@
-.section__review {
+article.review {
 	padding: 1rem 0;
 	border-bottom: 1px solid $primary-color;
 	.column:first-child {
@@ -13,12 +13,12 @@
 	}
 }
 
-.section__review-list {
+section.review-list {
 	margin-bottom: 3rem;
 }
 
 @media (min-width: 42.5rem) {
-	.section__review {
+	article.review {
 		.column:first-child {
 			.fa-user-circle {
 				font-size: 3.5rem;

@@ -13,15 +13,20 @@
                     <router-link to="/overzicht" tag="li" exact @click.prevent="toggleNav">
                         <a>Overzicht</a>
                     </router-link>
-          <router-link v-if="!user" to="/aanmelden" tag="li" exact @click.prevent="toggleNav">
+                    <router-link v-if="!user" to="/aanmelden" tag="li" exact @click.prevent="toggleNav">
                         <a>Aanmelden</a>
                     </router-link>
-          <router-link v-if="user" :to="'/profiel/' + user.current_user.uid" tag="li" exact @click.prevent="toggleNav">
-                        <a>Profiel</a>
-                    </router-link>
-          <li v-if="user" @click.prevent="logOut">
-                        <a href="">Uitloggen</a>
-                    </li>
+                    <div v-if="user">
+                        <router-link :to="'/profiel/' + user.current_user.uid" tag="li" exact @click.prevent="toggleNav">
+                            <a>Profiel</a>
+                        </router-link>
+                        <router-link :to="'/dashboard'" tag="li" exact @click.prevent="toggleNav">
+                            <a>Dashboard</a>
+                        </router-link>
+                        <li @click.prevent="logOut">
+                          <a href="">Uitloggen</a>
+                        </li>
+                    </div>
                 </ul>
             </nav>
         </div>

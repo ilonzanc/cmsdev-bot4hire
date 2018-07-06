@@ -125,7 +125,7 @@
         </div>
       </section>
       <h2>Reviews</h2>
-      <section class="section__review-list">
+      <section class="review-list">
         <section v-for="review in reviews" v-bind:key="review.id" class="section__review">
           <div class="row">
             <div class="column column-sm-3 column-2">
