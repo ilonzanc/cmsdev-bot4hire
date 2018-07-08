@@ -23,20 +23,19 @@
             <input type="text" id="seats" name="seats" placeholder="Number of seats in your vehicle..." v-model="vehicle.seats.value">
             <label for="age">Age</label>
             <input type="text" id="age" name="age" placeholder="Age of your vehicle..." v-model="vehicle.age.value">
-            <label for="vehicle_type">Type of vehicle*</label>
+            <label for="vehicle_type">Type of vehicle *</label>
             <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id[0].target_id" >
               <option value="" selected>- Select a type -</option>
               <option v-for="vehicle_type in vehicle_types" v-bind:key="vehicle_type.id" :value="vehicle_type.id">{{vehicle_type.name}}</option>
             </select>
-            <label for="locations">Pickup Location</label>
+            <label for="locations">Pickup Location *</label>
             <select class="form-control" name="vehicle_type_id" v-model="vehicle.location_id[0].target_id" >
               <option selected value="">- Selecteer een plaats -</option>
               <option v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
             <router-link class="btn" to="/">Go to map</router-link>
-            <label for="image">Afbeelding</label>
-            <input type="text" id="image" name="image" placeholder="Link naar afbeelding..." v-model="vehicle.image.value">
-            <input type="file">
+            <label for="image">Vehicle image *</label>
+            <input id="vehicle_image" type="file" @change="encodeImageFileAsURL()">
             <button type="submit" class="btn widebtn">Voertuig toevoegen</button>
           </div>
         </div>
@@ -53,82 +52,136 @@ export default {
   name: 'create-vehicle',
   data () {
     return {
-    user: this.$parent.user,
-    password: this.$parent.user_password,
-    vehicle: {
-      _links: {
-        type: {
-          href: apiurl + "rest/type/vehicle/vehicle"
+      user: this.$parent.user,
+      password: this.$parent.user_password,
+      vehicle: {
+        _links: {
+          type: {
+            href: apiurl + "rest/type/vehicle/vehicle"
+          }
+        },
+        name: {
+          value: ""
+        },
+        description: {
+          value: ""
+        },
+        price: {
+          value: ""
+        },
+        seats: {
+          value: ""
+        },
+        age: {
+          value: ""
+        },
+        image: {
+          value: ""
+        },
+        vehicle_type_id:[{
+          target_id :"",
+          target_type: "vehicle_type",
+        }],
+        location_id:[{
+          target_id :"",
+          target_type: "location",
+        }],
+
+      },
+      uploadedImage: {
+        _links: {
+          type: {
+            href: "http://localhost:8888/rest/type/file/file"
+          }
+        },
+        filename: {
+          value: "input.jpg"
+        },
+        filemime: {
+          value: "input.jpg"
+        },
+        data: {
+          value: "input.jpg"
+        },
+        uri:{
+          value: "public://testfolder"
         }
       },
-      name: {
-        value: ""
-      },
-      description: {
-        value: ""
-      },
-      price: {
-        value: ""
-      },
-      seats: {
-        value: ""
-      },
-      age: {
-        value: ""
-      },
-      image: {
-        value: ""
-      },
-      vehicle_type_id:[{
-        target_id :"",
-        target_type: "vehicle_type",
-      }],
-      location_id:[{
-        target_id :"",
-        target_type: "location",
-      }]
-    },
-    vehicle_types: {},
-    locations: {},
+      vehicle_types: {},
+      locations: {},
     }
   },
-    mounted() {
-      axios.get(apiurl + "api/v1.0/vehicle_types?_format=hal_json")
-      .then(response => {
+  mounted() {
+    axios.get(apiurl + "api/v1.0/vehicle_types?_format=hal_json")
+    .then(response => {
       console.log(response)
       this.vehicle_types = response.data;
     });
 
     axios.get(apiurl + 'api/v1.0/locations?_format=hal_json')
-      .then(response => {
+    .then(response => {
       console.log(response)
       this.locations = response.data;
     });
   },
   methods: {
     onSubmit() {
-      var self = this;
-      axios({
+      /* axios({
         method: 'post',
         url: apiurl + "entity/vehicle?_format=hal_json",
         headers: {
-      //'X-CSRF-Token': self.user.csrf_token,
-      'Accept': 'application/hal+json',
-      'Content-Type': 'application/hal+json',
-      'X-CSRF-Token': self.user.csrf_token,
-    },
-    auth: {
-      username: self.user.current_user.name,
-      password: self.password
-    },
+          'Accept': 'application/hal+json',
+          'Content-Type': 'application/hal+json',
+          'X-CSRF-Token': self.user.csrf_token,
+        },
+        auth: {
+          username: self.user.current_user.name,
+          password: self.password
+        },
         data: self.vehicle
-      }).then(function (response) {
-    console.log(response);
-    location.href = '/overzicht/voertuig/' + response.data.id[0].value;
-      }).catch(function(error) {
+      })
+      .then((response) => {
+        console.log(response);
+        location.href = '/overzicht/voertuig/' + response.data.id[0].value;
+      })
+      .catch((error) => {
+        console.log(error);
+      }); */
+      let self = this;
+      axios({
+        method: 'post',
+        url: "http://localhost:8888/entity/file?_format=hal_json",
+        headers: {
+          'Accept': 'application/hal+json',
+          'Content-Type': 'application/hal+json',
+          'X-CSRF-Token': self.user.csrf_token,
+        },
+        auth: {
+          username: self.user.current_user.name,
+          password: self.password
+        },
+        data: self.uploadedImage
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
         console.log(error);
       });
     },
+    encodeImageFileAsURL() {
+      let file = document.getElementById('vehicle_image').files[0];
+      console.log(file);
+      var reader = new FileReader();
+      reader.onloadend = () => {
+        let commaPos = reader.result.indexOf(',');
+        let imageData = reader.result.substr(commaPos + 1, reader.result.length);
+        this.uploadedImage.data.value = imageData;
+        this.uploadedImage.filemime.value = file.type;
+        this.uploadedImage.filename.value = file.name;
+      }
+      reader.readAsDataURL(file);
+    }
   }
 }
 </script>

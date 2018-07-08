@@ -1040,6 +1040,20 @@ section.review-list {
   background-repeat: no-repeat;
   background-position: center; }
 
+#dashboard ul.action-icons {
+  display: flex;
+  list-style-type: none;
+  position: absolute;
+  width: 100%;
+  bottom: 0; }
+  #dashboard ul.action-icons li {
+    flex: 3;
+    text-align: center; }
+    #dashboard ul.action-icons li h1 {
+      margin: 0; }
+  #dashboard ul.action-icons .fa {
+    font-size: 1.5rem; }
+
 #detail img {
   width: 100%; }
 

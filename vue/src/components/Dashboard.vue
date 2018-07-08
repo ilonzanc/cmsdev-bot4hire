@@ -1,5 +1,10 @@
 <template>
   <div id="dashboard">
+    <ul class="action-icons">
+      <li><i class="fa fa-plus"></i></li>
+      <li><h1>a</h1></li>
+      <li><i class="fa fa-envelope-o"></i></li>
+    </ul>
     <div class="container">
       <header class="title-header">
         <h1>Dashboard</h1>
