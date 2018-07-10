@@ -8,6 +8,7 @@ use Drupal\shortcut\Entity\Shortcut;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\SchemaCheckTestTrait;
 use Drupal\Tests\system\Functional\Module\ModuleTestBase;
+use Drupal\workspace\Entity\Workspace;
 
 /**
  * Tests the largest configuration import possible with all available modules.
@@ -93,12 +94,16 @@ class ConfigImportAllTest extends ModuleTestBase {
     $shortcuts = Shortcut::loadMultiple();
     entity_delete_multiple('shortcut', array_keys($shortcuts));
 
+    // Delete any workspaces so the workspace module can be uninstalled.
+    $workspaces = Workspace::loadMultiple();
+    \Drupal::entityTypeManager()->getStorage('workspace')->delete($workspaces);
+
     system_list_reset();
     $all_modules = system_rebuild_module_data();
 
     // Ensure that only core required modules and the install profile can not be uninstalled.
     $validation_reasons = \Drupal::service('module_installer')->validateUninstall(array_keys($all_modules));
-    $this->assertEqual(['standard', 'system', 'user'], array_keys($validation_reasons));
+    $this->assertEqual(['system', 'user', 'standard'], array_keys($validation_reasons));
 
     $modules_to_uninstall = array_filter($all_modules, function ($module) use ($validation_reasons) {
       // Filter required and not enabled modules.

@@ -1,6 +1,6 @@
 parameters:
     http.response.debug_cacheability_headers: true
-    cors.config: { enabled: true, allowedHeaders: [Authorization, Content-type, X-CSRF-Token], allowedMethods: ['*'], allowedOrigins: ['*'], exposedHeaders: true, maxAge: false, supportsCredentials: true }
+    cors.config: { enabled: true, allowedHeaders: [Authorization, Content-type, X-CSRF-Token, Content-Disposition], allowedMethods: ['*'], allowedOrigins: ['*'], exposedHeaders: true, maxAge: false, supportsCredentials: true }
     twig.config: { debug: true, auto_reload: true, cache: true }
 services:
     cache.backend.null: { class: Drupal\Core\Cache\NullBackendFactory }

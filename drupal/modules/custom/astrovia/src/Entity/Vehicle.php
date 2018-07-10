@@ -234,6 +234,33 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
     return $this;
   }
 
+  public function getImage() {
+    return $this->get('image')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getImageId() {
+    return $this->get('image')->target_id;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setImageId($id) {
+    $this->set('image', $id);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setImage(FileInterface $image) {
+    $this->set('image', $image->id());
+    return $this;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -436,7 +463,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-      $fields['image'] = BaseFieldDefinition::create('uri')
+      /* $fields['image'] = BaseFieldDefinition::create('uri')
       ->setLabel(t('Afbeelding'))
       ->setDescription(t('De afbeelding van de Vehicle entity.'))
       ->setSetting('max_length', 255)
@@ -449,6 +476,21 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ])
       ->setDisplayOptions('form', [
         'type' => 'string',
+        'weight' => -1,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE); */
+
+      $fields['image'] = BaseFieldDefinition::create('image')
+      ->setLabel(t('Image'))
+      ->setDescription(t('The image of the vehicle item.'))
+      ->setDisplayOptions('view', [
+        'type' => 'image',
+        'weight' => 5,
+        'label' => 'hidden',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'image',
         'weight' => -1,
       ])
       ->setDisplayConfigurable('form', TRUE)

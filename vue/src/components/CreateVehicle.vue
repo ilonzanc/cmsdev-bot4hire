@@ -75,9 +75,6 @@ export default {
         age: {
           value: ""
         },
-        image: {
-          value: ""
-        },
         vehicle_type_id:[{
           target_id :"",
           target_type: "vehicle_type",
@@ -86,26 +83,28 @@ export default {
           target_id :"",
           target_type: "location",
         }],
-
+        image:[{
+          target_id :"",
+        }],
       },
       uploadedImage: {
         _links: {
           type: {
-            href: "http://localhost:8888/rest/type/file/file"
+            href: "http://localhost:8888/rest/type/file/image"
           }
         },
         filename: {
-          value: "input.jpg"
+          value: "input.png"
         },
         filemime: {
-          value: "input.jpg"
+          value: "input.png"
         },
         data: {
-          value: "input.jpg"
+          value: "input.png"
         },
-        uri:{
-          value: "public://testfolder"
-        }
+        uri: {
+          value: "public://default/files/pictures/vehicles"
+        },
       },
       vehicle_types: {},
       locations: {},
@@ -126,48 +125,74 @@ export default {
   },
   methods: {
     onSubmit() {
-      /* axios({
-        method: 'post',
-        url: apiurl + "entity/vehicle?_format=hal_json",
-        headers: {
-          'Accept': 'application/hal+json',
-          'Content-Type': 'application/hal+json',
-          'X-CSRF-Token': self.user.csrf_token,
-        },
-        auth: {
-          username: self.user.current_user.name,
-          password: self.password
-        },
-        data: self.vehicle
-      })
-      .then((response) => {
-        console.log(response);
-        location.href = '/overzicht/voertuig/' + response.data.id[0].value;
-      })
-      .catch((error) => {
-        console.log(error);
-      }); */
       let self = this;
       axios({
         method: 'post',
-        url: "http://localhost:8888/entity/file?_format=hal_json",
+        //url: "http://localhost:8888/file/upload/media/image/field_media_image?_format=hal_json",
+        url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
         headers: {
-          'Accept': 'application/hal+json',
-          'Content-Type': 'application/hal+json',
+          'Content-Type': 'application/octet-stream',
           'X-CSRF-Token': self.user.csrf_token,
+          //'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
+          'Content-Disposition': 'file; filename="fileName.jpg"'
         },
         auth: {
           username: self.user.current_user.name,
           password: self.password
         },
-        data: self.uploadedImage
+        //data: self.uploadedImage,
+        data: {
+          "_links": {
+            "type": {
+              "href": "http://localhost:8888/rest/type/file/image"
+            }
+          },
+          "filename": [
+            {
+              "value": "fileName.jpg"
+            }
+          ],
+            "uri": [
+                {
+                    "value": "public://fileName.jpg"
+                }
+            ],
+          "data": [
+            {
+              "value": self.uploadedImage.data.value
+            }
+          ]
+        },
       })
       .then((response) => {
         console.log(response);
+        self.vehicle.image[0].target_id = response.data.fid[0].value
+        /* axios({
+          method: 'post',
+          url: apiurl + "entity/vehicle?_format=hal_json",
+          headers: {
+            'Accept': 'application/hal+json',
+            'Content-Type': 'application/hal+json',
+            'X-CSRF-Token': self.user.csrf_token,
+          },
+          auth: {
+            username: self.user.current_user.name,
+            password: self.password
+          },
+          data: self.vehicle
+        })
+        .then((response) => {
+          console.log(response);
+          //location.href = '/overzicht/voertuig/' + response.data.id[0].value;
+        })
+        .catch((error) => {
+          console.log(error);
+        }); */
       })
       .catch((error) => {
         console.log(error);
       });
+
     },
     encodeImageFileAsURL() {
       let file = document.getElementById('vehicle_image').files[0];

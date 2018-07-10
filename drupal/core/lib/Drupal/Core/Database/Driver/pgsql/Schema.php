@@ -2,7 +2,6 @@
 
 namespace Drupal\Core\Database\Driver\pgsql;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Database\SchemaObjectExistsException;
 use Drupal\Core\Database\SchemaObjectDoesNotExistException;
 use Drupal\Core\Database\Schema as DatabaseSchema;
@@ -250,7 +249,7 @@ EOD;
     }
 
     $sql_keys = [];
-    if (isset($table['primary key']) && is_array($table['primary key'])) {
+    if (!empty($table['primary key']) && is_array($table['primary key'])) {
       $sql_keys[] = 'CONSTRAINT ' . $this->ensureIdentifiersLength($name, '', 'pkey') . ' PRIMARY KEY (' . $this->createPrimaryKeySql($table['primary key']) . ')';
     }
     if (isset($table['unique keys']) && is_array($table['unique keys'])) {
@@ -350,7 +349,7 @@ EOD;
     // Set the correct database-engine specific datatype.
     // In case one is already provided, force it to lowercase.
     if (isset($field['pgsql_type'])) {
-      $field['pgsql_type'] = Unicode::strtolower($field['pgsql_type']);
+      $field['pgsql_type'] = mb_strtolower($field['pgsql_type']);
     }
     else {
       $map = $this->getFieldTypeMap();
@@ -714,6 +713,29 @@ EOD;
     $this->connection->query('ALTER TABLE {' . $table . '} DROP CONSTRAINT ' . $this->ensureIdentifiersLength($table, '', 'pkey'));
     $this->resetTableInformation($table);
     return TRUE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function findPrimaryKeyColumns($table) {
+    if (!$this->tableExists($table)) {
+      return FALSE;
+    }
+
+    // Fetch the 'indkey' column from 'pg_index' to figure out the order of the
+    // primary key.
+    // @todo Use 'array_position()' to be able to perform the ordering in SQL
+    //   directly when 9.5 is the minimum  PostgreSQL version.
+    $result = $this->connection->query("SELECT a.attname, i.indkey FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '{" . $table . "}'::regclass AND i.indisprimary")->fetchAllKeyed();
+    if (!$result) {
+      return [];
+    }
+
+    $order = explode(' ', reset($result));
+    $columns = array_combine($order, array_keys($result));
+    ksort($columns);
+    return array_values($columns);
   }
 
   /**

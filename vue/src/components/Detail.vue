@@ -14,7 +14,7 @@
           <div class="column column-sm-12 column-6">
             <section class="vehicle-hologram">
               <div class="image-border">
-                <div class="vehicle__image" :style='"background: url(" + vehicle.image + ") no-repeat center; background-size: contain"'></div>
+                <div class="vehicle__image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
               </div>
               <svg version="1.1" id="hologram" x="0px" y="0px"
                 viewBox="0 0 836 395" style="enable-background:new 0 0 836 395;" xml:space="preserve">

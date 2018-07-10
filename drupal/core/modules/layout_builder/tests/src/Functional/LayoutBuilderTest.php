@@ -2,7 +2,9 @@
 
 namespace Drupal\Tests\layout_builder\Functional;
 
+use Drupal\node\Entity\Node;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\views\Entity\View;
 
 /**
  * Tests the Layout Builder UI.
@@ -15,10 +17,13 @@ class LayoutBuilderTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   public static $modules = [
+    'views',
     'layout_builder',
+    'layout_builder_views_test',
     'layout_test',
     'block',
     'node',
+    'layout_builder_test',
   ];
 
   /**
@@ -317,6 +322,71 @@ class LayoutBuilderTest extends BrowserTestBase {
     $this->drupalGet('node/1/layout');
     $assert_session->pageTextContains('This is the default view mode');
     $this->clickLink('Cancel Layout');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function testLayoutBuilderChooseBlocksAlter() {
+    // See layout_builder_test_plugin_filter_block__layout_builder_alter().
+    $assert_session = $this->assertSession();
+
+    $this->drupalLogin($this->drupalCreateUser([
+      'configure any layout',
+      'administer node display',
+      'administer node fields',
+    ]));
+
+    // From the manage display page, go to manage the layout.
+    $this->drupalGet('admin/structure/types/manage/bundle_with_section_field/display/default');
+    $this->clickLink('Manage layout');
+
+    // Add a new block.
+    $this->clickLink('Add Block');
+
+    // Verify that blocks not modified are present.
+    $assert_session->linkExists('Powered by Drupal');
+    $assert_session->linkExists('Default revision');
+
+    // Verify that blocks explicitly removed are not present.
+    $assert_session->linkNotExists('Help');
+    $assert_session->linkNotExists('Sticky at top of lists');
+  }
+
+  /**
+   * Tests that deleting a View block used in Layout Builder works.
+   */
+  public function testDeletedView() {
+    $assert_session = $this->assertSession();
+    $page = $this->getSession()->getPage();
+
+    $this->drupalLogin($this->drupalCreateUser([
+      'configure any layout',
+      'administer node display',
+    ]));
+
+    $field_ui_prefix = 'admin/structure/types/manage/bundle_with_section_field';
+    // Enable overrides.
+    $this->drupalPostForm("$field_ui_prefix/display/default", ['layout[allow_custom]' => TRUE], 'Save');
+    $this->drupalGet('node/1');
+
+    $assert_session->linkExists('Layout');
+    $this->clickLink('Layout');
+    $this->clickLink('Add Block');
+    $this->clickLink('Test Block View');
+    $page->pressButton('Add Block');
+
+    $assert_session->pageTextContains('Test Block View');
+    $assert_session->elementExists('css', '.block-views-blocktest-block-view-block-1');
+    $this->clickLink('Save Layout');
+    $assert_session->pageTextContains('Test Block View');
+    $assert_session->elementExists('css', '.block-views-blocktest-block-view-block-1');
+
+    View::load('test_block_view')->delete();
+    $this->drupalGet('node/1');
+    // Node can be loaded after deleting the View.
+    $assert_session->pageTextContains(Node::load(1)->getTitle());
+    $assert_session->pageTextNotContains('Test Block View');
   }
 
 }

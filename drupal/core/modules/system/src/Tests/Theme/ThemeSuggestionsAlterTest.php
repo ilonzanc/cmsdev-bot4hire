@@ -154,7 +154,7 @@ class ThemeSuggestionsAlterTest extends WebTestBase {
   /**
    * Tests execution order of theme suggestion alter hooks.
    *
-   * hook_theme_suggestions_alter() should fire before
+   * Hook hook_theme_suggestions_alter() should fire before
    * hook_theme_suggestions_HOOK_alter() within an extension (module or theme).
    */
   public function testExecutionOrder() {
@@ -166,7 +166,7 @@ class ThemeSuggestionsAlterTest extends WebTestBase {
     $this->resetAll();
 
     // Send two requests so that we get all the messages we've set via
-    // drupal_set_message().
+    // \Drupal\Core\Messenger\MessengerInterface::addStatus().
     $this->drupalGet('theme-test/suggestion-alter');
     // Ensure that the order is first by extension, then for a given extension,
     // the hook-specific one after the generic one.

@@ -3,7 +3,7 @@
 namespace Drupal\comment\Tests;
 
 use Drupal\comment\CommentManagerInterface;
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\node\Entity\Node;
 
 /**
@@ -12,6 +12,7 @@ use Drupal\node\Entity\Node;
  * @group comment
  */
 class CommentPagerTest extends CommentTestBase {
+
   /**
    * Confirms comment paging works correctly with flat and threaded comments.
    */
@@ -328,7 +329,7 @@ class CommentPagerTest extends CommentTestBase {
         'settings' => [
           'pager_id' => 1,
           'view_mode' => 'default',
-        ]
+        ],
       ])
       ->save();
 
@@ -422,10 +423,10 @@ class CommentPagerTest extends CommentTestBase {
     $urls = $this->xpath($xpath, $arguments);
     if (isset($urls[$index])) {
       $url_target = $this->getAbsoluteUrl($urls[$index]['href']);
-      $this->pass(SafeMarkup::format('Clicked link %label (@url_target) from @url_before', ['%label' => $xpath, '@url_target' => $url_target, '@url_before' => $url_before]), 'Browser');
+      $this->pass(new FormattableMarkup('Clicked link %label (@url_target) from @url_before', ['%label' => $xpath, '@url_target' => $url_target, '@url_before' => $url_before]), 'Browser');
       return $this->drupalGet($url_target);
     }
-    $this->fail(SafeMarkup::format('Link %label does not exist on @url_before', ['%label' => $xpath, '@url_before' => $url_before]), 'Browser');
+    $this->fail(new FormattableMarkup('Link %label does not exist on @url_before', ['%label' => $xpath, '@url_before' => $url_before]), 'Browser');
     return FALSE;
   }
 

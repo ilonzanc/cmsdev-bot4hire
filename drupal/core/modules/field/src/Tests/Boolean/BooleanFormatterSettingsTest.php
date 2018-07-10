@@ -2,8 +2,7 @@
 
 namespace Drupal\field\Tests\Boolean;
 
-use Drupal\Component\Utility\Unicode;
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\simpletest\WebTestBase;
@@ -43,14 +42,14 @@ class BooleanFormatterSettingsTest extends WebTestBase {
     parent::setUp();
 
     // Create a content type. Use Node because it has Field UI pages that work.
-    $type_name = Unicode::strtolower($this->randomMachineName(8)) . '_test';
+    $type_name = mb_strtolower($this->randomMachineName(8)) . '_test';
     $type = $this->drupalCreateContentType(['name' => $type_name, 'type' => $type_name]);
     $this->bundle = $type->id();
 
     $admin_user = $this->drupalCreateUser(['access content', 'administer content types', 'administer node fields', 'administer node display', 'bypass node access', 'administer nodes']);
     $this->drupalLogin($admin_user);
 
-    $this->fieldName = Unicode::strtolower($this->randomMachineName(8));
+    $this->fieldName = mb_strtolower($this->randomMachineName(8));
 
     $field_storage = FieldStorageConfig::create([
       'field_name' => $this->fieldName,
@@ -118,7 +117,7 @@ class BooleanFormatterSettingsTest extends WebTestBase {
       foreach ($options as $string) {
         $this->assertText($string);
       }
-      $this->assertText(SafeMarkup::format($default, ['@on' => $values[0], '@off' => $values[1]]));
+      $this->assertText(new FormattableMarkup($default, ['@on' => $values[0], '@off' => $values[1]]));
     }
 
     foreach ($settings as $values) {

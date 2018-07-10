@@ -99,14 +99,13 @@ trait XmlEntityNormalizationQuirksTrait {
         }
       }
 
-      if (!empty($normalization[$field_name])) {
+      if (count($normalization[$field_name]) === 1) {
         $normalization[$field_name] = $normalization[$field_name][0];
       }
     }
 
     return $normalization;
   }
-
 
   /**
    * Applies the XML config entity encoding quirks that remain after decoding.

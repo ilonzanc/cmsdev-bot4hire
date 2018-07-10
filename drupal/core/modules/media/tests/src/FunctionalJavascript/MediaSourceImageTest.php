@@ -46,7 +46,7 @@ class MediaSourceImageTest extends MediaSourceTestBase {
 
     // Create a media item.
     $this->drupalGet("media/add/{$media_type_id}");
-    $page->attachFileToField("files[{$source_field_id}_0]", \Drupal::root() . '/core/modules/media/tests/fixtures/example_1.jpeg');
+    $page->attachFileToField("files[{$source_field_id}_0]", $this->root . '/core/modules/media/tests/fixtures/example_1.jpeg');
     $result = $assert_session->waitForButton('Remove');
     $this->assertNotEmpty($result);
     $page->fillField("{$source_field_id}[0][alt]", 'Image Alt Text 1');
@@ -59,9 +59,9 @@ class MediaSourceImageTest extends MediaSourceTestBase {
 
     // Load the media and check that all fields are properly populated.
     $media = Media::load(1);
-    $this->assertEquals('example_1.jpeg', $media->getName());
-    $this->assertEquals('200', $media->get('field_string_width')->value);
-    $this->assertEquals('89', $media->get('field_string_height')->value);
+    $this->assertSame('example_1.jpeg', $media->getName());
+    $this->assertSame('200', $media->get('field_string_width')->value);
+    $this->assertSame('89', $media->get('field_string_height')->value);
   }
 
 }
