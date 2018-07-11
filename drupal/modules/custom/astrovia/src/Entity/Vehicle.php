@@ -235,29 +235,14 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
   }
 
   public function getImage() {
-    return $this->get('image')->entity;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getImageId() {
-    return $this->get('image')->target_id;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setImageId($id) {
-    $this->set('image', $id);
-    return $this;
+    return $this->get('image')->value;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setImage(FileInterface $image) {
-    $this->set('image', $image->id());
+    $this->set('image', $image);
     return $this;
   }
 

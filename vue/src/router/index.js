@@ -3,13 +3,15 @@ import Router from 'vue-router'
 import Home from '../components/Home'
 import Overview from '../components/Overview'
 import Detail from '../components/Detail'
-import CreateVehicle from '../components/CreateVehicle'
-import UpdateVehicle from '../components/UpdateVehicle'
 import Profile from '../components/Profile'
-import Dashboard from '../components/Dashboard'
 import Login from '../components/Login'
 import Register from '../components/Register'
 import RentVehicle from '../components/RentVehicle'
+
+import Dashboard from '../components/dashboard/Dashboard'
+import YourVehicles from '../components/dashboard/YourVehicles'
+import CreateVehicle from '../components/dashboard/CreateVehicle'
+import UpdateVehicle from '../components/dashboard/UpdateVehicle'
 
 Vue.use(Router);
 
@@ -19,11 +21,12 @@ let routes = [
   { path: '/registreren', component: Register },
   { path: '/overzicht', component: Overview },
   { path: '/profiel/:id', component: Profile },
-  { path: '/dashboard', component: Dashboard },
-  { path: '/dashboard/vehicles/new', component: CreateVehicle },
-  { path: '/voertuig/:id/bewerken', component: UpdateVehicle },
   { path: '/overzicht/voertuig/:id', component: Detail },
   { path: '/overzicht/voertuig/:id/huren', component: RentVehicle },
+  { path: '/dashboard', component: Dashboard },
+  { path: '/dashboard/vehicles', component: YourVehicles },
+  { path: '/dashboard/vehicles/new', component: CreateVehicle },
+  { path: '/dashboard/vehicles/:id/edit', component: UpdateVehicle },
 ];
 
 export default new Router({

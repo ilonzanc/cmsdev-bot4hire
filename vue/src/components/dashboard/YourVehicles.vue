@@ -1,8 +1,8 @@
 <template>
-  <div id="vehicle-overview">
+  <div id="your-vehicles">
     <div class="container">
       <header class="title-header">
-        <h1>Overview</h1>
+        <h1>Your vehicles</h1>
         <svg version="1.1" id="title-line" x="0px" y="0px"
           viewBox="0 0 250 89" style="enable-background:new 0 0 250 89;" xml:space="preserve">
           <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,85 40,85 25,69.9 0,69.9 "/>
@@ -11,15 +11,16 @@
       <div class="row">
         <div class="column column-sm-12 column-4" v-bind:key="vehicle.id" v-for="vehicle in vehicles">
           <section class="section__vehicle">
-            <router-link :to='"overzicht/voertuig/" + vehicle.id'>
               <div class="row">
                 <div class="column column-sm-3 column-12">
                   <div class="image-border">
-                    <div class="vehicle__image" :style='"background: url(http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
+                    <div class="vehicle__image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
                   </div>
                 </div>
                 <div class="column column-sm-9 column-12">
-                  <i class="fa fa-angle-right"></i>
+                  <i class="fa fa-eye"></i>
+                  <router-link :to="'vehicles/' + vehicle.id + '/edit'"><i class="fa fa-pencil"></i></router-link>
+                  <i class="fa fa-trash"></i>
                   <h2>{{vehicle.name}}</h2>
                   <p>{{vehicle.vehicle_type_name}}</p>
                   <section class="vehicle-price">
@@ -28,7 +29,6 @@
                   </section>
                 </div>
               </div>
-            </router-link>
           </section>
         </div>
       </div>
@@ -41,7 +41,7 @@
 import axios from "axios";
 
 export default {
-  name: "overview",
+  name: "your-vehicles",
   data() {
     return {
     user: this.$parent.user,
@@ -54,7 +54,7 @@ export default {
     axios({
       method: "get",
       url:
-        apiurl + "api/v1.0/vehicles?_format=hal_json",
+        apiurl + "api/v1.0/users/" + this.user.current_user.uid + "/vehicles?_format=hal_json",
       headers: {
       }
     })

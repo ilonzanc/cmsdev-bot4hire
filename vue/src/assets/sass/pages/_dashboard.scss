@@ -18,3 +18,14 @@
         }
     }
 }
+
+.uploaded-image {
+    border-radius: 5px;
+    height: 200px;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    border: 1px solid rgba($primary-color, 1);
+    background-repeat: no-repeat;
+    background-position: center;
+}

@@ -24,12 +24,12 @@
             <label for="age">Age</label>
             <input type="text" id="age" name="age" placeholder="Age of your vehicle..." v-model="vehicle.age.value">
             <label for="vehicle_type">Type of vehicle *</label>
-            <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id[0].target_id" >
+            <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id" >
               <option value="" selected>- Select a type -</option>
               <option v-for="vehicle_type in vehicle_types" v-bind:key="vehicle_type.id" :value="vehicle_type.id">{{vehicle_type.name}}</option>
             </select>
             <label for="locations">Pickup Location *</label>
-            <select class="form-control" name="vehicle_type_id" v-model="vehicle.location_id[0].target_id" >
+            <select class="form-control" name="vehicle_type_id" v-model="vehicle.location_id" >
               <option selected value="">- Selecteer een plaats -</option>
               <option v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
@@ -46,7 +46,7 @@
 
 <script>
 import axios from 'axios';
-import Form from '../utilities/Form.js';
+import Form from '../../utilities/Form.js';
 
 export default {
   name: 'create-vehicle',
@@ -125,13 +125,11 @@ export default {
       let self = this;
       axios({
         method: 'post',
-        //url: "http://localhost:8888/file/upload/media/file/field_media_file?_format=hal_json",
         url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
         headers: {
           'Content-Type': 'application/octet-stream',
           'X-CSRF-Token': self.user.csrf_token,
           'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
-          //'Content-Disposition': 'file; filename="filename.jpg"'
         },
         auth: {
           username: self.user.current_user.name,
@@ -141,8 +139,8 @@ export default {
       })
       .then((response) => {
         console.log(response);
-        self.vehicle.image[0].target_id = response.data.fid[0].value
-        /* axios({
+        self.vehicle.image[0].target_id = response.data.fid[0].value;
+        axios({
           method: 'post',
           url: apiurl + "entity/vehicle?_format=hal_json",
           headers: {
@@ -158,11 +156,11 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          //location.href = '/overzicht/voertuig/' + response.data.id[0].value;
+          location.href = '/overzicht/voertuig/' + response.data.id[0].value;
         })
         .catch((error) => {
           console.log(error);
-        }); */
+        });
       })
       .catch((error) => {
         console.log(error);

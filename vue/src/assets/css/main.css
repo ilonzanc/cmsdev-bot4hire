@@ -1054,6 +1054,16 @@ section.review-list {
   #dashboard ul.action-icons .fa {
     font-size: 1.5rem; }
 
+.uploaded-image {
+  border-radius: 5px;
+  height: 200px;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  border: 1px solid #67b1fc;
+  background-repeat: no-repeat;
+  background-position: center; }
+
 #detail img {
   width: 100%; }
 
