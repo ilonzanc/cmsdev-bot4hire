@@ -89,9 +89,9 @@ export default {
       },
       uploadedImage: {
         _links: {
-          type: {
+          type: [{
             href: "http://localhost:8888/rest/type/file/image"
-          }
+          }]
         },
         filename: {
           value: "input.png"
@@ -99,12 +99,9 @@ export default {
         filemime: {
           value: "input.png"
         },
-        data: {
-          value: "input.png"
-        },
-        uri: {
-          value: "public://default/files/pictures/vehicles"
-        },
+        data: [{
+          value: "randomdata"
+        }]
       },
       vehicle_types: {},
       locations: {},
@@ -128,41 +125,19 @@ export default {
       let self = this;
       axios({
         method: 'post',
-        //url: "http://localhost:8888/file/upload/media/image/field_media_image?_format=hal_json",
+        //url: "http://localhost:8888/file/upload/media/file/field_media_file?_format=hal_json",
         url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
         headers: {
           'Content-Type': 'application/octet-stream',
           'X-CSRF-Token': self.user.csrf_token,
-          //'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
-          'Content-Disposition': 'file; filename="fileName.jpg"'
+          'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
+          //'Content-Disposition': 'file; filename="filename.jpg"'
         },
         auth: {
           username: self.user.current_user.name,
           password: self.password
         },
-        //data: self.uploadedImage,
-        data: {
-          "_links": {
-            "type": {
-              "href": "http://localhost:8888/rest/type/file/image"
-            }
-          },
-          "filename": [
-            {
-              "value": "fileName.jpg"
-            }
-          ],
-            "uri": [
-                {
-                    "value": "public://fileName.jpg"
-                }
-            ],
-          "data": [
-            {
-              "value": self.uploadedImage.data.value
-            }
-          ]
-        },
+        data: self.uploadedImage.data[0].value
       })
       .then((response) => {
         console.log(response);
@@ -196,12 +171,11 @@ export default {
     },
     encodeImageFileAsURL() {
       let file = document.getElementById('vehicle_image').files[0];
-      console.log(file);
       var reader = new FileReader();
       reader.onloadend = () => {
         let commaPos = reader.result.indexOf(',');
         let imageData = reader.result.substr(commaPos + 1, reader.result.length);
-        this.uploadedImage.data.value = imageData;
+        this.uploadedImage.data[0].value = file;
         this.uploadedImage.filemime.value = file.type;
         this.uploadedImage.filename.value = file.name;
       }
