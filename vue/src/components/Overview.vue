@@ -15,7 +15,7 @@
               <div class="row">
                 <div class="column column-sm-3 column-12">
                   <div class="image-border">
-                    <div class="vehicle__image" :style='"background: url(http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
+                    <div class="vehicle__image" :style='"background: url(http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: cover"'></div>
                   </div>
                 </div>
                 <div class="column column-sm-9 column-12">

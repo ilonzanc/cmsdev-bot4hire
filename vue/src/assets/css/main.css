@@ -394,7 +394,8 @@ h1 {
   margin-bottom: 1rem;
   margin-left: 60px;
   font-size: 1.8rem;
-  letter-spacing: 2px; }
+  letter-spacing: 2px;
+  line-height: 100%; }
 
 h2 {
   font-weight: 300;
@@ -671,6 +672,8 @@ form select {
   color: none;
   position: relative;
   outline: none; }
+form input[type="file"] {
+  margin-bottom: 1rem; }
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],

@@ -1,7 +1,13 @@
 <template>
   <div id="update-vehicle">
       <div class="container">
-      <h1>Voertuig bewerken</h1>
+      <header class="title-header">
+        <h1>Edit vehicle</h1>
+        <svg version="1.1" id="title-line" x="0px" y="0px"
+          viewBox="0 0 250 89" style="enable-background:new 0 0 250 89;" xml:space="preserve">
+          <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,85 40,85 25,69.9 0,69.9 "/>
+        </svg>
+      </header>
       <form @submit.prevent="onSubmit">
         <div class="row">
           <div class="column column-sm-12 column-6">
@@ -28,7 +34,7 @@
             </select>
             <router-link class="btn" to="/">Go to map</router-link>
             <label for="image">Vehicle image *</label>
-            <input id="vehicle_image" type="file" @change="encodeImageFileAsURL()">
+            <input id="vehicle_image" type="file" @change="uploadImage()">
             <div class="image-border">
               <div class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
             </div>
@@ -118,9 +124,6 @@ export default {
         age: {
           value: self.vehicle.age
         },
-        image: {
-          value: self.vehicle.image
-        },
         vehicle_type_id: [{
           target_id: self.vehicle.vehicle_type_id,
           target_type: "",
@@ -135,23 +138,6 @@ export default {
       };
 
       axios({
-        method: 'post',
-        url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
-        headers: {
-          'Content-Type': 'application/octet-stream',
-          'X-CSRF-Token': self.user.csrf_token,
-          'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
-        },
-        auth: {
-          username: self.user.current_user.name,
-          password: self.password
-        },
-        data: self.uploadedImage.data[0].value
-      })
-      .then((response) => {
-        console.log(response);
-        updateVehicle.image[0].target_id = response.data.fid[0].value;
-        axios({
           method: 'patch',
           url: apiurl + "admin/structure/vehicle/" + this.$route.params.id + "?_format=hal_json",
           headers: {
@@ -167,25 +153,45 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          //location.href = '/dashboard/vehicles/' + response.data.id[0].value;
+          location.href = '/dashboard/vehicles/' + response.data.id[0].value;
         })
         .catch(function(error) {
           console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+
     },
-    encodeImageFileAsURL() {
+    uploadImage() {
+      let self = this;
       let file = document.getElementById('vehicle_image').files[0];
       var reader = new FileReader();
       reader.onloadend = () => {
-        let commaPos = reader.result.indexOf(',');
-        let imageData = reader.result.substr(commaPos + 1, reader.result.length);
         this.uploadedImage.data[0].value = file;
         this.uploadedImage.filemime.value = file.type;
         this.uploadedImage.filename.value = file.name;
+
+        axios({
+          method: 'post',
+          url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'X-CSRF-Token': self.user.csrf_token,
+            'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
+          },
+          auth: {
+            username: self.user.current_user.name,
+            password: self.password
+          },
+          data: self.uploadedImage.data[0].value
+        })
+        .then((response) => {
+          console.log(response);
+          self.vehicle.image_id = response.data.fid[0].value;
+          self.vehicle.image_url = response.data.uri[0].url;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       }
       reader.readAsDataURL(file);
     }

@@ -32,6 +32,10 @@ form {
     outline: none;
   }
 
+  input[type="file"] {
+    margin-bottom: 1rem;
+  }
+
   input[type="text"],
   input[type="email"],
   input[type="password"],

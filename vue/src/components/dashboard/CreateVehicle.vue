@@ -35,7 +35,10 @@
             </select>
             <router-link class="btn" to="/">Go to map</router-link>
             <label for="image">Vehicle image *</label>
-            <input id="vehicle_image" type="file" @change="encodeImageFileAsURL()">
+            <input id="vehicle_image" type="file" @change="uploadImage()">
+            <div class="image-border">
+              <div class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
+            </div>
             <button type="submit" class="btn widebtn">Voertuig toevoegen</button>
           </div>
         </div>
@@ -124,23 +127,6 @@ export default {
     onSubmit() {
       let self = this;
       axios({
-        method: 'post',
-        url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
-        headers: {
-          'Content-Type': 'application/octet-stream',
-          'X-CSRF-Token': self.user.csrf_token,
-          'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
-        },
-        auth: {
-          username: self.user.current_user.name,
-          password: self.password
-        },
-        data: self.uploadedImage.data[0].value
-      })
-      .then((response) => {
-        console.log(response);
-        self.vehicle.image[0].target_id = response.data.fid[0].value;
-        axios({
           method: 'post',
           url: apiurl + "entity/vehicle?_format=hal_json",
           headers: {
@@ -159,23 +145,72 @@ export default {
           location.href = '/overzicht/voertuig/' + response.data.id[0].value;
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
 
     },
-    encodeImageFileAsURL() {
+    uploadImage() {
+      let self = this;
       let file = document.getElementById('vehicle_image').files[0];
       var reader = new FileReader();
       reader.onloadend = () => {
-        let commaPos = reader.result.indexOf(',');
-        let imageData = reader.result.substr(commaPos + 1, reader.result.length);
         this.uploadedImage.data[0].value = file;
         this.uploadedImage.filemime.value = file.type;
         this.uploadedImage.filename.value = file.name;
+
+        axios({
+          method: 'post',
+          url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'X-CSRF-Token': self.user.csrf_token,
+            'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
+          },
+          auth: {
+            username: self.user.current_user.name,
+            password: self.password
+          },
+          data: self.uploadedImage.data[0].value
+        })
+        .then((response) => {
+          console.log(response);
+          self.vehicle.image[0].target_id = response.data.fid[0].value;
+
+        })
+        .catch((error) => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        });
       }
       reader.readAsDataURL(file);
     }
