@@ -274,6 +274,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setTranslatable(TRUE)
+      ->setRequired(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'author',
@@ -299,6 +300,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         ->setDescription(t('The Vehicle Type of the associated Vehicle.'))
         ->setSetting('target_type', 'vehicle_type')
         ->setSetting('handler', 'default')
+        ->setRequired(TRUE)
         ->setDisplayOptions('view', array(
             'label' => 'above',
             'type' => 'entity_reference_label',
@@ -322,6 +324,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         ->setDescription(t('The current Location of the associated Vehicle.'))
         ->setSetting('target_type', 'location')
         ->setSetting('handler', 'default')
+        ->setRequired(TRUE)
         ->setDisplayOptions('view', array(
             'label' => 'above',
             'type' => 'entity_reference_label',
@@ -343,6 +346,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
     $fields['name'] = BaseFieldDefinition::create('string')
         ->setLabel(t('Naam'))
         ->setDescription(t('Naam van de Vehicle entity.'))
+        ->setRequired(TRUE)
         ->setSettings([
             'max_length' => 50,
             'text_processing' => 0,
@@ -385,6 +389,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
     $fields['price'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Prijs'))
       ->setDescription(t('De prijs van de Vehicle entity.'))
+      ->setRequired(TRUE)
       ->setSettings([
         'min' => 1,
         'max' => 10000,
@@ -407,6 +412,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
     $fields['seats'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Zitplaatsen'))
       ->setDescription(t('Hoeveelheid zitplaatsen van de Vehicle entity.'))
+      ->setRequired(TRUE)
       ->setSettings([
         'min' => 1,
         'max' => 500,
@@ -448,27 +454,10 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-      /* $fields['image'] = BaseFieldDefinition::create('uri')
-      ->setLabel(t('Afbeelding'))
-      ->setDescription(t('De afbeelding van de Vehicle entity.'))
-      ->setSetting('max_length', 255)
-      ->setSetting('case_sensitive', TRUE)
-      ->addConstraint('FileUriUnique')
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -1,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'string',
-        'weight' => -1,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE); */
-
       $fields['image'] = BaseFieldDefinition::create('image')
       ->setLabel(t('Image'))
       ->setDescription(t('The image of the vehicle item.'))
+      ->setRequired(TRUE)
       ->setDisplayOptions('view', [
         'type' => 'image',
         'weight' => 5,

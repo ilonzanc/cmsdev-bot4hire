@@ -13,14 +13,17 @@
           <div class="column column-sm-12 column-6">
             <label for="name">Name *</label>
             <input type="text" id="name" name="name" placeholder="Name of your vehicle..." v-model="vehicle.name.value">
+            <p v-if="errors.name" class="message error">{{ errors.name }}</p>
             <label for="body">Description</label>
             <textarea id="body" name="body" placeholder="Description of your vehicle..." v-model="vehicle.description.value"></textarea>
             <label for="price">Price *</label>
             <input type="number" id="price" name="price" placeholder="Price of your vehicle per day..." v-model="vehicle.price.value">
+            <p v-if="errors.price" class="message error">{{ errors.price }}</p>
           </div>
           <div class="column column-sm-12 column-6">
             <label for="seats">Seats *</label>
             <input type="text" id="seats" name="seats" placeholder="Number of seats in your vehicle..." v-model="vehicle.seats.value">
+            <p v-if="errors.seats" class="message error">{{ errors.seats }}</p>
             <label for="age">Age</label>
             <input type="text" id="age" name="age" placeholder="Age of your vehicle..." v-model="vehicle.age.value">
             <label for="vehicle_type">Type of vehicle *</label>
@@ -28,16 +31,19 @@
               <option value="" selected>- Select a type -</option>
               <option v-for="vehicle_type in vehicle_types" v-bind:key="vehicle_type.id" :value="vehicle_type.id">{{vehicle_type.name}}</option>
             </select>
+            <p v-if="errors.vehicle_type_id" class="message error">{{ errors.vehicle_type_id }}</p>
             <label for="locations">Pickup Location *</label>
             <select class="form-control" name="vehicle_type_id" v-model="vehicle.location_id" >
               <option selected value="">- Selecteer een plaats -</option>
               <option v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
+            <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
             <router-link class="btn" to="/">Go to map</router-link>
             <label for="image">Vehicle image *</label>
             <input id="vehicle_image" type="file" @change="uploadImage()">
-            <div class="image-border">
-              <div class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
+            <p v-if="errors.image" class="message error">{{ errors.image }}</p>
+            <div v-if="vehicle.image_url" class="image-border">
+              <div  class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
             </div>
             <button type="submit" class="btn widebtn">Voertuig toevoegen</button>
           </div>
@@ -64,30 +70,30 @@ export default {
           }
         },
         name: {
-          value: ""
+          value: null
         },
         description: {
-          value: ""
+          value: null
         },
         price: {
-          value: ""
+          value: null
         },
         seats: {
-          value: ""
+          value: null
         },
         age: {
-          value: ""
+          value: null
         },
         vehicle_type_id:[{
-          target_id :"",
+          target_id: null,
           target_type: "vehicle_type",
         }],
         location_id:[{
-          target_id :"",
+          target_id: null,
           target_type: "location",
         }],
         image:[{
-          target_id :"",
+          target_id: null,
         }],
       },
       uploadedImage: {
@@ -97,35 +103,42 @@ export default {
           }]
         },
         filename: {
-          value: "input.png"
+          value: null
         },
         filemime: {
-          value: "input.png"
+          value: null
         },
         data: [{
-          value: "randomdata"
+          value: null
         }]
       },
       vehicle_types: {},
       locations: {},
+      errors: {
+        name: null,
+        price: null,
+        seats: null,
+        vehicle_type_id: null,
+        location_id: null,
+        image: null
+      }
     }
   },
   mounted() {
     axios.get(apiurl + "api/v1.0/vehicle_types?_format=hal_json")
     .then(response => {
-      console.log(response)
       this.vehicle_types = response.data;
     });
 
     axios.get(apiurl + 'api/v1.0/locations?_format=hal_json')
     .then(response => {
-      console.log(response)
       this.locations = response.data;
     });
   },
   methods: {
     onSubmit() {
       let self = this;
+      this.resetFields();
       axios({
           method: 'post',
           url: apiurl + "entity/vehicle?_format=hal_json",
@@ -146,26 +159,51 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            console.log(error.response.data.message);
+
+            let errorstring = error.response.data.message;
+            errorstring = errorstring.replace(new RegExp('This value should not be null.', 'g'), 'This field is required!');
+            let returnPos = errorstring.indexOf('\n');
+            errorstring = errorstring.substr(returnPos + 1, errorstring.length);
+            let errorarray = this.loopThroughErrors(errorstring);
+            this.setErrors(errorarray);
           } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
             console.log(error.request);
           } else {
-            // Something happened in setting up the request that triggered an Error
             console.log('Error', error.message);
           }
           console.log(error.config);
         });
-
-
     },
-    uploadImage() {
+    loopThroughErrors(errorstring) {
+      let array = [];
+      let loopstring = errorstring;
+      while (loopstring.length > 0) {
+        let currentReturnPos = loopstring.indexOf('\n');
+        let error = loopstring.substr(0, currentReturnPos);
+        array.push(error);
+        loopstring = loopstring.substr(currentReturnPos + 1, loopstring.length);
+
+      }
+      return array;
+    },
+    setErrors(errors) {
+      let self = this;
+      for (let error of errors) {
+        let colonPos = error.indexOf(':');
+        let errorField = error.substr(0, colonPos);
+        self.errors[errorField] = error.substr(colonPos + 1, error.length);
+      }
+    },
+    resetFields () {
+      let self = this;
+      for (let key in self.errors) {
+          if (self.errors.hasOwnProperty(key)) {
+              self.errors[key] = null;
+          }
+      }
+    },
+    uploadImage () {
       let self = this;
       let file = document.getElementById('vehicle_image').files[0];
       var reader = new FileReader();
@@ -195,18 +233,12 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            console.log(error.response.data.message);
+            let errors = [];
+
           } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
             console.log(error.request);
           } else {
-            // Something happened in setting up the request that triggered an Error
             console.log('Error', error.message);
           }
           console.log(error.config);

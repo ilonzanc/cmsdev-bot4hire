@@ -678,8 +678,7 @@ form input[type="text"],
 form input[type="email"],
 form input[type="password"],
 form input[type="date"],
-form input[type="number"],
-form textarea {
+form input[type="number"] {
   display: block;
   background: none;
   color: #fff;
@@ -700,9 +699,7 @@ form textarea {
   form input[type="date"]:focus,
   form input[type="date"].filled-in,
   form input[type="number"]:focus,
-  form input[type="number"].filled-in,
-  form textarea:focus,
-  form textarea.filled-in {
+  form input[type="number"].filled-in {
     border-color: #c9ed8b;
     color: #c9ed8b;
     box-shadow: none;
@@ -715,9 +712,7 @@ form textarea {
     form input[type="date"]:focus::-webkit-input-placeholder,
     form input[type="date"].filled-in::-webkit-input-placeholder,
     form input[type="number"]:focus::-webkit-input-placeholder,
-    form input[type="number"].filled-in::-webkit-input-placeholder,
-    form textarea:focus::-webkit-input-placeholder,
-    form textarea.filled-in::-webkit-input-placeholder {
+    form input[type="number"].filled-in::-webkit-input-placeholder {
       /* WebKit, Blink, Edge */
       opacity: 1; }
     form input[type="text"]:focus:-moz-placeholder, form input[type="text"].filled-in:-moz-placeholder,
@@ -728,9 +723,7 @@ form textarea {
     form input[type="date"]:focus:-moz-placeholder,
     form input[type="date"].filled-in:-moz-placeholder,
     form input[type="number"]:focus:-moz-placeholder,
-    form input[type="number"].filled-in:-moz-placeholder,
-    form textarea:focus:-moz-placeholder,
-    form textarea.filled-in:-moz-placeholder {
+    form input[type="number"].filled-in:-moz-placeholder {
       /* Mozilla Firefox 4 to 18 */
       opacity: 1; }
     form input[type="text"]:focus::-moz-placeholder, form input[type="text"].filled-in::-moz-placeholder,
@@ -741,9 +734,7 @@ form textarea {
     form input[type="date"]:focus::-moz-placeholder,
     form input[type="date"].filled-in::-moz-placeholder,
     form input[type="number"]:focus::-moz-placeholder,
-    form input[type="number"].filled-in::-moz-placeholder,
-    form textarea:focus::-moz-placeholder,
-    form textarea.filled-in::-moz-placeholder {
+    form input[type="number"].filled-in::-moz-placeholder {
       /* Mozilla Firefox 19+ */
       opacity: 1; }
     form input[type="text"]:focus:-ms-input-placeholder, form input[type="text"].filled-in:-ms-input-placeholder,
@@ -754,9 +745,7 @@ form textarea {
     form input[type="date"]:focus:-ms-input-placeholder,
     form input[type="date"].filled-in:-ms-input-placeholder,
     form input[type="number"]:focus:-ms-input-placeholder,
-    form input[type="number"].filled-in:-ms-input-placeholder,
-    form textarea:focus:-ms-input-placeholder,
-    form textarea.filled-in:-ms-input-placeholder {
+    form input[type="number"].filled-in:-ms-input-placeholder {
       /* Internet Explorer 10-11 */
       opacity: 1; }
     form input[type="text"]:focus::-ms-input-placeholder, form input[type="text"].filled-in::-ms-input-placeholder,
@@ -767,9 +756,7 @@ form textarea {
     form input[type="date"]:focus::-ms-input-placeholder,
     form input[type="date"].filled-in::-ms-input-placeholder,
     form input[type="number"]:focus::-ms-input-placeholder,
-    form input[type="number"].filled-in::-ms-input-placeholder,
-    form textarea:focus::-ms-input-placeholder,
-    form textarea.filled-in::-ms-input-placeholder {
+    form input[type="number"].filled-in::-ms-input-placeholder {
       /* Microsoft Edge */
       opacity: 1; }
     form input[type="text"]:focus::placeholder, form input[type="text"].filled-in::placeholder,
@@ -780,21 +767,32 @@ form textarea {
     form input[type="date"]:focus::placeholder,
     form input[type="date"].filled-in::placeholder,
     form input[type="number"]:focus::placeholder,
-    form input[type="number"].filled-in::placeholder,
-    form textarea:focus::placeholder,
-    form textarea.filled-in::placeholder {
+    form input[type="number"].filled-in::placeholder {
       /* Most modern browsers support this now. */
       opacity: 1; }
   form input[type="text"].filled-in,
   form input[type="email"].filled-in,
   form input[type="password"].filled-in,
   form input[type="date"].filled-in,
-  form input[type="number"].filled-in,
-  form textarea.filled-in {
+  form input[type="number"].filled-in {
     color: #fff;
     border-color: #fff; }
 form textarea {
-  overflow: visible; }
+  overflow: visible;
+  background: none;
+  width: 100%;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  padding: 0.5rem;
+  top: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  outline: none; }
+  form textarea:focus, form textarea.filled-in {
+    border-color: #c9ed8b;
+    color: #c9ed8b;
+    box-shadow: none;
+    top: 0; }
 
 .btn {
   border-radius: 20px;
@@ -980,6 +978,19 @@ section.review-list {
 
 .icon.small-icon {
   width: 30px; }
+
+p.message {
+  font-size: 0.8rem; }
+  p.message.error {
+    color: #ff9f4a; }
+    p.message.error:before {
+      content: "\f071";
+      font-family: 'FontAwesome';
+      font-weight: normal;
+      font-style: normal;
+      display: inline-block;
+      text-decoration: inherit;
+      margin-right: 5px; }
 
 #home .hero__image {
   height: 300px;
