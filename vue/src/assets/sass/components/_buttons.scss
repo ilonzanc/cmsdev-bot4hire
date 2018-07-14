@@ -30,6 +30,13 @@
     width: auto;
     float: right;
   }
+
+  &.delete-btn {
+    color: $error-color;
+    border-color: $error-color;
+
+
+  }
 }
 
 @media (min-width: 42.5rem) {

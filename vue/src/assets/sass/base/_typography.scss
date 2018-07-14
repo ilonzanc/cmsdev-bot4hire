@@ -47,6 +47,12 @@ p {
   font-size: 0.8rem;
 }
 
+em {
+  font-style: normal;
+  font-weight: 700;
+  color: $secundary-color;
+}
+
 
 .breadcrumbs {
   color: $secundary-color;

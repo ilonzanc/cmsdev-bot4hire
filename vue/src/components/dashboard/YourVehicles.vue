@@ -18,9 +18,9 @@
                   </div>
                 </div>
                 <div class="column column-sm-9 column-12">
-                  <i class="fa fa-eye"></i>
+                  <router-link :to="'vehicles/' + vehicle.id"><i class="fa fa-eye"></i></router-link>
                   <router-link :to="'vehicles/' + vehicle.id + '/edit'"><i class="fa fa-pencil"></i></router-link>
-                  <i class="fa fa-trash"></i>
+                  <i @click.prevent="onDelete(vehicle)" class="fa fa-trash"></i>
                   <h2>{{vehicle.name}}</h2>
                   <p>{{vehicle.vehicle_type_name}}</p>
                   <section class="vehicle-price">
@@ -32,6 +32,12 @@
           </section>
         </div>
       </div>
+      <article v-if="deleteVehicle.status" class="toast-message">
+        <i @click.prevent="closeToastMessage()" class="fa fa-times"></i>
+        <p>Are you sure you want to erase <em>{{deleteVehicle.vehicle_name}}</em> from the system?</p>
+        <button @click.prevent="confirmDelete()" class="btn delete-btn">Erase</button>
+        <button @click.prevent="closeToastMessage()" class="btn">Cancel</button>
+      </article>
     </div>
 
   </div>
@@ -44,10 +50,18 @@ export default {
   name: "your-vehicles",
   data() {
     return {
-    user: this.$parent.user,
-    password: this.$parent.user_password,
-        vehicles: []
-    };
+      user: this.$parent.user,
+      password: this.$parent.user_password,
+      vehicles: [],
+      deleteVehicle: {
+        status: false,
+        vehicle_id: null,
+        vehicle_name: null
+      },
+      errors: {
+
+      }
+    }
   },
   mounted() {
     let self = this;
@@ -65,6 +79,54 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
+  },
+  methods: {
+    closeToastMessage() {
+      this.deleteVehicle.status = false;
+      this.deleteVehicle.vehicle_id = null;
+      this.deleteVehicle.vehicle_name = null;
+    },
+    onDelete(currentVehicle) {
+      this.deleteVehicle.status = true;
+      this.deleteVehicle.vehicle_id = currentVehicle.id;
+      this.deleteVehicle.vehicle_name = currentVehicle.name;
+    },
+    confirmDelete() {
+      // TODO: Replace hard delete with soft delete
+      axios({
+        method: 'delete',
+        url: apiurl + "/admin/structure/vehicle/" + this.deleteVehicle.vehicle_id + "?_format=hal_json",
+        headers: {
+          'Accept': 'application/hal+json',
+          'Content-Type': 'application/hal+json',
+          'X-CSRF-Token': this.user.csrf_token,
+        },
+        auth: {
+          username: this.user.current_user.name,
+          password: this.password
+        }
+      })
+      .then((response) => {
+        console.log(response);
+        this.$router.go();
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data.message);
+          let errorstring = error.response.data.message;
+          errorstring = errorstring.replace(new RegExp('This value should not be null.', 'g'), 'This field is required!');
+          let returnPos = errorstring.indexOf('\n');
+          errorstring = errorstring.substr(returnPos + 1, errorstring.length);
+          let errorarray = this.loopThroughErrors(errorstring);
+          this.setErrors(errorarray);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
+    }
   }
 };
 </script>

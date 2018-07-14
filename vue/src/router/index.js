@@ -10,6 +10,7 @@ import RentVehicle from '../components/RentVehicle'
 
 import Dashboard from '../components/dashboard/Dashboard'
 import YourVehicles from '../components/dashboard/YourVehicles'
+import YourVehicle from '../components/dashboard/YourVehicle'
 import CreateVehicle from '../components/dashboard/CreateVehicle'
 import UpdateVehicle from '../components/dashboard/UpdateVehicle'
 
@@ -25,6 +26,7 @@ let routes = [
   { path: '/overzicht/voertuig/:id/huren', component: RentVehicle },
   { path: '/dashboard', component: Dashboard },
   { path: '/dashboard/vehicles', component: YourVehicles },
+  { path: '/dashboard/vehicles/:id', component: YourVehicle },
   { path: '/dashboard/vehicles/new', component: CreateVehicle },
   { path: '/dashboard/vehicles/:id/edit', component: UpdateVehicle },
 ];

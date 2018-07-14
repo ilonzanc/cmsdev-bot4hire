@@ -13,3 +13,19 @@ p.message {
         }
     }
 }
+
+.toast-message {
+    position: absolute;
+    background: $background-color;
+    top: 50%;
+    border: 1px solid $primary-color;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    padding: 1rem;
+    border-radius: 6px;
+    .fa-times {
+        float: right;
+        font-size: 1.2rem;
+    }
+}

@@ -412,6 +412,11 @@ p {
   color: #c9ed8b;
   font-size: 0.8rem; }
 
+em {
+  font-style: normal;
+  font-weight: 700;
+  color: #c9ed8b; }
+
 .breadcrumbs {
   color: #c9ed8b;
   font-weight: 700;
@@ -818,6 +823,9 @@ form textarea {
     display: inline-block;
     width: auto;
     float: right; }
+  .btn.delete-btn {
+    color: #ff9f4a;
+    border-color: #ff9f4a; }
 
 @media (min-width: 42.5rem) {
   .btn {
@@ -991,6 +999,20 @@ p.message {
       display: inline-block;
       text-decoration: inherit;
       margin-right: 5px; }
+
+.toast-message {
+  position: absolute;
+  background: #161e33;
+  top: 50%;
+  border: 1px solid #67b1fc;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  padding: 1rem;
+  border-radius: 6px; }
+  .toast-message .fa-times {
+    float: right;
+    font-size: 1.2rem; }
 
 #home .hero__image {
   height: 300px;
