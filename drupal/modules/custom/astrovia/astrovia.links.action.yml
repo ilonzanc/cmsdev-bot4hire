@@ -28,3 +28,8 @@ entity.planet.add_form:
   title: 'Add Planet'
   appears_on:
     - entity.planet.collection
+entity.profile.add_form:
+  route_name: entity.profile.add_form
+  title: 'Add Profile'
+  appears_on:
+    - entity.profile.collection

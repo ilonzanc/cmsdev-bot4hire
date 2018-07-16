@@ -3,7 +3,7 @@
       <div class="container">
       <section class="section__profile">
         <header class="title-header">
-          <h1>{{user.name}}</h1>
+          <h1>{{user.username}}</h1>
           <svg version="1.1" id="title-line" x="0px" y="0px"
             viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
             <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
@@ -12,9 +12,9 @@
         <div class="image-border">
           <div class="profile-image" :style='"background: url( http://localhost:8888/sites/default/files" + user.uri + ") no-repeat center; background-size: contain"'></div>
         </div>
-        <h2>Starscream of Vos</h2>
+        <h2>{{user.first_name + " " + user.last_name}}</h2>
         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>{{user.bio}}</p>
       </section>
       <section class="section-contact-information">
         <h2>Contact Information</h2>
@@ -89,52 +89,59 @@ export default {
     name: 'profile',
     data () {
     return {
-      activeuser: this.$parent.user,
-      password: this.$parent.user_password,
       user: {},
       vehicles: [],
       rentals: [],
-      password: 'secret',
       reviews: []
     }
   },
   mounted () {
     console.log('Profile Component Mounted');
+    let self = this;
     axios({
       method: 'get',
-      //url: apiurl + "user/" + this.$route.params.id + "?_format=hal_json",
-      url: apiurl + "api/v1.0/users/" + this.$route.params.id + "?_format=hal_json",
+      url: apiurl + "api/v1.0/profiles/" + this.$route.params.id + "?_format=hal_json",
       headers: {
-      //'X-CSRF-Token': this.user.csrf_token,
-      'Accept': 'application/hal+json',
-      'Content-Type': 'application/hal+json',
-      'X-CSRF-Token': this.activeuser.csrf_token,
+        'Accept': 'application/hal+json',
+        'Content-Type': 'application/hal+json',
+        'X-CSRF-Token': self.user.csrf_token,
       },
-      auth: {
-        username: this.activeuser.current_user.name,
-        password: "secret"
-      },
+      /* auth: {
+        username: self.user.current_user.name,
+        password: self.user.current_user.pass,
+      }, */
     })
     .then(response => {
       console.log(response)
       this.user = response.data[0];
-      let slashPos = this.user.uri.indexOf("/");
-      this.user.uri = this.user.uri.substring(slashPos + 1, this.user.uri.length);
+      if (this.user.uri) {
+        let slashPos = this.user.uri.indexOf("/");
+        this.user.uri = this.user.uri.substring(slashPos + 1, this.user.uri.length);
+      }
       this.getVehiclesByUser();
     })
     .catch(error => {
-      console.log(error);
+      if (error.response) {
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        console.log(error.response.data.message);
+
+        let errors = [];
+
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
     });
   },
   methods: {
     getVehiclesByUser() {
-      axios.get(apiurl + 'api/v1.0/vehicles?_format=hal_json')
+      axios.get(apiurl + '/api/v1.0/users/' + this.$route.params.id + '/vehicles?_format=hal_json')
       .then(response => {
         console.log(response)
-        for (let i = 0; i < response.data.length; i++){
-          if (response.data[i].user_id == this.user.uid[0].value)
-            this.vehicles.push(response.data[i])
-        }
+        this.vehicles = response.data[0];
       })
       .catch(error => {
         console.log(error);

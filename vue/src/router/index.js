@@ -13,6 +13,7 @@ import YourVehicles from '../components/dashboard/YourVehicles'
 import YourVehicle from '../components/dashboard/YourVehicle'
 import CreateVehicle from '../components/dashboard/CreateVehicle'
 import UpdateVehicle from '../components/dashboard/UpdateVehicle'
+import UpdateProfile from '../components/dashboard/UpdateProfile'
 
 Vue.use(Router);
 
@@ -26,9 +27,10 @@ let routes = [
   { path: '/overzicht/voertuig/:id/huren', component: RentVehicle },
   { path: '/dashboard', component: Dashboard },
   { path: '/dashboard/vehicles', component: YourVehicles },
-  { path: '/dashboard/vehicles/:id', component: YourVehicle },
   { path: '/dashboard/vehicles/new', component: CreateVehicle },
+  { path: '/dashboard/vehicles/:id', component: YourVehicle },
   { path: '/dashboard/vehicles/:id/edit', component: UpdateVehicle },
+  { path: '/dashboard/profile/edit', component: UpdateProfile },
 ];
 
 export default new Router({

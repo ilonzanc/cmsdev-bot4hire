@@ -109,3 +109,22 @@ view published planet entities:
 
 view unpublished planet entities:
   title: 'View unpublished Planet entities'
+add profile entities:
+  title: 'Create new Profile entities'
+
+administer profile entities:
+  title: 'Administer Profile entities'
+  description: 'Allow to access the administration form to configure Profile entities.'
+  restrict access: true
+
+delete profile entities:
+  title: 'Delete Profile entities'
+
+edit profile entities:
+  title: 'Edit Profile entities'
+
+view published profile entities:
+  title: 'View published Profile entities'
+
+view unpublished profile entities:
+  title: 'View unpublished Profile entities'

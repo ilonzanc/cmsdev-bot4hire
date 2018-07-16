@@ -159,6 +159,8 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
+            console.log(error.response.status);
+            console.log(error.response.headers);
             console.log(error.response.data.message);
 
             let errorstring = error.response.data.message;
@@ -198,9 +200,9 @@ export default {
     resetFields () {
       let self = this;
       for (let key in self.errors) {
-          if (self.errors.hasOwnProperty(key)) {
-              self.errors[key] = null;
-          }
+        if (self.errors.hasOwnProperty(key)) {
+            self.errors[key] = null;
+        }
       }
     },
     uploadImage () {

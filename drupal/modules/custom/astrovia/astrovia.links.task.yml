@@ -129,3 +129,25 @@ entity.planet.delete_form:
   title: Delete
   weight: 10
 
+# Profile routing definition
+profile.settings_tab:
+  route_name: profile.settings
+  title: 'Settings'
+  base_route: profile.settings
+
+entity.profile.canonical:
+  route_name: entity.profile.canonical
+  base_route: entity.profile.canonical
+  title: 'View'
+
+entity.profile.edit_form:
+  route_name: entity.profile.edit_form
+  base_route: entity.profile.canonical
+  title: 'Edit'
+
+entity.profile.delete_form:
+  route_name:  entity.profile.delete_form
+  base_route:  entity.profile.canonical
+  title: Delete
+  weight: 10
+

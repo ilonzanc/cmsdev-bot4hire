@@ -3,7 +3,7 @@
     <header class="navigation-header">
         <div class="container">
             <a href="#" v-bind:class="'fa ' + [navOpen ? 'fa-times' : 'fa-bars'] + ' toggleBars'" @click.prevent="toggleNav"></a>
-      <h1>Astrovia</h1>
+            <router-link to="/" exact><h1>Astrovia</h1></router-link>
             <router-link to="/" exact><img class="header_logo" src=""><h1></h1></router-link>
             <nav :class="{ 'nav-open': navOpen }">
                 <ul>
@@ -13,11 +13,11 @@
                     <router-link to="/overzicht" tag="li" exact @click.prevent="toggleNav">
                         <a>Overzicht</a>
                     </router-link>
-                    <router-link v-if="!user" to="/aanmelden" tag="li" exact @click.prevent="toggleNav">
+                    <router-link v-if="!loggedInUser" to="/aanmelden" tag="li" exact @click.prevent="toggleNav">
                         <a>Aanmelden</a>
                     </router-link>
-                    <div v-if="user">
-                        <router-link :to="'/profiel/' + user.current_user.uid" tag="li" exact @click.prevent="toggleNav">
+                    <div v-if="loggedInUser">
+                        <router-link :to="'/profiel/' + loggedInUser.current_user.uid" tag="li" exact @click.prevent="toggleNav">
                             <a>Profiel</a>
                         </router-link>
                         <router-link :to="'/dashboard'" tag="li" exact @click.prevent="toggleNav">
@@ -45,8 +45,7 @@ export default {
   data() {
     return {
       navOpen: false,
-      user: JSON.parse(localStorage.getItem('loggedInUser')),
-      user_password: localStorage.getItem('password')
+      loggedInUser: JSON.parse(localStorage.getItem('loggedInUser')),
     }
   },
   watch: {
@@ -69,7 +68,6 @@ export default {
     },
     logOut() {
       localStorage.removeItem('loggedInUser');
-      localStorage.removeItem('password');
       location.href = '/';
     }
   }
