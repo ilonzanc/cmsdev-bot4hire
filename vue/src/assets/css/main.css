@@ -782,6 +782,8 @@ form input[type="number"] {
   form input[type="number"].filled-in {
     color: #fff;
     border-color: #fff; }
+form .checkbox-group {
+  display: block; }
 form textarea {
   overflow: visible;
   background: none;

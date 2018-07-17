@@ -10,8 +10,44 @@
       </header>
       <form @submit.prevent="onSubmit">
         <label for="username">Username *</label>
-        <input type="text" id="username" name="username" placeholder="Your username..." v-bind:class="{ 'filled-in': user.name.value }" v-model="user.name.value">
+        <input type="text" id="username" name="username" placeholder="Your username..." v-bind:class="{ 'filled-in': currentUser.username }" v-model="currentUser.username">
+        <!-- <p v-if="errors.name" class="message error">{{ errors.name }}</p> -->
+        <label for="first_name">First Name *</label>
+        <input type="text" id="first_name" name="first_name" placeholder="Your firstname..." v-bind:class="{ 'filled-in': currentUser.first_name }" v-model="currentUser.first_name">
         <p v-if="errors.name" class="message error">{{ errors.name }}</p>
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" placeholder="Your username..." v-bind:class="{ 'filled-in': currentUser.last_name }" v-model="currentUser.last_name">
+        <p v-if="errors.last_name" class="message error">{{ errors.last_name }}</p>
+        <div class="checkbox-group">
+          <input type="checkbox" id="display_name" v-model="currentUser.display_name">
+          <label for="display_name">Display your full name</label>
+        </div>
+        <label for="bio">Bio</label>
+        <textarea name="bio" id="bio" placeholder="Tell something about yourself..." v-model="currentUser.bio"></textarea>
+        <p v-if="errors.bio" class="message error">{{ errors.bio }}</p>
+        <!-- TODO: include email address-->
+        <!-- <label for="email">Email Address</label>
+        <input type="text" id="email" name="email" placeholder="Your email address..." v-bind:class="{ 'filled-in': currentUser.email }" v-model="currentUser.email">
+        <p v-if="errors.email" class="message error">{{ errors.email }}</p>
+        <div class="checkbox-group">
+          <input type="checkbox" id="display_email" v-model="currentUser.display_email">
+          <label for="display_email">Display your emailaddress</label>
+        </div> -->
+        <label for="tel">Phone Number</label>
+        <input type="text" id="tel" name="tel" placeholder="Your phone number..." v-bind:class="{ 'filled-in': currentUser.tel }" v-model="currentUser.tel">
+        <p v-if="errors.tel" class="message error">{{ errors.tel }}</p>
+        <div class="checkbox-group">
+          <input type="checkbox" id="display_tel" v-model="currentUser.display_tel">
+          <label for="display_tel">Display your phone number</label>
+        </div>
+        <label for="comm_frequency">Comm. frequency</label>
+        <input type="text" id="comm_frequency" name="comm_frequency" placeholder="Your comm. frequency..." v-bind:class="{ 'filled-in': currentUser.comm_frequency }" v-model="currentUser.comm_frequency">
+        <p v-if="errors.comm_frequency" class="message error">{{ errors.comm_frequency }}</p>
+        <div class="checkbox-group">
+          <input type="checkbox" id="display_comm_frequency" v-model="currentUser.display_comm_frequency">
+          <label for="display_comm_frequency">Display your comm. frequency</label>
+        </div>
+        <button type="submit" class="btn widebtn">Update profile</button>
       </form>
     </div>
   </div>
@@ -25,100 +61,79 @@ export default {
   name: 'update-profile',
   data () {
     return {
-      user: {
-        name: {
-          value: null
-        }
-      },
+      currentUser: { },
       errors: {
         name: null,
-        price: null,
-        seats: null,
-        vehicle_type_id: null,
-        location_id: null,
-        image: [{
-          target_id: null
-        }]
+        last_name: null,
+        bio: null,
       }
     }
   },
     mounted() {
-      axios.get(apiurl + "api/v1.0/users/" + this.user.current_user.uid + "?_format=hal_json")
+      axios.get(apiurl + "api/v1.0/profiles/" + this.$parent.loggedInUser.current_user.uid + "?_format=hal_json")
       .then(response => {
       console.log(response)
-      this.user = response.data[0];
-    });
+      this.currentUser = response.data[0];
 
-    axios.get(apiurl + 'api/v1.0/locations?_format=hal_json')
-      .then(response => {
-      console.log(response)
-      this.locations = response.data;
-    });
-
-    axios.get(apiurl + 'api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
-    .then(response => {
-      console.log(response)
-      this.vehicle = response.data[0];
-    })
-    .catch(error => {
-      console.log(error);
+      this.currentUser.display_comm_frequency = parseInt(this.currentUser.display_comm_frequency);
+      this.currentUser.display_email = parseInt(this.currentUser.display_email);
+      this.currentUser.display_name = parseInt(this.currentUser.display_name);
+      this.currentUser.display_tel = parseInt(this.currentUser.display_tel);
     });
   },
   methods: {
     onSubmit() {
       let self = this;
       //this.resetFields();
-      let updateVehicle = {
+      let updatedProfile = {
         _links: {
           type: {
-            href: apiurl + "rest/type/vehicle/vehicle"
+            href: apiurl + "rest/type/profile/profile"
           }
         },
         name: {
-          value: self.vehicle.name
+          value: this.currentUser.first_name
         },
-        description: {
-          value: self.vehicle.description
+        last_name: {
+          value: this.currentUser.last_name
         },
-        price: {
-          value: self.vehicle.price
+        display_name: {
+          value: this.currentUser.display_name
         },
-        seats: {
-          value: self.vehicle.seats
+        bio: {
+          value: this.currentUser.bio
         },
-        age: {
-          value: self.vehicle.age
+        tel: {
+          value: this.currentUser.tel
         },
-        vehicle_type_id: [{
-          target_id: self.vehicle.vehicle_type_id,
-          target_type: "",
-        }],
-        location_id: [{
-          target_id: self.vehicle.location_id,
-          target_type: "",
-        }],
-        image: [{
-          target_id: self.vehicle.image_id,
-        }],
+        display_tel: {
+          value: this.currentUser.display_tel
+        },
+        comm_frequency: {
+          value: this.currentUser.comm_frequency
+        },
+        display_comm_frequency: {
+          value: this.currentUser.display_comm_frequency
+        }
       };
 
       axios({
         method: 'patch',
-        url: apiurl + "admin/structure/vehicle/" + this.$route.params.id + "?_format=hal_json",
+        url: apiurl + "admin/structure/profile/" + this.currentUser.id + "?_format=hal_json",
         headers: {
         'Accept': 'application/hal+json',
         'Content-Type': 'application/hal+json',
-        'X-CSRF-Token': self.user.csrf_token,
+        'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
       },
       auth: {
-        username: self.user.current_user.name,
-        password: self.password
+        username: this.$parent.loggedInUser.current_user.name,
+        password: this.$parent.loggedInUser.current_user.password
       },
-      data: updateVehicle
+      data: updatedProfile
       })
       .then((response) => {
         console.log(response);
-        location.href = '/dashboard/vehicles/' + response.data.id[0].value;
+        //location.href = '/dashboard/vehicles/' + response.data.id[0].value;
       })
       .catch((error) => {
         if (error.response) {
