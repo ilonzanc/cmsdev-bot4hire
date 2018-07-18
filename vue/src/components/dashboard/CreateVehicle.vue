@@ -12,28 +12,28 @@
         <div class="row">
           <div class="column column-sm-12 column-6">
             <label for="name">Name *</label>
-            <input type="text" id="name" name="name" placeholder="Name of your vehicle..." v-model="vehicle.name.value">
+            <input type="text" id="name" name="name" placeholder="Name of your vehicle..." v-bind:class="{ 'filled-in': vehicle.name.value }" v-model="vehicle.name.value">
             <p v-if="errors.name" class="message error">{{ errors.name }}</p>
             <label for="body">Description</label>
-            <textarea id="body" name="body" placeholder="Description of your vehicle..." v-model="vehicle.description.value"></textarea>
+            <textarea id="body" name="body" placeholder="Description of your vehicle..." v-bind:class="{ 'filled-in': vehicle.description.value }" v-model="vehicle.description.value"></textarea>
             <label for="price">Price *</label>
-            <input type="number" id="price" name="price" placeholder="Price of your vehicle per day..." v-model="vehicle.price.value">
+            <input type="number" id="price" name="price" placeholder="Price of your vehicle per day..." v-bind:class="{ 'filled-in': vehicle.price.value }" v-model="vehicle.price.value">
             <p v-if="errors.price" class="message error">{{ errors.price }}</p>
           </div>
           <div class="column column-sm-12 column-6">
             <label for="seats">Seats *</label>
-            <input type="text" id="seats" name="seats" placeholder="Number of seats in your vehicle..." v-model="vehicle.seats.value">
+            <input type="text" id="seats" name="seats" placeholder="Number of seats in your vehicle..." v-bind:class="{ 'filled-in': vehicle.seats.value }" v-model="vehicle.seats.value">
             <p v-if="errors.seats" class="message error">{{ errors.seats }}</p>
             <label for="age">Age</label>
-            <input type="text" id="age" name="age" placeholder="Age of your vehicle..." v-model="vehicle.age.value">
+            <input type="text" id="age" name="age" placeholder="Age of your vehicle..." v-bind:class="{ 'filled-in': vehicle.age.value }" v-model="vehicle.age.value">
             <label for="vehicle_type">Type of vehicle *</label>
-            <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id" >
+            <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id[0].target_id" >
               <option value="" selected>- Select a type -</option>
               <option v-for="vehicle_type in vehicle_types" v-bind:key="vehicle_type.id" :value="vehicle_type.id">{{vehicle_type.name}}</option>
             </select>
             <p v-if="errors.vehicle_type_id" class="message error">{{ errors.vehicle_type_id }}</p>
             <label for="locations">Pickup Location *</label>
-            <select class="form-control" name="vehicle_type_id" v-model="vehicle.location_id" >
+            <select class="form-control" name="vehicle_type_id" v-model="vehicle.location_id[0].target_id" >
               <option selected value="">- Selecteer een plaats -</option>
               <option v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
@@ -140,42 +140,42 @@ export default {
       let self = this;
       this.resetFields();
       axios({
-          method: 'post',
-          url: apiurl + "entity/vehicle?_format=hal_json",
-          headers: {
-            'Accept': 'application/hal+json',
-            'Content-Type': 'application/hal+json',
-            'X-CSRF-Token': self.user.csrf_token,
-          },
-          auth: {
-            username: self.user.current_user.name,
-            password: self.password
-          },
-          data: self.vehicle
-        })
-        .then((response) => {
-          console.log(response);
-          location.href = '/overzicht/voertuig/' + response.data.id[0].value;
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.headers);
-            console.log(error.response.data.message);
+        method: 'post',
+        url: apiurl + "entity/vehicle?_format=hal_json",
+        headers: {
+          'Accept': 'application/hal+json',
+          'Content-Type': 'application/hal+json',
+          'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
+        },
+        auth: {
+          username: this.$parent.loggedInUser.current_user.name,
+          password: this.$parent.loggedInUser.current_user.pass
+        },
+        data: this.vehicle
+      })
+      .then((response) => {
+        console.log(response);
+        location.href = '/overzicht/voertuig/' + response.data.id[0].value;
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          console.log(error.response.data.message);
 
-            let errorstring = error.response.data.message;
-            errorstring = errorstring.replace(new RegExp('This value should not be null.', 'g'), 'This field is required!');
-            let returnPos = errorstring.indexOf('\n');
-            errorstring = errorstring.substr(returnPos + 1, errorstring.length);
-            let errorarray = this.loopThroughErrors(errorstring);
-            this.setErrors(errorarray);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-        });
+          let errorstring = error.response.data.message;
+          errorstring = errorstring.replace(new RegExp('This value should not be null.', 'g'), 'This field is required!');
+          let returnPos = errorstring.indexOf('\n');
+          errorstring = errorstring.substr(returnPos + 1, errorstring.length);
+          let errorarray = this.loopThroughErrors(errorstring);
+          this.setErrors(errorarray);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
     },
     loopThroughErrors(errorstring) {
       let array = [];
@@ -219,23 +219,25 @@ export default {
           url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
           headers: {
             'Content-Type': 'application/octet-stream',
-            'X-CSRF-Token': self.user.csrf_token,
+            'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
             'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
           },
           auth: {
-            username: self.user.current_user.name,
-            password: self.password
+            username: this.$parent.loggedInUser.current_user.name,
+            password: this.$parent.loggedInUser.current_user.pass
           },
-          data: self.uploadedImage.data[0].value
+          data: this.uploadedImage.data[0].value
         })
         .then((response) => {
           console.log(response);
-          self.vehicle.image[0].target_id = response.data.fid[0].value;
+          this.vehicle.image[0].target_id = response.data.fid[0].value;
 
         })
         .catch((error) => {
           if (error.response) {
             console.log(error.response.data.message);
+            console.log(error.response.status);
+            console.log(error.response.headers);
             let errors = [];
 
           } else if (error.request) {
