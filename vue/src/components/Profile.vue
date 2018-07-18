@@ -12,24 +12,20 @@
         <div class="image-border">
           <div class="profile-image" :style='"background: url( http://localhost:8888/sites/default/files" + user.uri + ") no-repeat center; background-size: contain"'></div>
         </div>
-        <h2>{{user.first_name + " " + user.last_name}}</h2>
+        <h2>{{user.display_name == 1 ? user.first_name + " " + user.last_name : user.username}}</h2>
         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
         <p>{{user.bio}}</p>
       </section>
       <section class="section-contact-information">
         <h2>Contact Information</h2>
         <dl>
-          <div class="dr">
-            <dt><i class="fa fa-envelope-o"></i></dt>
-            <dd>johndoe@mail.com</dd>
-          </div>
-          <div class="dr">
+          <div v-if="user.display_tel == 1" class="dr">
             <dt><i class="fa fa-phone"></i></dt>
-            <dd>+32498055032</dd>
+            <dd>{{user.tel}}</dd>
           </div>
-          <div class="dr">
+          <div v-if="user.display_comm_frequency == 1" class="dr">
             <dt><i title="Comm. frequency" class="fa fa-rss"></i></dt>
-            <dd>152.63.25</dd>
+            <dd>{{user.comm_frequency}}</dd>
           </div>
         </dl>
       </section>
@@ -118,6 +114,10 @@ export default {
         let slashPos = this.user.uri.indexOf("/");
         this.user.uri = this.user.uri.substring(slashPos + 1, this.user.uri.length);
       }
+      this.user.display_comm_frequency = parseInt(this.user.display_comm_frequency);
+      this.user.display_email = parseInt(this.user.display_email);
+      this.user.display_name = parseInt(this.user.display_name);
+      this.user.display_tel = parseInt(this.user.display_tel);
       this.getVehiclesByUser();
     })
     .catch(error => {

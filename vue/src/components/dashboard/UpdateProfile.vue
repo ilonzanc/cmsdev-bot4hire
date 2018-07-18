@@ -9,9 +9,6 @@
         </svg>
       </header>
       <form @submit.prevent="onSubmit">
-        <label for="username">Username *</label>
-        <input type="text" id="username" name="username" placeholder="Your username..." v-bind:class="{ 'filled-in': currentUser.username }" v-model="currentUser.username">
-        <!-- <p v-if="errors.name" class="message error">{{ errors.name }}</p> -->
         <label for="first_name">First Name *</label>
         <input type="text" id="first_name" name="first_name" placeholder="Your firstname..." v-bind:class="{ 'filled-in': currentUser.first_name }" v-model="currentUser.first_name">
         <p v-if="errors.name" class="message error">{{ errors.name }}</p>
@@ -25,14 +22,6 @@
         <label for="bio">Bio</label>
         <textarea name="bio" id="bio" placeholder="Tell something about yourself..." v-model="currentUser.bio"></textarea>
         <p v-if="errors.bio" class="message error">{{ errors.bio }}</p>
-        <!-- TODO: include email address-->
-        <!-- <label for="email">Email Address</label>
-        <input type="text" id="email" name="email" placeholder="Your email address..." v-bind:class="{ 'filled-in': currentUser.email }" v-model="currentUser.email">
-        <p v-if="errors.email" class="message error">{{ errors.email }}</p>
-        <div class="checkbox-group">
-          <input type="checkbox" id="display_email" v-model="currentUser.display_email">
-          <label for="display_email">Display your emailaddress</label>
-        </div> -->
         <label for="tel">Phone Number</label>
         <input type="text" id="tel" name="tel" placeholder="Your phone number..." v-bind:class="{ 'filled-in': currentUser.tel }" v-model="currentUser.tel">
         <p v-if="errors.tel" class="message error">{{ errors.tel }}</p>
@@ -76,7 +65,6 @@ export default {
       this.currentUser = response.data[0];
 
       this.currentUser.display_comm_frequency = parseInt(this.currentUser.display_comm_frequency);
-      this.currentUser.display_email = parseInt(this.currentUser.display_email);
       this.currentUser.display_name = parseInt(this.currentUser.display_name);
       this.currentUser.display_tel = parseInt(this.currentUser.display_tel);
     });
