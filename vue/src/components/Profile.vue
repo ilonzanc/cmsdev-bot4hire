@@ -52,7 +52,7 @@
       </section>
       <section class="review-list">
         <h2>Reviews</h2>
-        <article v-for="review in reviews" v-bind:key="review.id" class="review">
+        <article v-for="review in reviewsAsRenter" v-bind:key="review.id" class="review">
           <div class="row">
             <div class="column column-sm-3 column-2">
               <router-link :to="'/profiel/' + review.user_id">
@@ -62,16 +62,33 @@
             </div>
             <div class="column column-sm-9 column-10">
               <h3>{{review.user_name}}</h3>
-              <!-- <h3>{{review.title}}</h3> -->
+              <h3>{{review.title}}</h3>
               <section class="vehicle-rating">
-                <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i>
+                <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i><i v-if="review.rating < 5" v-bind:key="n" v-for="n in (5 - review.rating)" class="fa fa-star-o" style="marginRight: 0.5rem; color: #c9ed8b"></i>
               </section>
-
               <p>{{review.body}}</p>
             </div>
           </div>
         </article>
-        <p v-if="reviews.length == 0">This user doesn't have any reviews yet.</p>
+        <article v-for="review in reviewsAsOwner" v-bind:key="review.id" class="review">
+          <div class="row">
+            <div class="column column-sm-3 column-2">
+              <router-link :to="'/profiel/' + review.user_id">
+                <i class="fa fa-user-circle"></i>
+
+              </router-link>
+            </div>
+            <div class="column column-sm-9 column-10">
+              <h3>{{review.user_name}}</h3>
+              <h3>{{review.title}}</h3>
+              <section class="vehicle-rating">
+                <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i><i v-if="review.rating < 5" v-bind:key="n" v-for="n in (5 - review.rating)" class="fa fa-star-o" style="marginRight: 0.5rem; color: #c9ed8b"></i>
+              </section>
+              <p>{{review.body}}</p>
+            </div>
+          </div>
+        </article>
+        <p v-if="reviewsAsRenter.length == 0 && reviewsAsOwner.length == 0">This user doesn't have any reviews yet.</p>
       </section>
       </div>
   </div>
@@ -88,27 +105,24 @@ export default {
       user: {},
       vehicles: [],
       rentals: [],
-      reviews: []
+      reviewsAsRenter: [],
+      reviewsAsOwner: [],
+      averageRating: null
     }
   },
   mounted () {
     console.log('Profile Component Mounted');
-    let self = this;
     axios({
       method: 'get',
       url: apiurl + "api/v1.0/profiles/" + this.$route.params.id + "?_format=hal_json",
       headers: {
         'Accept': 'application/hal+json',
         'Content-Type': 'application/hal+json',
-        'X-CSRF-Token': self.user.csrf_token,
+        'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
       },
-      /* auth: {
-        username: self.user.current_user.name,
-        password: self.user.current_user.pass,
-      }, */
     })
     .then(response => {
-      console.log(response)
+      console.log(response.data[0])
       this.user = response.data[0];
       if (this.user.uri) {
         let slashPos = this.user.uri.indexOf("/");
@@ -119,6 +133,7 @@ export default {
       this.user.display_name = parseInt(this.user.display_name);
       this.user.display_tel = parseInt(this.user.display_tel);
       this.getVehiclesByUser();
+      this.getReviewsByUser();
     })
     .catch(error => {
       if (error.response) {
@@ -138,10 +153,35 @@ export default {
   },
   methods: {
     getVehiclesByUser() {
-      axios.get(apiurl + '/api/v1.0/users/' + this.$route.params.id + '/vehicles?_format=hal_json')
+      axios.get(apiurl + 'api/v1.0/users/' + this.user.user_id + '/vehicles?_format=hal_json')
       .then(response => {
-        console.log(response)
-        this.vehicles = response.data[0];
+        console.log(response.data);
+        this.vehicles = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    },
+    getReviewsByUser() {
+      axios.get(apiurl + 'api/v1.0/reviews/renter/' + this.user.user_id + '?_format=hal_json')
+      .then(response => {
+        console.log(response.data);
+        this.reviewsAsRenter = response.data;
+        for (let review of this.reviewsAsRenter) {
+          review.rating = parseInt(review.rating);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+      axios.get(apiurl + 'api/v1.0/reviews/owner/' + this.user.user_id + '?_format=hal_json')
+      .then(response => {
+        console.log(response.data);
+        this.reviewsAsOwner = response.data;
+        for (let review of this.reviewsAsOwner) {
+          review.rating = parseInt(review.rating);
+        }
       })
       .catch(error => {
         console.log(error);

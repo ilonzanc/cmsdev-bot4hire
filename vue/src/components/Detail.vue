@@ -130,14 +130,13 @@
             <div class="column column-sm-3 column-2">
               <router-link :to="'/profiel/' + review.user_id">
                 <i class="fa fa-user-circle"></i>
-
               </router-link>
             </div>
             <div class="column column-sm-9 column-10">
               <h3>{{review.user_name}}</h3>
               <!-- <h3>{{review.title}}</h3> -->
               <section class="vehicle-rating">
-                <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i>
+                <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i><i v-if="review.rating < 5" v-bind:key="n" v-for="n in (5 - review.rating)" class="fa fa-star-o" style="marginRight: 0.5rem; color: #c9ed8b"></i>
               </section>
 
               <p>{{review.body}}</p>
@@ -145,22 +144,6 @@
           </div>
         </section>
         <p v-if="reviews.length == 0">This vehicle doesn't have any reviews yet.</p>
-      </section>
-      <section v-if="$parent.loggedInUser.current_user.uid !== vehicle.user_id" class="section__newreview">
-        <div class="row">
-          <div class="column column-sm-12 column-6">
-            <h2><i class="fa fa-plus"></i> Add a new review</h2>
-            <form @submit.prevent="onSubmit">
-              <label for="title">Title</label>
-              <input type="text" id="title" name="title" placeholder="Title of your review..." required ref="title" v-bind:class="{ 'filled-in': newReview.title.value }" v-model="newReview.title.value" @focus.prevent="onFocus()">
-              <label for="rating">Rating</label>
-              <input type="text" name="rating" placeholder="Rating on 5..." required v-model="newReview.rating.value">
-              <label for="body">Description</label>
-              <textarea id="body" name="body" placeholder="Tell us more..." required v-model="newReview.body.value"></textarea>
-              <button type="submit" class="btn">add review</button>
-            </form>
-          </div>
-        </div>
       </section>
       </div>
   </div>

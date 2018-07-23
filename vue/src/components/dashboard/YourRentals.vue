@@ -21,7 +21,7 @@
           </section>
         </div>
       </div>
-      <h2>As user</h2>
+      <h2>As renter</h2>
       <div class="row">
         <div class="column column-sm-12 column-4" v-bind:key="user_rental.id" v-for="user_rental in rentalsAsUser">
           <section class="section__vehicle">
@@ -38,10 +38,9 @@
         <div class="column column-sm-12 column-4" v-bind:key="closed_rental.id" v-for="closed_rental in closedRentals">
           <section class="section__vehicle">
               <h3>Contract ID {{closed_rental.id}}</h3>
-              <p v-if="closed_rental.accepted_by_owner == 0" class="message information">This contract still needs confirmation</p>
               <p>Vehicle rented: {{closed_rental.vehicle_name}}</p>
               <p v-if="closed_rental.vehicle_owner != $parent.loggedInUser.current_user.name">Owner: {{closed_rental.vehicle_owner}}</p>
-              <p v-if="closed_rental.renter_id != $parent.loggedInUser.current_user.name">Rented by: {{closed_rental.renter_id}}</p>
+              <p v-if="closed_rental.renter_username != $parent.loggedInUser.current_user.name">Rented by: {{closed_rental.renter_id}}</p>
               <router-link :to="'rentalcontracts/' + closed_rental.id" class="btn smallbtn"><i class="fa fa-eye"></i> view</router-link>
           </section>
         </div>
@@ -117,54 +116,8 @@ export default {
     });
   },
   methods: {
-    closeToastMessage() {
-      this.deleteVehicle.status = false;
-      this.deleteVehicle.vehicle_id = null;
-      this.deleteVehicle.vehicle_name = null;
-    },
-    onDelete(currentVehicle) {
-      this.deleteVehicle.status = true;
-      this.deleteVehicle.vehicle_id = currentVehicle.id;
-      this.deleteVehicle.vehicle_name = currentVehicle.name;
-    },
-    confirmDelete() {
-      // TODO: Replace hard delete with soft delete
-      axios({
-        method: 'delete',
-        url: apiurl + "/admin/structure/vehicle/" + this.deleteVehicle.vehicle_id + "?_format=hal_json",
-        headers: {
-          'Accept': 'application/hal+json',
-          'Content-Type': 'application/hal+json',
-          'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
-        },
-        auth: {
-          username: this.$parent.loggedInUser.current_user.name,
-          password: this.$parent.loggedInUser.current_user.password
-        }
-      })
-      .then((response) => {
-        console.log(response);
-        this.$router.go();
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response.data.message);
-          let errorstring = error.response.data.message;
-          errorstring = errorstring.replace(new RegExp('This value should not be null.', 'g'), 'This field is required!');
-          let returnPos = errorstring.indexOf('\n');
-          errorstring = errorstring.substr(returnPos + 1, errorstring.length);
-          let errorarray = this.loopThroughErrors(errorstring);
-          this.setErrors(errorarray);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
-    }
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -51,7 +51,7 @@ export default {
 
     axios.get(apiurl + 'api/v1.0/rentals/owner/' + this.$parent.loggedInUser.current_user.uid + '?_format=hal_json')
     .then(response => {
-      console.log(response.data[0])
+      console.log(response.data[0]);
       this.rentals = response.data;
 
       for (let rental of this.rentals) {

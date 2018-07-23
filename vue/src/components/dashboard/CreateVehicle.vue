@@ -185,7 +185,6 @@ export default {
         let error = loopstring.substr(0, currentReturnPos);
         array.push(error);
         loopstring = loopstring.substr(currentReturnPos + 1, loopstring.length);
-
       }
       return array;
     },
