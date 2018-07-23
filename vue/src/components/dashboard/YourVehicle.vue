@@ -1,7 +1,7 @@
 <template>
   <div id="your-vehicle">
       <div class="container">
-      <router-link class="breadcrumbs" to="/overzicht"><i class="fa fa-chevron-left"></i> back to overview</router-link>
+      <router-link class="breadcrumbs" to="/dashboard/vehicles"><i class="fa fa-chevron-left"></i> back to your vehicles</router-link>
       <section class="section__vehicle">
         <header class="title-header">
           <h1>{{vehicle.name}}</h1>
@@ -119,8 +119,8 @@
                 </table>
               </tab>
             </tabs>
-            <router-link v-if="activeuser.current_user.uid !== vehicle.uid" :to="vehicle.id + '/huren'" class="btn">Rent this vehicle</router-link>
-            <router-link v-if="activeuser.current_user.uid == vehicle.uid" :to="'/voertuig/' + vehicle.id + '/bewerken'" class="btn smallbtn"><i class="fa fa-pencil"></i> edit</router-link>
+            <router-link v-if="this.$parent.loggedInUser.current_user.uid !== vehicle.uid" :to="vehicle.id + '/huren'" class="btn">Rent this vehicle</router-link>
+            <router-link v-if="this.$parent.loggedInUser.current_user.uid == vehicle.uid" :to="'/voertuig/' + vehicle.id + '/bewerken'" class="btn smallbtn"><i class="fa fa-pencil"></i> edit</router-link>
           </div>
         </div>
       </section>
@@ -147,7 +147,7 @@
         </section>
         <p v-if="reviews.length == 0">This vehicle doesn't have any reviews yet.</p>
       </section>
-      <section v-if="activeuser.current_user.uid !== vehicle.uid" class="section__newreview">
+      <section v-if="this.$parent.loggedInUser.current_user.uid !== vehicle.uid" class="section__newreview">
         <div class="row">
           <div class="column column-sm-12 column-6">
             <h2><i class="fa fa-plus"></i> Add a new review</h2>
@@ -239,17 +239,17 @@ export default {
           //'X-CSRF-Token': self.user.csrf_token,
           'Accept': 'application/hal+json',
           'Content-Type': 'application/hal+json',
-          'X-CSRF-Token': self.activeuser.csrf_token,
+          'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
         },
         auth: {
-          username: self.activeuser.current_user.name,
-          password: self.password
+          username: this.$parent.loggedInUser.current_user.name,
+          password: this.$parent.loggedInUser.current_user.pass
         },
         data: self.newReview
-      }).then(function (response) {
+      }).then((response) => {
         console.log(response);
         location.reload();
-      }).catch(function(error) {
+      }).catch((error) => {
         console.log(error);
       });
     },

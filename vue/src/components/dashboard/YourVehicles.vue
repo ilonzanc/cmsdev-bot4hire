@@ -64,21 +64,18 @@ export default {
     }
   },
   mounted() {
-    let self = this;
     axios({
       method: "get",
-      url:
-        apiurl + "api/v1.0/users/" + this.user.current_user.uid + "/vehicles?_format=hal_json",
-      headers: {
-      }
+      url: apiurl + "api/v1.0/users/" + this.$parent.loggedInUser.current_user.uid + "/vehicles?_format=hal_json",
+      headers: {  }
     })
-      .then(function(response) {
-        console.log(response);
-        self.vehicles = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    .then((response) => {
+      console.log(response);
+      this.vehicles = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   },
   methods: {
     closeToastMessage() {
@@ -99,11 +96,11 @@ export default {
         headers: {
           'Accept': 'application/hal+json',
           'Content-Type': 'application/hal+json',
-          'X-CSRF-Token': this.user.csrf_token,
+          'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
         },
         auth: {
-          username: this.user.current_user.name,
-          password: this.password
+          username: this.$parent.loggedInUser.current_user.name,
+          password: this.$parent.loggedInUser.current_user.password
         }
       })
       .then((response) => {

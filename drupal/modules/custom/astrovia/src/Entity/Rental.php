@@ -40,7 +40,7 @@ use VehicleInterface;
  *     "id" = "id",
  *     "label" = "name",
  *     "uuid" = "uuid",
- *     "uid" = "user_id",
+ *     "uid" = "renter_id",
  *     "langcode" = "langcode",
  *     "status" = "status",
  *   },
@@ -64,7 +64,7 @@ class Rental extends ContentEntityBase implements RentalInterface {
     public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
         parent::preCreate($storage_controller, $values);
         $values += [
-        'user_id' => \Drupal::currentUser()->id(),
+        'renter_id' => \Drupal::currentUser()->id(),
         ];
     }
 
@@ -132,21 +132,21 @@ class Rental extends ContentEntityBase implements RentalInterface {
      * {@inheritdoc}
      */
     public function getOwner() {
-        return $this->get('user_id')->entity;
+        return $this->get('renter_id')->entity;
     }
 
     /**
      * {@inheritdoc}
      */
     public function getOwnerId() {
-        return $this->get('user_id')->target_id;
+        return $this->get('renter_id')->target_id;
     }
 
     /**
      * {@inheritdoc}
      */
     public function setOwnerId($uid) {
-        $this->set('user_id', $uid);
+        $this->set('renter_id', $uid);
         return $this;
     }
 
@@ -154,7 +154,7 @@ class Rental extends ContentEntityBase implements RentalInterface {
      * {@inheritdoc}
      */
     public function setOwner(UserInterface $account) {
-        $this->set('user_id', $account->id());
+        $this->set('renter_id', $account->id());
         return $this;
     }
 

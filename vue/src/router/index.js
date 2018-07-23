@@ -1,3 +1,4 @@
+// Website
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home'
@@ -8,11 +9,17 @@ import Login from '../components/Login'
 import Register from '../components/Register'
 import RentVehicle from '../components/RentVehicle'
 
+// Dashboard
 import Dashboard from '../components/dashboard/Dashboard'
+
 import YourVehicles from '../components/dashboard/YourVehicles'
 import YourVehicle from '../components/dashboard/YourVehicle'
 import CreateVehicle from '../components/dashboard/CreateVehicle'
 import UpdateVehicle from '../components/dashboard/UpdateVehicle'
+
+import YourRentals from '../components/dashboard/YourRentals'
+import YourRental from '../components/dashboard/YourRental'
+
 import UpdateProfile from '../components/dashboard/UpdateProfile'
 
 Vue.use(Router);
@@ -30,6 +37,8 @@ let routes = [
   { path: '/dashboard/vehicles/new', component: CreateVehicle },
   { path: '/dashboard/vehicles/:id', component: YourVehicle },
   { path: '/dashboard/vehicles/:id/edit', component: UpdateVehicle },
+  { path: '/dashboard/rentalcontracts', component: YourRentals },
+  { path: '/dashboard/rentalcontracts/:id', component: YourRental },
   { path: '/dashboard/profile/edit', component: UpdateProfile },
 ];
 

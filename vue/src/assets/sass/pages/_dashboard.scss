@@ -17,6 +17,23 @@
             font-size: 1.5rem;
         }
     }
+
+    .actions {
+        a {
+            position: relative;
+            .fa-envelope {
+                position: absolute;
+                right: 3px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: $background-color;
+                background: $primary-color;
+                border-radius: 50%;
+                padding: 9px;
+            }
+        }
+
+    }
 }
 
 .uploaded-image {

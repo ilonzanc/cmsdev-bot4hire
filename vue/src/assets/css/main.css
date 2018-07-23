@@ -682,7 +682,6 @@ form input[type="file"] {
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
-form input[type="date"],
 form input[type="number"] {
   display: block;
   background: none;
@@ -701,8 +700,6 @@ form input[type="number"] {
   form input[type="email"].filled-in,
   form input[type="password"]:focus,
   form input[type="password"].filled-in,
-  form input[type="date"]:focus,
-  form input[type="date"].filled-in,
   form input[type="number"]:focus,
   form input[type="number"].filled-in {
     border-color: #c9ed8b;
@@ -714,8 +711,6 @@ form input[type="number"] {
     form input[type="email"].filled-in::-webkit-input-placeholder,
     form input[type="password"]:focus::-webkit-input-placeholder,
     form input[type="password"].filled-in::-webkit-input-placeholder,
-    form input[type="date"]:focus::-webkit-input-placeholder,
-    form input[type="date"].filled-in::-webkit-input-placeholder,
     form input[type="number"]:focus::-webkit-input-placeholder,
     form input[type="number"].filled-in::-webkit-input-placeholder {
       /* WebKit, Blink, Edge */
@@ -725,8 +720,6 @@ form input[type="number"] {
     form input[type="email"].filled-in:-moz-placeholder,
     form input[type="password"]:focus:-moz-placeholder,
     form input[type="password"].filled-in:-moz-placeholder,
-    form input[type="date"]:focus:-moz-placeholder,
-    form input[type="date"].filled-in:-moz-placeholder,
     form input[type="number"]:focus:-moz-placeholder,
     form input[type="number"].filled-in:-moz-placeholder {
       /* Mozilla Firefox 4 to 18 */
@@ -736,8 +729,6 @@ form input[type="number"] {
     form input[type="email"].filled-in::-moz-placeholder,
     form input[type="password"]:focus::-moz-placeholder,
     form input[type="password"].filled-in::-moz-placeholder,
-    form input[type="date"]:focus::-moz-placeholder,
-    form input[type="date"].filled-in::-moz-placeholder,
     form input[type="number"]:focus::-moz-placeholder,
     form input[type="number"].filled-in::-moz-placeholder {
       /* Mozilla Firefox 19+ */
@@ -747,8 +738,6 @@ form input[type="number"] {
     form input[type="email"].filled-in:-ms-input-placeholder,
     form input[type="password"]:focus:-ms-input-placeholder,
     form input[type="password"].filled-in:-ms-input-placeholder,
-    form input[type="date"]:focus:-ms-input-placeholder,
-    form input[type="date"].filled-in:-ms-input-placeholder,
     form input[type="number"]:focus:-ms-input-placeholder,
     form input[type="number"].filled-in:-ms-input-placeholder {
       /* Internet Explorer 10-11 */
@@ -758,8 +747,6 @@ form input[type="number"] {
     form input[type="email"].filled-in::-ms-input-placeholder,
     form input[type="password"]:focus::-ms-input-placeholder,
     form input[type="password"].filled-in::-ms-input-placeholder,
-    form input[type="date"]:focus::-ms-input-placeholder,
-    form input[type="date"].filled-in::-ms-input-placeholder,
     form input[type="number"]:focus::-ms-input-placeholder,
     form input[type="number"].filled-in::-ms-input-placeholder {
       /* Microsoft Edge */
@@ -769,8 +756,6 @@ form input[type="number"] {
     form input[type="email"].filled-in::placeholder,
     form input[type="password"]:focus::placeholder,
     form input[type="password"].filled-in::placeholder,
-    form input[type="date"]:focus::placeholder,
-    form input[type="date"].filled-in::placeholder,
     form input[type="number"]:focus::placeholder,
     form input[type="number"].filled-in::placeholder {
       /* Most modern browsers support this now. */
@@ -778,13 +763,13 @@ form input[type="number"] {
   form input[type="text"].filled-in,
   form input[type="email"].filled-in,
   form input[type="password"].filled-in,
-  form input[type="date"].filled-in,
   form input[type="number"].filled-in {
     color: #fff;
     border-color: #fff; }
 form .checkbox-group {
   display: block; }
-form textarea {
+form textarea,
+form input[type="date"] {
   overflow: visible;
   background: none;
   width: 100%;
@@ -795,7 +780,9 @@ form textarea {
   margin-top: 0.5rem;
   margin-bottom: 2rem;
   outline: none; }
-  form textarea:focus, form textarea.filled-in {
+  form textarea:focus, form textarea.filled-in,
+  form input[type="date"]:focus,
+  form input[type="date"].filled-in {
     border-color: #c9ed8b;
     color: #c9ed8b;
     box-shadow: none;
@@ -1001,6 +988,14 @@ p.message {
       display: inline-block;
       text-decoration: inherit;
       margin-right: 5px; }
+  p.message.information:before {
+    content: "\f05a";
+    font-family: 'FontAwesome';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    margin-right: 5px; }
 
 .toast-message {
   position: absolute;
@@ -1091,6 +1086,17 @@ p.message {
       margin: 0; }
   #dashboard ul.action-icons .fa {
     font-size: 1.5rem; }
+#dashboard .actions a {
+  position: relative; }
+  #dashboard .actions a .fa-envelope {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #161e33;
+    background: #67b1fc;
+    border-radius: 50%;
+    padding: 9px; }
 
 .uploaded-image {
   border-radius: 5px;

@@ -18,7 +18,7 @@
         <router-link to="/dashboard/vehicles/new" class="btn">Add a new vehicle</router-link>
         <router-link to="/dashboard/vehicles" class="btn">Manage your vehicles</router-link>
         <router-link to="/dashboard/profile/edit" class="btn">Edit your profile</router-link>
-        <router-link to="/dashboard/rental-contracts" class="btn">Manage your rental contracts</router-link>
+        <router-link to="/dashboard/rentalcontracts" class="btn">Manage your rental contracts<i v-if="gotRentalNotifications == true" class="fa fa-envelope"></i></router-link>
       </section>
       <section class="statistics">
         <h2>Statistics</h2>
@@ -41,47 +41,31 @@ export default {
     name: 'dashboard',
     data () {
     return {
-      activeuser: this.$parent.user,
-      password: this.$parent.user_password,
-      user: {},
       vehicles: [],
       rentals: [],
-      password: 'secret'
+      gotRentalNotifications: false
     }
   },
   mounted () {
-    console.log('Profile Component Mounted');
-    axios({
-      method: 'get',
-      //url: apiurl + "user/" + this.$route.params.id + "?_format=hal_json",
-      url: apiurl + "api/v1.0/users/" + this.$route.params.id + "?_format=hal_json",
-      headers: {
-      //'X-CSRF-Token': this.user.csrf_token,
-      'Accept': 'application/hal+json',
-      'Content-Type': 'application/hal+json',
-      'X-CSRF-Token': this.activeuser.csrf_token,
-      },
-      auth: {
-        username: this.activeuser.current_user.name,
-        password: "secret"
-      },
-    })
-    .then(response => {
-      console.log(response)
-      this.user = response.data[0];
-      let slashPos = this.user.uri.indexOf("/");
-      console.log(slashPos);
-      this.user.uri = this.user.uri.substring(slashPos + 1, this.user.uri.length);
-      this.getVehiclesByUser();
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    console.log('Dashboard Component Mounted');
 
-    axios.get(apiurl + 'api/v1.0/user/' + this.$route.params.id + '/rentals?_format=hal_json')
+    axios.get(apiurl + 'api/v1.0/rentals/owner/' + this.$parent.loggedInUser.current_user.uid + '?_format=hal_json')
     .then(response => {
       console.log(response.data[0])
       this.rentals = response.data;
+
+      for (let rental of this.rentals) {
+        console.log(rental);
+        rental.accepted_by_owner = parseInt(rental.accepted_by_owner);
+        rental.returned_by_renter = parseInt(rental.returned_by_renter);
+        rental.return_confirmed_by_owner = parseInt(rental.return_confirmed_by_owner);
+
+        if (rental.accepted_by_owner == 0) {
+          this.gotRentalNotifications = true;
+        } else if (rental.returned_by_renter == 1 && rental.return_confirmed_by_owner == 0) {
+          this.gotRentalNotifications = true;
+        }
+      }
     })
     .catch(error => {
       console.log(error);
@@ -89,40 +73,6 @@ export default {
 
   },
   methods: {
-    getVehiclesByUser() {
-      axios.get(apiurl + 'api/v1.0/vehicles?_format=hal_json')
-      .then(response => {
-        console.log(response)
-        for (let i = 0; i < response.data.length; i++){
-          if (response.data[i].user_id == this.user.uid[0].value)
-            this.vehicles.push(response.data[i])
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    },
-    deleteRental(rental_id) {
-      axios({
-      method: 'delete',
-      url: apiurl + "admin/structure/rental/" + rental_id + "?_format=hal_json",
-      headers: {
-        //'X-CSRF-Token': this.user.csrf_token,
-        'Accept': 'application/hal+json',
-        'Content-Type': 'application/hal+json',
-        'X-CSRF-Token': this.activeuser.csrf_token,
-      },
-      auth: {
-        username: this.activeuser.current_user.name,
-        password: this.password
-      }
-    }).then((response) => {
-      console.log(response);
-      location.reload();
-    }).catch((error) => {
-      console.log(error);
-    });
-    }
   }
 }
 </script>

@@ -169,19 +169,21 @@ export default {
       });
     },
     createProfile() {
+      let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
       axios({
         method: 'post',
         url: apiurl + "entity/profile?_format=hal_json",
         headers: {
           'Accept': 'application/hal+json',
           'Content-Type': 'application/hal+json',
-          "X-CSRF-Token": "T48cuYVRu1CRiXoV7-O35YUNV5A_j7Ro9jT5z5St0OA",
+          "X-CSRF-Token": loggedInUser.csrf_token,
         },
         data: this.profile
       })
       .then((response) => {
         console.log(response.data);
-        location.href = '/profiel/' + response.data.current_user.uid;
+
+        location.href = '/profiel/' + loggedInUser.current_user.uid;
       })
       .catch((error) => {
         if (error.response) {

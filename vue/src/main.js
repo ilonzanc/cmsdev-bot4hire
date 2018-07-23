@@ -4,8 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import moment from 'moment'
 
 window.axios = axios;
+
+window.moment = moment;
 
 window.axios.defaults.headers.common = {
     //'Accept': 'application/hal+json',

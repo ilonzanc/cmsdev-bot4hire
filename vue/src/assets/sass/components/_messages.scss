@@ -12,6 +12,18 @@ p.message {
             margin-right: 5px;
         }
     }
+
+    &.information {
+        &:before {
+            content: "\f05a";
+            font-family: 'FontAwesome';
+            font-weight: normal;
+            font-style: normal;
+            display: inline-block;
+            text-decoration: inherit;
+            margin-right: 5px;
+        }
+    }
 }
 
 .toast-message {

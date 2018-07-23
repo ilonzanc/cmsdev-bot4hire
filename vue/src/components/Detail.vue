@@ -119,8 +119,7 @@
                 </table>
               </tab>
             </tabs>
-            <router-link v-if="this.$parent.loggedInUser.current_user.uid !== vehicle.uid" :to="vehicle.id + '/huren'" class="btn">Rent this vehicle</router-link>
-            <router-link v-if="this.$parent.loggedInUser.current_user.uid == vehicle.uid" :to="'/voertuig/' + vehicle.id + '/bewerken'" class="btn smallbtn"><i class="fa fa-pencil"></i> edit</router-link>
+            <router-link v-if="$parent.loggedInUser.current_user.uid !== vehicle.user_id" :to="vehicle.id + '/huren'" class="btn">Rent this vehicle</router-link>
           </div>
         </div>
       </section>
@@ -147,7 +146,7 @@
         </section>
         <p v-if="reviews.length == 0">This vehicle doesn't have any reviews yet.</p>
       </section>
-      <section v-if="this.$parent.loggedInUser.current_user.uid !== vehicle.uid" class="section__newreview">
+      <section v-if="$parent.loggedInUser.current_user.uid !== vehicle.user_id" class="section__newreview">
         <div class="row">
           <div class="column column-sm-12 column-6">
             <h2><i class="fa fa-plus"></i> Add a new review</h2>
@@ -180,8 +179,6 @@ export default {
   },
   data () {
     return {
-      activeuser: this.$parent.user,
-      password: this.$parent.user_password,
       vehicle: {},
       reviews: [],
       newReview: {

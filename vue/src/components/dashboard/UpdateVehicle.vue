@@ -12,20 +12,20 @@
         <div class="row">
           <div class="column column-sm-12 column-6">
             <label for="name">Naam</label>
-            <input type="text" id="name" name="name" placeholder="Naam van je voertuig..." v-model="vehicle.name">
+            <input type="text" id="name" name="name" placeholder="Naam van je voertuig..." v-bind:class="{ 'filled-in': vehicle.name }" v-model="vehicle.name">
             <p v-if="errors.name" class="message error">{{ errors.name }}</p>
             <label for="body">Beschrijving</label>
-            <textarea id="body" name="body" placeholder="Beschrijving van voertuig..." v-model="vehicle.description"></textarea>
+            <textarea id="body" name="body" placeholder="Beschrijving van voertuig..." v-bind:class="{ 'filled-in': vehicle.description }" v-model="vehicle.description"></textarea>
             <label for="price">Prijs (Shanix/dag)</label>
-            <input type="text" id="price" name="price" placeholder="Prijs van je voertuig..." v-model="vehicle.price">
+            <input type="text" id="price" name="price" placeholder="Prijs van je voertuig..." v-bind:class="{ 'filled-in': vehicle.price }" v-model="vehicle.price">
             <p v-if="errors.price" class="message error">{{ errors.price }}</p>
           </div>
           <div class="column column-sm-12 column-6">
             <label for="seats">Zitplaatsen</label>
-            <input type="text" id="seats" name="seats" placeholder="Zitplaatsen van je voertuig..." v-model="vehicle.seats">
+            <input type="text" id="seats" name="seats" placeholder="Zitplaatsen van je voertuig..." v-bind:class="{ 'filled-in': vehicle.seats }" v-model="vehicle.seats">
             <p v-if="errors.seats" class="message error">{{ errors.seats }}</p>
             <label for="age">Leeftijd (in miljoen jaar)</label>
-            <input type="text" id="age" name="age" placeholder="Leeftijd van je voertuig..." v-model="vehicle.age">
+            <input type="text" id="age" name="age" placeholder="Leeftijd van je voertuig..." v-bind:class="{ 'filled-in': vehicle.age }" v-model="vehicle.age">
             <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id" >
               <option value="">- Select a type -</option>
               <option :selected="vehicle_type.id" v-for="vehicle_type in vehicle_types" v-bind:key="vehicle_type.id" :value="vehicle_type.id">{{vehicle_type.name}}</option>
@@ -159,11 +159,11 @@ export default {
         headers: {
         'Accept': 'application/hal+json',
         'Content-Type': 'application/hal+json',
-        'X-CSRF-Token': self.user.csrf_token,
+        'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
       },
       auth: {
-        username: self.user.current_user.name,
-        password: self.password
+        username: this.$parent.loggedInUser.current_user.name,
+        password: this.$parent.loggedInUser.current_user.pass
       },
       data: updateVehicle
       })
@@ -241,12 +241,12 @@ export default {
           url: "http://localhost:8888/file/upload/vehicle/vehicle/image?_format=hal_json",
           headers: {
             'Content-Type': 'application/octet-stream',
-            'X-CSRF-Token': self.user.csrf_token,
+            'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
             'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
           },
           auth: {
-            username: self.user.current_user.name,
-            password: self.password
+            username: this.$parent.loggedInUser.current_user.name,
+            password: this.$parent.loggedInUser.current_user.pass
           },
           data: self.uploadedImage.data[0].value
         })

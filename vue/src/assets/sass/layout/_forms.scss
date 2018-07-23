@@ -39,7 +39,6 @@ form {
   input[type="text"],
   input[type="email"],
   input[type="password"],
-  input[type="date"],
   input[type="number"],
   {
     display: block;
@@ -93,7 +92,8 @@ form {
     display: block;
   }
 
-  textarea {
+  textarea,
+  input[type="date"] {
     overflow: visible;
     background: none;
     width: 100%;
