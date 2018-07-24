@@ -39,7 +39,11 @@
             <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
             <router-link class="btn" to="/">Go to map</router-link>
             <label for="image">Vehicle image *</label>
-            <input id="vehicle_image" type="file" @change="uploadImage()">
+            <div class="upload-btn-wrapper">
+              <!-- TODO: icon upload animation -->
+              <button class="btn upload-btn">Upload a file</button>
+              <input id="vehicle_image" type="file" @change="uploadImage()">
+            </div>
             <p v-if="errors.image[0].target_id" class="message error">{{ errors.image[0].target_id }}</p>
             <div class="image-border">
               <div class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>

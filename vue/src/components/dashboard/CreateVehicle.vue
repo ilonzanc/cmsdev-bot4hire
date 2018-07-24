@@ -39,13 +39,16 @@
             </select>
             <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
             <!-- TODO: Add cybertron map -->
-            <router-link class="btn" to="/">Go to map</router-link>
-            <!-- TODO: custom upload buttons -->
+            <!-- <router-link class="btn" to="/">Go to map</router-link> -->
             <label for="image">Vehicle image *</label>
-            <input id="vehicle_image" type="file" @change="uploadImage()">
+            <div class="upload-btn-wrapper">
+              <!-- TODO: icon upload animation -->
+              <button class="btn upload-btn">Upload a file</button>
+              <input id="vehicle_image" type="file" @change="uploadImage()">
+            </div>
             <p v-if="errors.image" class="message error">{{ errors.image }}</p>
-            <div v-if="vehicle.image_url" class="image-border">
-              <div  class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
+            <div v-if="vehicle_image_url != null" class="image-border">
+              <div  class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle_image_url + ")"'></div>
             </div>
             <!-- TODO: sliders -->
             <label for="power">Power</label>
@@ -127,6 +130,7 @@ export default {
           value: null
         }]
       },
+      vehicle_image_url: null,
       vehicle_types: {},
       locations: {},
       errors: {
@@ -247,6 +251,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
+          this.vehicle_image_url = response.data.uri[0].url;
           this.vehicle.image[0].target_id = response.data.fid[0].value;
 
         })

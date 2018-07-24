@@ -11,7 +11,11 @@
       <form @submit.prevent="onSubmit">
         <!-- TODO: Upload avatar -->
         <label for="user">Avatar</label>
-        <input id="user_avatar" type="file" @change="uploadImage()">
+        <div class="upload-btn-wrapper">
+          <!-- TODO: icon upload animation -->
+          <button class="btn upload-btn">Upload a file</button>
+          <input id="vehicle_image" type="file" @change="uploadImage()">
+        </div>
         <p v-if="errors.image" class="message error">{{ errors.image }}</p>
         <div v-if="avatar" class="image-border">
           <div  class="uploaded-image" :style='"background: url( http://localhost:8888" + avatar + ") no-repeat center; background-size: contain"'></div>
