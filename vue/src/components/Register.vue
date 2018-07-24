@@ -9,6 +9,7 @@
         </svg>
       </header>
       <form @submit.prevent="onSubmit">
+        <!-- TODO: Upload avatar -->
         <label for="user">Avatar</label>
         <input id="user_avatar" type="file" @change="uploadImage()">
         <p v-if="errors.image" class="message error">{{ errors.image }}</p>
@@ -92,21 +93,17 @@ export default {
       this.resetFields();
       let file = document.getElementById('user_avatar').files[0];
       var reader = new FileReader();
-      //this.user.user_picture.value = file;
       axios({
         method: 'post',
         url: apiurl + "user/register?_format=hal_json",
         headers: {
           'Accept': 'application/hal+json',
           'Content-Type': 'application/hal+json',
-          //"X-CSRF-Token": "ECWys4TAdc0FAUXf2zIbO8DSpwUh5kjl7YMgv-0qZO0",
         },
         data: self.user
       })
       .then((response) => {
         console.log(response.data);
-        /* localStorage.setItem('loggedInUser', JSON.stringify(response.data));
-        location.href = '/profiel/' + response.data.current_user.uid; */
         this.profile.name.value = response.data.name[0].value;
         this.profile.user_id[0].target_id = response.data.uid[0].value;
         self.loginUser();
@@ -183,7 +180,7 @@ export default {
       .then((response) => {
         console.log(response.data);
 
-        location.href = '/profiel/' + loggedInUser.current_user.uid;
+        location.href = '/profile/' + loggedInUser.current_user.uid;
       })
       .catch((error) => {
         if (error.response) {
@@ -215,7 +212,6 @@ export default {
           url: "http://localhost:8888/file/upload/user/user/user_picture?_format=hal_json",
           headers: {
             'Content-Type': 'application/octet-stream',
-            //'X-CSRF-Token': self.user.csrf_token,
             'Content-Disposition': 'file; filename="'+ self.uploadedImage.filename.value + '"'
           },
           auth: {

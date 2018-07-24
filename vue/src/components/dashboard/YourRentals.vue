@@ -2,6 +2,7 @@
   <div id="your-vehicles">
     <div class="container">
       <header class="title-header">
+        <!-- TODO: filter contracts -->
         <h1>Your rental contracts</h1>
         <svg version="1.1" id="title-line" x="0px" y="0px"
           viewBox="0 0 250 89" style="enable-background:new 0 0 250 89;" xml:space="preserve">

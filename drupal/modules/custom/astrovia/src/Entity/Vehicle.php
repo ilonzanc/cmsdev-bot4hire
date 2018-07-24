@@ -351,7 +351,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
             'max_length' => 50,
             'text_processing' => 0,
         ])
-        ->setDefaultValue('')
+        ->setDefaultValue(NULL)
         ->setDisplayOptions('view', [
             'label' => 'above',
             'type' => 'string',
@@ -371,6 +371,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
             'default_value' => '',
             'text_processing' => 0,
         ])
+        ->setDefaultValue(NULL)
         ->setDisplayOptions('form', [
             'type' => 'string_textarea',
             'weight' => -7,
@@ -396,7 +397,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         'prefix' => '',
         'suffix' => ' Shanix'
       ])
-      ->setDefaultValue('')
+      ->setDefaultValue(0)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
@@ -419,7 +420,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         'prefix' => '',
         'suffix' => ' zitplaatsen'
       ])
-      ->setDefaultValue('')
+      ->setDefaultValue(0)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
@@ -441,7 +442,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         'prefix' => '',
         'suffix' => ' miljoen jaar'
       ])
-      ->setDefaultValue('')
+      ->setDefaultValue(0)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
@@ -458,6 +459,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setLabel(t('Image'))
       ->setDescription(t('The image of the vehicle item.'))
       ->setRequired(TRUE)
+      ->setDefaultValue(NULL)
       ->setDisplayOptions('view', [
         'type' => 'image',
         'weight' => 5,
@@ -466,6 +468,69 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
       ->setDisplayOptions('form', [
         'type' => 'image',
         'weight' => -1,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+      $fields['power'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Power'))
+      ->setDescription(t('The power of your Vehicle.'))
+      ->setRequired(FALSE)
+      ->setSettings([
+        'min' => 1,
+        'max' => 5,
+      ])
+      ->setDefaultValue(NULL)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'number_integer',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'number',
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+      $fields['speed'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Speed'))
+      ->setDescription(t('The speed of your Vehicle.'))
+      ->setRequired(FALSE)
+      ->setSettings([
+        'min' => 1,
+        'max' => 5,
+      ])
+      ->setDefaultValue(NULL)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'number_integer',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'number',
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+      $fields['accuracy'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Accuracy'))
+      ->setDescription(t('The accuracy of your Vehicle.'))
+      ->setRequired(FALSE)
+      ->setSettings([
+        'min' => 1,
+        'max' => 5,
+      ])
+      ->setDefaultValue(NULL)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'number_integer',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'number',
+        'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);

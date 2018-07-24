@@ -1,7 +1,7 @@
 <template>
   <div id="vehicle-detail">
       <div class="container">
-      <router-link class="breadcrumbs" to="/overzicht"><i class="fa fa-chevron-left"></i> back to overview</router-link>
+      <router-link class="breadcrumbs" to="/overview"><i class="fa fa-chevron-left"></i> back to overview</router-link>
       <section class="section__vehicle">
         <header class="title-header">
           <h1>{{vehicle.name}}</h1>
@@ -12,9 +12,10 @@
         </header>
         <div class="row">
           <div class="column column-sm-12 column-6">
+            <!-- TODO: Animate hologram -->
             <section class="vehicle-hologram">
               <div class="image-border">
-                <div class="vehicle__image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
+                <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
               </div>
               <svg version="1.1" id="hologram" x="0px" y="0px"
                 viewBox="0 0 836 395" style="enable-background:new 0 0 836 395;" xml:space="preserve">
@@ -51,12 +52,12 @@
             </section>
             <div class="row important-details">
               <div class="column column-sm-6 column-2">
-                <!-- <img class="icon small-icon" src="../assets/images/marker.svg"> -->
                 <i class="fa fa-map-marker"></i>
                 {{vehicle.location_name}}
               </div>
               <div class="column column-sm-6 column-10">
                 <section class="vehicle-price">
+                  <!-- TODO: price should have thousand marker -->
                     <span class="vehicle-price-number">{{vehicle.price}}</span>
                     <span class="vehicle-price-suffix">shanix</span>
                   </section>
@@ -66,7 +67,7 @@
           <div class="column column-sm-12 column-6">
             <p class="vehicle__type">{{vehicle.vehicle_type}}</p>
             <p>{{vehicle.description}}</p>
-            <p>Owner: <router-link :to="'/profiel/' + vehicle.user_id">{{vehicle.user_name}}</router-link></p>
+            <p>Owner: <router-link :to="'/profile/' + vehicle.user_id">{{vehicle.user_name}}</router-link></p>
             <p>Seats: {{vehicle.seats}}</p>
             <p>Age: {{vehicle.age}} million year(s)</p>
             <tabs>
@@ -76,9 +77,7 @@
                     <td>power</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
+                        <div v-if="vehicle.power > 0" v-bind:key="n" v-for="n in vehicle.power" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -86,8 +85,7 @@
                     <td>speed</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
+                        <div v-if="vehicle.speed > 0" v-bind:key="n" v-for="n in vehicle.speed" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -95,10 +93,7 @@
                     <td>accuracy</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
+                        <div v-if="vehicle.accuracy > 0" v-bind:key="n" v-for="n in vehicle.accuracy" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -107,6 +102,7 @@
               <tab name="status">
                 <table>
                   <tr>
+                    <!-- TODO: add this to the db. Maybe? -->
                     <td>fuel levels</td>
                     <td>
                       <div class="spec-bar power-bar">
@@ -119,7 +115,8 @@
                 </table>
               </tab>
             </tabs>
-            <router-link v-if="$parent.loggedInUser.current_user.uid !== vehicle.user_id" :to="vehicle.id + '/huren'" class="btn">Rent this vehicle</router-link>
+            <!-- TODO: Disable renting depending on rent period of contract -->
+            <router-link v-if="$parent.loggedInUser.current_user.uid !== vehicle.user_id" :to="vehicle.id + '/rent'" class="btn">Rent this vehicle</router-link>
           </div>
         </div>
       </section>
@@ -128,13 +125,13 @@
         <section v-for="review in reviews" v-bind:key="review.id" class="section__review">
           <div class="row">
             <div class="column column-sm-3 column-2">
-              <router-link :to="'/profiel/' + review.user_id">
+              <router-link :to="'/profile/' + review.user_id">
                 <i class="fa fa-user-circle"></i>
               </router-link>
             </div>
             <div class="column column-sm-9 column-10">
               <h3>{{review.user_name}}</h3>
-              <!-- <h3>{{review.title}}</h3> -->
+              <h3>{{review.title}}</h3>
               <section class="vehicle-rating">
                 <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i><i v-if="review.rating < 5" v-bind:key="n" v-for="n in (5 - review.rating)" class="fa fa-star-o" style="marginRight: 0.5rem; color: #c9ed8b"></i>
               </section>
@@ -188,10 +185,21 @@ export default {
   },
   mounted () {
     console.log('Detail Component Mounted');
-    this.makeTitleSmaller();
     axios.get(apiurl + 'api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
     .then(response => {
       this.vehicle = response.data[0];
+      this.vehicle.power = parseInt(this.vehicle.power);
+      if (isNaN(this.vehicle.power)) {
+        this.vehicle.power = 0;
+      }
+      this.vehicle.speed = parseInt(this.vehicle.speed);
+      if (isNaN(this.vehicle.speed)) {
+        this.vehicle.speed = 0;
+      }
+      this.vehicle.accuracy = parseInt(this.vehicle.accuracy);
+      if (isNaN(this.vehicle.accuracy)) {
+        this.vehicle.accuracy = 0;
+      }
       this.newReview.vehicle_id[0].target_id = response.data[0].id;
     })
     .catch(error => {
@@ -233,20 +241,12 @@ export default {
         console.log(error.response.data.message);
       });
     },
-    onFocus() {
-      this.$refs.title.classList.toggle('hey');
-    },
-    makeTitleSmaller() {
-      let title = document.querySelector('.title-header h1');
-      console.log(title.clientWidth);
-      if (title.clientWidth > 280) {
-        //title.style.fontSize = "1.4rem";
-      }
-    }
   }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
-
+<style scoped lang="scss">
+  .column {
+    overflow: visible;
+  }
 </style>

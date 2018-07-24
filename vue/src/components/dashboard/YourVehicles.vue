@@ -2,6 +2,7 @@
   <div id="your-vehicles">
     <div class="container">
       <header class="title-header">
+        <!-- TODO: not same layout as overview. More dashboard-y... -->
         <h1>Your vehicles</h1>
         <svg version="1.1" id="title-line" x="0px" y="0px"
           viewBox="0 0 250 89" style="enable-background:new 0 0 250 89;" xml:space="preserve">
@@ -18,6 +19,7 @@
                   </div>
                 </div>
                 <div class="column column-sm-9 column-12">
+                  <!-- TODO: more user-friendly buttons -->
                   <router-link :to="'vehicles/' + vehicle.id"><i class="fa fa-eye"></i></router-link>
                   <router-link :to="'vehicles/' + vehicle.id + '/edit'"><i class="fa fa-pencil"></i></router-link>
                   <i @click.prevent="onDelete(vehicle)" class="fa fa-trash"></i>
@@ -33,6 +35,7 @@
         </div>
       </div>
       <article v-if="deleteVehicle.status" class="toast-message">
+        <!-- TODO: Fancy slide in animation with darker overlay -->
         <i @click.prevent="closeToastMessage()" class="fa fa-times"></i>
         <p>Are you sure you want to erase <em>{{deleteVehicle.vehicle_name}}</em> from the system?</p>
         <button @click.prevent="confirmDelete()" class="btn delete-btn">Erase</button>

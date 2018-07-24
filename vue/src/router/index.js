@@ -26,12 +26,12 @@ Vue.use(Router);
 
 let routes = [
   { path: '/', component: Home },
-  { path: '/aanmelden', component: Login },
-  { path: '/registreren', component: Register },
-  { path: '/overzicht', component: Overview },
-  { path: '/profiel/:id', component: Profile },
-  { path: '/overzicht/voertuig/:id', component: Detail },
-  { path: '/overzicht/voertuig/:id/huren', component: RentVehicle },
+  { path: '/login', component: Login },
+  { path: '/register', component: Register },
+  { path: '/overview', component: Overview },
+  { path: '/overview/vehicle/:id', component: Detail },
+  { path: '/overview/vehicle/:id/rent', component: RentVehicle },
+  { path: '/profile/:id', component: Profile },
   { path: '/dashboard', component: Dashboard },
   { path: '/dashboard/vehicles', component: YourVehicles },
   { path: '/dashboard/vehicles/new', component: CreateVehicle },

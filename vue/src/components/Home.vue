@@ -3,26 +3,33 @@
     <div class="hero__image">
       <div class="container">
         <div class="hero__image-text">
-          <h1>Bot4Hire</h1>
-          <p>Wissel je wagen uit met anderen. Super handig en goed voor het milieu!</p>
-          <router-link class="btn secundary-btn" to="/overzicht">Bekijk de catalogus</router-link>
+          <!-- TODO: Final text and layouting -->
+          <h1>Astrovia</h1>
+          <p>Robots n stff</p>
+          <router-link class="btn secundary-btn" to="/overview">Check the catalogue</router-link>
         </div>
       </div>
     </div>
     <div class="container">
-      <h2>Nieuwste voertuigen</h2>
+      <h2><i class="fa fa-star-o" style="fontSize: 1rem; position: relative; bottom: 2px"></i> Newest vehicles</h2>
       <div class="row">
         <div class="column column-sm-12 column-4" v-bind:key="vehicle.index" v-for="vehicle in vehicles">
           <section class="section__vehicle">
-            <router-link :to='"overzicht/voertuig/" + vehicle.id'>
+            <router-link :to='"overview/vehicle/" + vehicle.id'>
               <div class="row">
                 <div class="column column-sm-3 column-12">
-                  <div class="vehicle__image" :style='"background: url(" + vehicle.image + ") no-repeat center; background-size: contain"'></div>
+                  <div class="image-border">
+                    <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
+                  </div>
                 </div>
                 <div class="column column-sm-9 column-12">
                   <i class="fa fa-angle-right"></i>
                   <h2>{{vehicle.name}}</h2>
-                  <p>{{vehicle.vehicle_type}}</p>
+                  <p>{{vehicle.vehicle_type_name}}</p>
+                  <section class="vehicle-price">
+                    <span class="vehicle-price-number">{{vehicle.price}}</span>
+                    <span class="vehicle-price-suffix">shanix</span>
+                  </section>
                 </div>
               </div>
             </router-link>

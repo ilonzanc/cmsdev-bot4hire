@@ -14,7 +14,7 @@
           <div class="column column-sm-12 column-6">
             <section class="vehicle-hologram">
               <div class="image-border">
-                <div class="vehicle__image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
+                <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
               </div>
               <svg version="1.1" id="hologram" x="0px" y="0px"
                 viewBox="0 0 836 395" style="enable-background:new 0 0 836 395;" xml:space="preserve">
@@ -66,7 +66,7 @@
           <div class="column column-sm-12 column-6">
             <p class="vehicle__type">{{vehicle.vehicle_type}}</p>
             <p>{{vehicle.description}}</p>
-            <p>Owner: <router-link :to="'/profiel/' + vehicle.user_id">{{vehicle.user_name}}</router-link></p>
+            <p>Owner: <router-link :to="'/profile/' + vehicle.user_id">{{vehicle.user_name}}</router-link></p>
             <p>Seats: {{vehicle.seats}}</p>
             <p>Age: {{vehicle.age}} million year(s)</p>
             <tabs>
@@ -76,9 +76,7 @@
                     <td>power</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
+                        <div v-bind:key="n" v-for="n in vehicle.power" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -86,8 +84,7 @@
                     <td>speed</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
+                        <div v-bind:key="n" v-for="n in vehicle.speed" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -95,10 +92,7 @@
                     <td>accuracy</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
-                        <div class="spec-block"></div>
+                        <div v-bind:key="n" v-for="n in vehicle.accuracy" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -119,8 +113,7 @@
                 </table>
               </tab>
             </tabs>
-            <router-link v-if="this.$parent.loggedInUser.current_user.uid !== vehicle.uid" :to="vehicle.id + '/huren'" class="btn">Rent this vehicle</router-link>
-            <router-link v-if="this.$parent.loggedInUser.current_user.uid == vehicle.uid" :to="'/voertuig/' + vehicle.id + '/bewerken'" class="btn smallbtn"><i class="fa fa-pencil"></i> edit</router-link>
+            <router-link v-if="this.$parent.loggedInUser.current_user.uid == vehicle.uid" :to="'/vehicle/' + vehicle.id + '/edit'" class="btn smallbtn"><i class="fa fa-pencil"></i> edit</router-link>
           </div>
         </div>
       </section>
@@ -129,7 +122,7 @@
         <section v-for="review in reviews" v-bind:key="review.id" class="section__review">
           <div class="row">
             <div class="column column-sm-3 column-2">
-              <router-link :to="'/profiel/' + review.user_id">
+              <router-link :to="'/profile/' + review.user_id">
                 <i class="fa fa-user-circle"></i>
 
               </router-link>
@@ -146,22 +139,6 @@
           </div>
         </section>
         <p v-if="reviews.length == 0">This vehicle doesn't have any reviews yet.</p>
-      </section>
-      <section v-if="this.$parent.loggedInUser.current_user.uid !== vehicle.uid" class="section__newreview">
-        <div class="row">
-          <div class="column column-sm-12 column-6">
-            <h2><i class="fa fa-plus"></i> Add a new review</h2>
-            <form @submit.prevent="onSubmit">
-              <label for="title">Title</label>
-              <input type="text" id="title" name="title" placeholder="Title of your review..." required ref="title" v-bind:class="{ 'filled-in': newReview.title.value }" v-model="newReview.title.value" @focus.prevent="onFocus()">
-              <label for="rating">Rating</label>
-              <input type="text" name="rating" placeholder="Rating on 5..." required v-model="newReview.rating.value">
-              <label for="body">Description</label>
-              <textarea id="body" name="body" placeholder="Tell us more..." required v-model="newReview.body.value"></textarea>
-              <button type="submit" class="btn">add review</button>
-            </form>
-          </div>
-        </div>
       </section>
       </div>
   </div>
@@ -208,11 +185,12 @@ export default {
   },
   mounted () {
     console.log('Detail Component Mounted');
-    this.makeTitleSmaller();
     axios.get(apiurl + 'api/v1.0/vehicles/' + this.$route.params.id + '?_format=hal_json')
     .then(response => {
       this.vehicle = response.data[0];
-      this.newReview.vehicle_id[0].target_id = response.data[0].id;
+      this.vehicle.power = parseInt(this.vehicle.power);
+      this.vehicle.speed = parseInt(this.vehicle.speed);
+      this.vehicle.accuracy = parseInt(this.vehicle.accuracy);
     })
     .catch(error => {
       console.log(error);
@@ -236,7 +214,6 @@ export default {
         method: 'post',
         url: apiurl + "entity/review?_format=hal_json",
         headers: {
-          //'X-CSRF-Token': self.user.csrf_token,
           'Accept': 'application/hal+json',
           'Content-Type': 'application/hal+json',
           'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
@@ -252,16 +229,6 @@ export default {
       }).catch((error) => {
         console.log(error);
       });
-    },
-    onFocus() {
-      this.$refs.title.classList.toggle('hey');
-    },
-    makeTitleSmaller() {
-      let title = document.querySelector('.title-header h1');
-      console.log(title.clientWidth);
-      if (title.clientWidth > 280) {
-        //title.style.fontSize = "1.4rem";
-      }
     }
   }
 }

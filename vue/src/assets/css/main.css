@@ -787,6 +787,10 @@ form input[type="date"] {
     color: #c9ed8b;
     box-shadow: none;
     top: 0; }
+  form textarea.filled-in,
+  form input[type="date"].filled-in {
+    color: #fff;
+    border-color: #fff; }
 
 .btn {
   border-radius: 20px;
@@ -893,7 +897,8 @@ section.review-list {
 
 .important-details {
   line-height: 100%;
-  font-size: 1.2rem; }
+  font-size: 1.2rem;
+  padding: 1rem 0; }
 
 .image-border {
   border: 1px solid #67b1fc;
@@ -912,7 +917,8 @@ section.review-list {
     overflow: hidden;
     border: 1px solid #67b1fc;
     background-repeat: no-repeat;
-    background-position: center; }
+    background-position: center;
+    background-size: 100% auto; }
   .section__vehicle .important-details {
     font-family: 'Orbitron', Arial, sans-serif;
     font-weight: 700;
@@ -942,7 +948,7 @@ section.review-list {
   .section__vehicle #hologram {
     width: 150%;
     position: absolute;
-    bottom: -100px;
+    bottom: -90px;
     left: 50%;
     transform: translateX(-50%); }
 

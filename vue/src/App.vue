@@ -10,21 +10,21 @@
                     <router-link to="/" tag="li" exact @click.prevent="toggleNav">
                         <a>Home</a>
                     </router-link>
-                    <router-link to="/overzicht" tag="li" exact @click.prevent="toggleNav">
-                        <a>Overzicht</a>
+                    <router-link to="/overview" tag="li" exact @click.prevent="toggleNav">
+                        <a>Overview</a>
                     </router-link>
-                    <router-link v-if="!loggedInUser" to="/aanmelden" tag="li" exact @click.prevent="toggleNav">
-                        <a>Aanmelden</a>
+                    <router-link v-if="!loggedInUser" to="/login" tag="li" exact @click.prevent="toggleNav">
+                        <a>Login</a>
                     </router-link>
                     <div v-if="loggedInUser">
-                        <router-link :to="'/profiel/' + loggedInUser.current_user.uid" tag="li" exact @click.prevent="toggleNav">
-                            <a>Profiel</a>
+                        <router-link :to="'/profile/' + loggedInUser.current_user.uid" tag="li" exact @click.prevent="toggleNav">
+                            <a>Profile</a>
                         </router-link>
                         <router-link :to="'/dashboard'" tag="li" exact @click.prevent="toggleNav">
                             <a>Dashboard</a>
                         </router-link>
                         <li @click.prevent="logOut">
-                          <a href="">Uitloggen</a>
+                          <a href="">Logout</a>
                         </li>
                     </div>
                 </ul>

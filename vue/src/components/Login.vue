@@ -1,15 +1,22 @@
 <template>
   <div id="login">
       <div class="container">
-      <h1>Aanmelden</h1>
+      <header class="title-header">
+        <!-- TODO: fix layout a bit -->
+        <h1>Login</h1>
+        <svg version="1.1" id="title-line" x="0px" y="0px"
+          viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
+          <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
+        </svg>
+      </header>
       <form @submit.prevent="onSubmit">
         <label for="name">Gebruikersnaam</label>
         <input type="text" id="name" name="name" placeholder="Jouw gebruikersnaam..." required v-bind:class="{ 'filled-in': user.name }" v-model="user.name">
         <label for="pass">Wachtwoord</label>
         <input type="password" id="pass" name="pass" placeholder="********" required v-bind:class="{ 'filled-in': user.pass }" v-model="user.pass">
-        <button type="submit" class="btn widebtn">Inloggen</button>
+        <button type="submit" class="btn widebtn">login</button>
         <p>Nog geen account?</p>
-        <p><router-link to="/registreren">Maak hier een gratis account aan!</router-link></p>
+        <p><router-link to="/register">Maak hier een gratis account aan!</router-link></p>
       </form>
       </div>
   </div>
@@ -46,7 +53,7 @@ export default {
         console.log(response.data);
         response.data.current_user.pass = this.user.pass;
         localStorage.setItem('loggedInUser', JSON.stringify(response.data));
-        location.href = '/profiel/' + response.data.current_user.uid;
+        location.href = '/profile/' + response.data.current_user.uid;
       })
       .catch((error) => {
         console.log(error);

@@ -12,20 +12,20 @@
         <div class="row">
           <div class="column column-sm-12 column-6">
             <label for="name">Naam</label>
-            <input type="text" id="name" name="name" placeholder="Naam van je voertuig..." v-bind:class="{ 'filled-in': vehicle.name }" v-model="vehicle.name">
+            <input type="text" id="name" name="name" placeholder="Naam van je vehicle..." v-bind:class="{ 'filled-in': vehicle.name }" v-model="vehicle.name">
             <p v-if="errors.name" class="message error">{{ errors.name }}</p>
             <label for="body">Beschrijving</label>
-            <textarea id="body" name="body" placeholder="Beschrijving van voertuig..." v-bind:class="{ 'filled-in': vehicle.description }" v-model="vehicle.description"></textarea>
+            <textarea id="body" name="body" placeholder="Beschrijving van vehicle..." v-bind:class="{ 'filled-in': vehicle.description }" v-model="vehicle.description"></textarea>
             <label for="price">Prijs (Shanix/dag)</label>
-            <input type="text" id="price" name="price" placeholder="Prijs van je voertuig..." v-bind:class="{ 'filled-in': vehicle.price }" v-model="vehicle.price">
+            <input type="text" id="price" name="price" placeholder="Prijs van je vehicle..." v-bind:class="{ 'filled-in': vehicle.price }" v-model="vehicle.price">
             <p v-if="errors.price" class="message error">{{ errors.price }}</p>
           </div>
           <div class="column column-sm-12 column-6">
             <label for="seats">Zitplaatsen</label>
-            <input type="text" id="seats" name="seats" placeholder="Zitplaatsen van je voertuig..." v-bind:class="{ 'filled-in': vehicle.seats }" v-model="vehicle.seats">
+            <input type="text" id="seats" name="seats" placeholder="Zitplaatsen van je vehicle..." v-bind:class="{ 'filled-in': vehicle.seats }" v-model="vehicle.seats">
             <p v-if="errors.seats" class="message error">{{ errors.seats }}</p>
             <label for="age">Leeftijd (in miljoen jaar)</label>
-            <input type="text" id="age" name="age" placeholder="Leeftijd van je voertuig..." v-bind:class="{ 'filled-in': vehicle.age }" v-model="vehicle.age">
+            <input type="text" id="age" name="age" placeholder="Leeftijd van je vehicle..." v-bind:class="{ 'filled-in': vehicle.age }" v-model="vehicle.age">
             <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id" >
               <option value="">- Select a type -</option>
               <option :selected="vehicle_type.id" v-for="vehicle_type in vehicle_types" v-bind:key="vehicle_type.id" :value="vehicle_type.id">{{vehicle_type.name}}</option>
@@ -44,7 +44,16 @@
             <div class="image-border">
               <div class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
             </div>
-            <button type="submit" class="btn widebtn">Voertuig bewerken</button>
+            <label for="power">Power</label>
+            <input type="text" id="power" name="power" placeholder="Power of your vehicle..." v-bind:class="{ 'filled-in': vehicle.power }" v-model="vehicle.power">
+            <p v-if="errors.power" class="message error">{{ errors.power }}</p>
+            <label for="speed">Speed</label>
+            <input type="text" id="speed" name="speed" placeholder="Speed of your vehicle..." v-bind:class="{ 'filled-in': vehicle.speed }" v-model="vehicle.speed">
+            <p v-if="errors.speed" class="message error">{{ errors.speed }}</p>
+            <label for="accuracy">Accuracy</label>
+            <input type="text" id="accuracy" name="accuracy" placeholder="Accuracy of your vehicle..." v-bind:class="{ 'filled-in': vehicle.accuracy }" v-model="vehicle.accuracy">
+            <p v-if="errors.accuracy" class="message error">{{ errors.accuracy }}</p>
+            <button type="submit" class="btn widebtn">vehicle bewerken</button>
           </div>
         </div>
       </form>
@@ -89,7 +98,10 @@ export default {
         location_id: null,
         image: [{
           target_id: null
-        }]
+        }],
+        power: null,
+        speed: null,
+        accuracy: null
       }
     }
   },
@@ -117,8 +129,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      let self = this;
-      //this.resetFields();
+      this.resetFields();
       let updateVehicle = {
         _links: {
           type: {
@@ -126,31 +137,40 @@ export default {
           }
         },
         name: {
-          value: self.vehicle.name
+          value: this.vehicle.name
         },
         description: {
-          value: self.vehicle.description
+          value: this.vehicle.description
         },
         price: {
-          value: self.vehicle.price
+          value: this.vehicle.price
         },
         seats: {
-          value: self.vehicle.seats
+          value: this.vehicle.seats
         },
         age: {
-          value: self.vehicle.age
+          value: this.vehicle.age
         },
         vehicle_type_id: [{
-          target_id: self.vehicle.vehicle_type_id,
+          target_id: this.vehicle.vehicle_type_id,
           target_type: "",
         }],
         location_id: [{
-          target_id: self.vehicle.location_id,
+          target_id: this.vehicle.location_id,
           target_type: "",
         }],
         image: [{
-          target_id: self.vehicle.image_id,
+          target_id: this.vehicle.image_id,
         }],
+        power: {
+          value: this.vehicle.power
+        },
+        speed: {
+          value: this.vehicle.speed
+        },
+        accuracy: {
+          value: this.vehicle.accuracy
+        },
       };
 
       axios({

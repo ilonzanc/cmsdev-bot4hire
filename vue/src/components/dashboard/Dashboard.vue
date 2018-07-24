@@ -1,10 +1,5 @@
 <template>
   <div id="dashboard">
-    <ul class="action-icons">
-      <li><i class="fa fa-plus"></i></li>
-      <li><h1>a</h1></li>
-      <li><i class="fa fa-envelope-o"></i></li>
-    </ul>
     <div class="container">
       <header class="title-header">
         <h1>Dashboard</h1>
@@ -21,6 +16,7 @@
         <router-link to="/dashboard/rentalcontracts" class="btn">Manage your rental contracts<i v-if="gotRentalNotifications == true" class="fa fa-envelope"></i></router-link>
       </section>
       <section class="statistics">
+        <!-- TODO: Add graphs -->
         <h2>Statistics</h2>
         <section class="stat-top">
           <article class="stat-numbers"><h3>Current available vehicles</h3></article>

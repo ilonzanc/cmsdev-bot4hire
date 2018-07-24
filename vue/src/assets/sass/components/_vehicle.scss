@@ -4,7 +4,8 @@
 
 .important-details {
   line-height: 100%;
-      font-size: 1.2rem;
+  font-size: 1.2rem;
+  padding: 1rem 0;
 }
 
 .image-border {
@@ -31,6 +32,7 @@
     border: 1px solid rgba($primary-color, 1);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 100% auto;
   }
 
   .important-details {
@@ -74,7 +76,7 @@
   #hologram {
     width: 150%;
     position: absolute;
-    bottom: -100px;
+    bottom: -90px;
     left: 50%;
     transform: translateX(-50%);
   }

@@ -9,6 +9,7 @@
         </svg>
       </header>
       <form @submit.prevent="onSubmit">
+        <!-- TODO: update avatar -->
         <label for="first_name">First Name *</label>
         <input type="text" id="first_name" name="first_name" placeholder="Your firstname..." v-bind:class="{ 'filled-in': currentUser.first_name }" v-model="currentUser.first_name">
         <p v-if="errors.name" class="message error">{{ errors.name }}</p>
@@ -72,7 +73,7 @@ export default {
   methods: {
     onSubmit() {
       let self = this;
-      //this.resetFields();
+      this.resetFields();
       let updatedProfile = {
         _links: {
           type: {
@@ -121,7 +122,7 @@ export default {
       })
       .then((response) => {
         console.log(response);
-        //location.href = '/dashboard/vehicles/' + response.data.id[0].value;
+        location.href = '/dashboard';
       })
       .catch((error) => {
         if (error.response) {

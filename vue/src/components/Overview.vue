@@ -1,6 +1,7 @@
 <template>
   <div id="vehicle-overview">
     <div class="container">
+      <!-- TODO: add search and filters -->
       <header class="title-header">
         <h1>Overview</h1>
         <svg version="1.1" id="title-line" x="0px" y="0px"
@@ -11,11 +12,12 @@
       <div class="row">
         <div class="column column-sm-12 column-4" v-bind:key="vehicle.id" v-for="vehicle in vehicles">
           <section class="section__vehicle">
-            <router-link :to='"overzicht/voertuig/" + vehicle.id'>
+            <router-link :to='"overview/vehicle/" + vehicle.id'>
               <div class="row">
                 <div class="column column-sm-3 column-12">
                   <div class="image-border">
-                    <div class="vehicle__image" :style='"background: url(http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: cover"'></div>
+                    <!-- TODO: resize images depending on portrait/landscape -->
+                    <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
                   </div>
                 </div>
                 <div class="column column-sm-9 column-12">

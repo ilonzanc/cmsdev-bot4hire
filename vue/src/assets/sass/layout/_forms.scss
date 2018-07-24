@@ -112,5 +112,10 @@ form {
       box-shadow: none;
       top: 0;
     }
+
+    &.filled-in {
+      color: $text-color;
+      border-color: $text-color;
+    }
   }
 }

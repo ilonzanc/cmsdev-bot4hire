@@ -38,14 +38,26 @@
               <option v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
             <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
+            <!-- TODO: Add cybertron map -->
             <router-link class="btn" to="/">Go to map</router-link>
+            <!-- TODO: custom upload buttons -->
             <label for="image">Vehicle image *</label>
             <input id="vehicle_image" type="file" @change="uploadImage()">
             <p v-if="errors.image" class="message error">{{ errors.image }}</p>
             <div v-if="vehicle.image_url" class="image-border">
               <div  class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
             </div>
-            <button type="submit" class="btn widebtn">Voertuig toevoegen</button>
+            <!-- TODO: sliders -->
+            <label for="power">Power</label>
+            <input type="text" id="power" name="power" placeholder="Power of your vehicle..." v-bind:class="{ 'filled-in': vehicle.power }" v-model="vehicle.power">
+            <p v-if="errors.power" class="message error">{{ errors.power }}</p>
+            <label for="speed">Speed</label>
+            <input type="text" id="speed" name="speed" placeholder="Speed of your vehicle..." v-bind:class="{ 'filled-in': vehicle.speed }" v-model="vehicle.speed">
+            <p v-if="errors.speed" class="message error">{{ errors.speed }}</p>
+            <label for="accuracy">Accuracy</label>
+            <input type="text" id="accuracy" name="accuracy" placeholder="Accuracy of your vehicle..." v-bind:class="{ 'filled-in': vehicle.accuracy }" v-model="vehicle.accuracy">
+            <p v-if="errors.accuracy" class="message error">{{ errors.accuracy }}</p>
+            <button type="submit" class="btn widebtn">add new vehicle</button>
           </div>
         </div>
       </form>
@@ -95,6 +107,9 @@ export default {
         image:[{
           target_id: null,
         }],
+        power: null,
+        speed: null,
+        accuracy: null
       },
       uploadedImage: {
         _links: {
@@ -120,7 +135,10 @@ export default {
         seats: null,
         vehicle_type_id: null,
         location_id: null,
-        image: null
+        image: null,
+        power: null,
+        speed: null,
+        accuracy: null
       }
     }
   },
@@ -155,7 +173,7 @@ export default {
       })
       .then((response) => {
         console.log(response);
-        location.href = '/overzicht/voertuig/' + response.data.id[0].value;
+        location.href = '/overview/vehicle/' + response.data.id[0].value;
       })
       .catch((error) => {
         if (error.response) {
