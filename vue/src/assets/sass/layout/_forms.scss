@@ -27,13 +27,47 @@ form {
     width: 100%;
     padding-bottom: 8px;
     margin-bottom: 1rem;
-    color: none;
     position: relative;
     outline: none;
   }
 
   input[type="file"] {
     margin-bottom: 1rem;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    background: $primary-color;
+    outline: none;
+    width: 100%;
+    margin: 1.2rem 0 2rem;
+    border-radius: 20px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: $secundary-color;
+    opacity: 0.5;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+  }
+
+  .range-label,
+  .range-box {
+    font-family: 'Orbitron', Arial, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+  }
+
+  .range-box {
+    float: right;
+    color: $secundary-color;
+    font-size: 1.5rem;
   }
 
   input[type="text"],

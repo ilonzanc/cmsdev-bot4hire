@@ -27,13 +27,13 @@
             <label for="age">Leeftijd (in miljoen jaar)</label>
             <input type="text" id="age" name="age" placeholder="Leeftijd van je vehicle..." v-bind:class="{ 'filled-in': vehicle.age }" v-model="vehicle.age">
             <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id" >
-              <option value="">- Select a type -</option>
+              <option value="" disabled>- Select a type -</option>
               <option :selected="vehicle_type.id" v-for="vehicle_type in vehicle_types" v-bind:key="vehicle_type.id" :value="vehicle_type.id">{{vehicle_type.name}}</option>
             </select>
             <p v-if="errors.vehicle_type_id" class="message error">{{ errors.vehicle_type_id }}</p>
             <label for="locations">Pickup Location *</label>
             <select class="form-control" name="vehicle_type_id" v-model="vehicle.location_id" >
-              <option value="">- Selecteer een plaats -</option>
+              <option value="" disabled>- Selecteer een plaats -</option>
               <option :selected="location.id" v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
             <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
@@ -48,16 +48,25 @@
             <div class="image-border">
               <div class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
             </div>
-            <label for="power">Power</label>
-            <input type="text" id="power" name="power" placeholder="Power of your vehicle..." v-bind:class="{ 'filled-in': vehicle.power }" v-model="vehicle.power">
+            <label for="power" class="range-label">Power</label>
+            <div class="range-box">
+              {{ vehicle.power }}
+            </div>
+            <input type="range" min="0" max="5" step="1" v-model="vehicle.power" class="slider" id="myRange" list="steplist">
             <p v-if="errors.power" class="message error">{{ errors.power }}</p>
-            <label for="speed">Speed</label>
-            <input type="text" id="speed" name="speed" placeholder="Speed of your vehicle..." v-bind:class="{ 'filled-in': vehicle.speed }" v-model="vehicle.speed">
+            <label for="speed" class="range-label">Speed</label>
+            <div class="range-box">
+              {{ vehicle.speed }}
+            </div>
+            <input type="range" min="0" max="5" step="1" v-model="vehicle.speed" class="slider" id="myRange" list="steplist">
             <p v-if="errors.speed" class="message error">{{ errors.speed }}</p>
-            <label for="accuracy">Accuracy</label>
-            <input type="text" id="accuracy" name="accuracy" placeholder="Accuracy of your vehicle..." v-bind:class="{ 'filled-in': vehicle.accuracy }" v-model="vehicle.accuracy">
+            <label for="accuracy" class="range-label">Accuracy</label>
+            <div class="range-box">
+              {{ vehicle.accuracy }}
+            </div>
+            <input type="range" min="0" max="5" step="1" v-model="vehicle.accuracy" class="slider" id="myRange" list="steplist">
             <p v-if="errors.accuracy" class="message error">{{ errors.accuracy }}</p>
-            <button type="submit" class="btn widebtn">vehicle bewerken</button>
+            <button type="submit" class="btn widebtn">update vehicle</button>
           </div>
         </div>
       </form>

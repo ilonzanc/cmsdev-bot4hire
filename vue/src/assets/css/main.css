@@ -674,11 +674,37 @@ form select {
   width: 100%;
   padding-bottom: 8px;
   margin-bottom: 1rem;
-  color: none;
   position: relative;
   outline: none; }
 form input[type="file"] {
   margin-bottom: 1rem; }
+form input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  background: #67b1fc;
+  outline: none;
+  width: 100%;
+  margin: 1.2rem 0 2rem;
+  border-radius: 20px; }
+form input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #c9ed8b;
+  opacity: 0.5;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%; }
+form .range-label,
+form .range-box {
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 1.2rem; }
+form .range-box {
+  float: right;
+  color: #c9ed8b;
+  font-size: 1.5rem; }
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],

@@ -480,7 +480,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         'min' => 1,
         'max' => 5,
       ])
-      ->setDefaultValue(NULL)
+      ->setDefaultValue(0)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
@@ -501,7 +501,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         'min' => 1,
         'max' => 5,
       ])
-      ->setDefaultValue(NULL)
+      ->setDefaultValue(0)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
@@ -522,7 +522,7 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         'min' => 1,
         'max' => 5,
       ])
-      ->setDefaultValue(NULL)
+      ->setDefaultValue(0)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number_integer',
