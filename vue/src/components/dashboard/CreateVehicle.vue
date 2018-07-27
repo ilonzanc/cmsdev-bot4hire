@@ -53,21 +53,21 @@
             <h2>Specifications</h2>
             <label for="power" class="range-label">Power</label>
             <div class="range-box">
-              {{ vehicle.power }}
+              {{ vehicle.power.value }}
             </div>
-            <input type="range" min="0" max="5" step="1" v-model="vehicle.power" class="slider" id="myRange" list="steplist">
+            <input type="range" min="0" max="5" step="1" v-model="vehicle.power.value" class="slider" id="myRange" list="steplist">
             <p v-if="errors.power" class="message error">{{ errors.power }}</p>
             <label for="speed" class="range-label">Speed</label>
             <div class="range-box">
-              {{ vehicle.speed }}
+              {{ vehicle.speed.value }}
             </div>
-            <input type="range" min="0" max="5" v-model="vehicle.speed" class="slider" id="myRange">
+            <input type="range" min="0" max="5" v-model="vehicle.speed.value" class="slider" id="myRange">
             <p v-if="errors.speed" class="message error">{{ errors.speed }}</p>
             <label for="accuracy" class="range-label">Accuracy</label>
             <div class="range-box">
-              {{ vehicle.accuracy }}
+              {{ vehicle.accuracy.value }}
             </div>
-            <input type="range" min="0" max="5" v-model="vehicle.accuracy" class="slider" id="myRange">
+            <input type="range" min="0" max="5" v-model="vehicle.accuracy.value" class="slider" id="myRange">
             <p v-if="errors.accuracy" class="message error">{{ errors.accuracy }}</p>
             <button type="submit" class="btn widebtn">add new vehicle</button>
           </div>
@@ -119,9 +119,19 @@ export default {
         image:[{
           target_id: null,
         }],
-        power: 0,
-        speed: 0,
-        accuracy: 0
+        status:[{
+          target_id: 10,
+          target_type: "taxonomy_term",
+        }],
+        power: {
+          value: 0
+        },
+        speed: {
+          value: 0
+        },
+        accuracy: {
+          value: 0
+        }
       },
       uploadedImage: {
         _links: {

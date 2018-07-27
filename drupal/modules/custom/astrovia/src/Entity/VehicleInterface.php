@@ -53,25 +53,4 @@ interface VehicleInterface extends ContentEntityInterface, EntityChangedInterfac
    */
   public function setCreatedTime($timestamp);
 
-  /**
-   * Returns the Vehicle published status indicator.
-   *
-   * Unpublished Vehicle are only visible to restricted users.
-   *
-   * @return bool
-   *   TRUE if the Vehicle is published.
-   */
-  public function isPublished();
-
-  /**
-   * Sets the published status of a Vehicle.
-   *
-   * @param bool $published
-   *   TRUE to set this Vehicle to published, FALSE to set it to unpublished.
-   *
-   * @return \Drupal\astrovia\Entity\VehicleInterface
-   *   The called Vehicle entity.
-   */
-  public function setPublished($published);
-
 }

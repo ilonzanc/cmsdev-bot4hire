@@ -18,6 +18,7 @@
               <p>Vehicle rented: {{rental.vehicle_name}}</p>
               <p v-if="rental.renter_username != $parent.loggedInUser.current_user.name">Rented by: {{rental.renter_username}}</p>
               <p v-if="rental.vehicle_owner != $parent.loggedInUser.current_user.name">Owner: {{rental.vehicle_owner}}</p>
+              <!-- TODO: decline button -->
               <button
                 v-if="rental.vehicle_owner == $parent.loggedInUser.current_user.name && rental.accepted_by_owner == 0"
                 class="btn"
@@ -93,6 +94,10 @@ export default {
           value: null
         },
         review_type:[{
+          target_id: null,
+          target_type: "taxonomy_term",
+        }],
+        status:[{
           target_id: null,
           target_type: "taxonomy_term",
         }],
@@ -178,6 +183,39 @@ export default {
         }
         console.log(error.config);
       });
+
+      let updateVehicle = {
+        _links: {
+          type: {
+            href: apiurl + "rest/type/vehicle/vehicle"
+          }
+        },
+        status:[{
+          target_id: 11,
+          target_type: "taxonomy_term",
+        }],
+      };
+
+      axios({
+        method: 'patch',
+        url: apiurl + "admin/structure/vehicle/" + this.rental.vehicle_id + "?_format=hal_json",
+        headers: {
+          'Accept': 'application/hal+json',
+          'Content-Type': 'application/hal+json',
+          'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
+        },
+        auth: {
+          username: this.$parent.loggedInUser.current_user.name,
+          password: this.$parent.loggedInUser.current_user.pass
+        },
+        data: updateVehicle
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      })
     },
     returnVehicle() {
       let returnTimestamp = moment().format("YYYY-MM-DD");
@@ -268,6 +306,39 @@ export default {
         }
         console.log(error.config);
       });
+
+      let updateVehicle = {
+        _links: {
+          type: {
+            href: apiurl + "rest/type/vehicle/vehicle"
+          }
+        },
+        status:[{
+          target_id: 10,
+          target_type: "taxonomy_term",
+        }],
+      };
+
+      axios({
+        method: 'patch',
+        url: apiurl + "admin/structure/vehicle/" + this.rental.vehicle_id + "?_format=hal_json",
+        headers: {
+          'Accept': 'application/hal+json',
+          'Content-Type': 'application/hal+json',
+          'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
+        },
+        auth: {
+          username: this.$parent.loggedInUser.current_user.name,
+          password: this.$parent.loggedInUser.current_user.pass
+        },
+        data: updateVehicle
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      })
     },
     postReview() {
       this.resetReview();

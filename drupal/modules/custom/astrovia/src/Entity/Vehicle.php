@@ -43,7 +43,6 @@ use LocationInterface;
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
- *     "status" = "status",
  *   },
  *   links = {
  *     "canonical" = "/admin/structure/vehicle/{vehicle}",
@@ -249,49 +248,34 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
   /**
    * {@inheritdoc}
    */
-  public function isPublished() {
-    return (bool) $this->getEntityKey('status');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setPublished($published) {
-    $this->set('status', $published ? TRUE : FALSE);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Aangemaakt door'))
-      ->setDescription(t('De user ID van de auteur van de Vehicle Entity.'))
-      ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'user')
-      ->setSetting('handler', 'default')
-      ->setTranslatable(TRUE)
-      ->setRequired(TRUE)
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'author',
-        'weight' => 0,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'weight' => 5,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'autocomplete_type' => 'tags',
-          'placeholder' => '',
-        ],
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+        ->setLabel(t('Aangemaakt door'))
+        ->setDescription(t('De user ID van de auteur van de Vehicle Entity.'))
+        ->setRevisionable(TRUE)
+        ->setSetting('target_type', 'user')
+        ->setSetting('handler', 'default')
+        ->setTranslatable(TRUE)
+        ->setRequired(TRUE)
+        ->setDisplayOptions('view', [
+            'label' => 'hidden',
+            'type' => 'author',
+            'weight' => 0,
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'entity_reference_autocomplete',
+            'weight' => 5,
+            'settings' => [
+            'match_operator' => 'CONTAINS',
+            'size' => '60',
+            'autocomplete_type' => 'tags',
+            'placeholder' => '',
+            ],
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
 
     // The uid is an entity reference to the user entity type, which allows to access the user id with $node->uid->target_id
     // and the user entity with $node->uid->entity. NodeInterface also defines getAuthor() and getAuthorId(). (@todo: check owner vs. revisionAuthor)
@@ -388,165 +372,196 @@ class Vehicle extends ContentEntityBase implements VehicleInterface {
         ->setDisplayConfigurable('view', TRUE);
 
     $fields['price'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Prijs'))
-      ->setDescription(t('De prijs van de Vehicle entity.'))
-      ->setRequired(TRUE)
-      ->setSettings([
-        'min' => 1,
-        'max' => 10000,
-        'prefix' => '',
-        'suffix' => ' Shanix'
-      ])
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'number_integer',
-        'weight' => -5,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => -5,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+        ->setLabel(t('Prijs'))
+        ->setDescription(t('De prijs van de Vehicle entity.'))
+        ->setRequired(TRUE)
+        ->setSettings([
+            'min' => 1,
+            'max' => 10000,
+            'prefix' => '',
+            'suffix' => ' Shanix'
+        ])
+        ->setDefaultValue(0)
+        ->setDisplayOptions('view', [
+            'label' => 'above',
+            'type' => 'number_integer',
+            'weight' => -5,
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'number',
+            'weight' => -5,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
 
     $fields['seats'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Zitplaatsen'))
-      ->setDescription(t('Hoeveelheid zitplaatsen van de Vehicle entity.'))
-      ->setRequired(TRUE)
-      ->setSettings([
-        'min' => 1,
-        'max' => 500,
-        'prefix' => '',
-        'suffix' => ' zitplaatsen'
-      ])
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'number_integer',
-        'weight' => -4,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => -4,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+        ->setLabel(t('Zitplaatsen'))
+        ->setDescription(t('Hoeveelheid zitplaatsen van de Vehicle entity.'))
+        ->setRequired(TRUE)
+        ->setSettings([
+            'min' => 1,
+            'max' => 500,
+            'prefix' => '',
+            'suffix' => ' zitplaatsen'
+        ])
+        ->setDefaultValue(0)
+        ->setDisplayOptions('view', [
+            'label' => 'above',
+            'type' => 'number_integer',
+            'weight' => -4,
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'number',
+            'weight' => -4,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
 
     $fields['age'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Leeftijd'))
-      ->setDescription(t('Leeftijd van de Vehicle entity.'))
-      ->setSettings([
-        'min' => 1,
-        'max' => 500,
-        'prefix' => '',
-        'suffix' => ' miljoen jaar'
-      ])
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'number_integer',
-        'weight' => -3,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => -3,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+        ->setLabel(t('Leeftijd'))
+        ->setDescription(t('Leeftijd van de Vehicle entity.'))
+        ->setSettings([
+            'min' => 1,
+            'max' => 500,
+            'prefix' => '',
+            'suffix' => ' miljoen jaar'
+        ])
+        ->setDefaultValue(0)
+        ->setDisplayOptions('view', [
+            'label' => 'above',
+            'type' => 'number_integer',
+            'weight' => -3,
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'number',
+            'weight' => -3,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
 
-      $fields['image'] = BaseFieldDefinition::create('image')
-      ->setLabel(t('Image'))
-      ->setDescription(t('The image of the vehicle item.'))
-      ->setRequired(TRUE)
-      ->setDefaultValue(NULL)
-      ->setDisplayOptions('view', [
-        'type' => 'image',
-        'weight' => 5,
-        'label' => 'hidden',
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'image',
-        'weight' => -1,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+        $fields['image'] = BaseFieldDefinition::create('image')
+        ->setLabel(t('Image'))
+        ->setDescription(t('The image of the vehicle item.'))
+        ->setRequired(TRUE)
+        ->setDefaultValue(NULL)
+        ->setDisplayOptions('view', [
+            'type' => 'image',
+            'weight' => 5,
+            'label' => 'hidden',
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'image',
+            'weight' => -1,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
 
-      $fields['power'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Power'))
-      ->setDescription(t('The power of your Vehicle.'))
-      ->setRequired(FALSE)
-      ->setSettings([
-        'min' => 1,
-        'max' => 5,
-      ])
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'number_integer',
-        'weight' => -4,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => -4,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['power'] = BaseFieldDefinition::create('integer')
+        ->setLabel(t('Power'))
+        ->setDescription(t('The power of your Vehicle.'))
+        ->setRequired(FALSE)
+        ->setSettings([
+            'min' => 0,
+            'max' => 5,
+        ])
+        ->setDefaultValue(0)
+        ->setDisplayOptions('view', [
+            'label' => 'above',
+            'type' => 'number_integer',
+            'weight' => -4,
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'number',
+            'weight' => -4,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
 
-      $fields['speed'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Speed'))
-      ->setDescription(t('The speed of your Vehicle.'))
-      ->setRequired(FALSE)
-      ->setSettings([
-        'min' => 1,
-        'max' => 5,
-      ])
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'number_integer',
-        'weight' => -4,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => -4,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['speed'] = BaseFieldDefinition::create('integer')
+        ->setLabel(t('Speed'))
+        ->setDescription(t('The speed of your Vehicle.'))
+        ->setRequired(FALSE)
+        ->setSettings([
+            'min' => 0,
+            'max' => 5,
+        ])
+        ->setDefaultValue(0)
+        ->setDisplayOptions('view', [
+            'label' => 'above',
+            'type' => 'number_integer',
+            'weight' => -4,
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'number',
+            'weight' => -4,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
 
-      $fields['accuracy'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Accuracy'))
-      ->setDescription(t('The accuracy of your Vehicle.'))
-      ->setRequired(FALSE)
-      ->setSettings([
-        'min' => 1,
-        'max' => 5,
-      ])
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'number_integer',
-        'weight' => -4,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => -4,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['accuracy'] = BaseFieldDefinition::create('integer')
+        ->setLabel(t('Accuracy'))
+        ->setDescription(t('The accuracy of your Vehicle.'))
+        ->setRequired(FALSE)
+        ->setSettings([
+            'min' => 0,
+            'max' => 5,
+        ])
+        ->setDefaultValue(0)
+        ->setDisplayOptions('view', [
+            'label' => 'above',
+            'type' => 'number_integer',
+            'weight' => -4,
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'number',
+            'weight' => -4,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
 
-    $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating whether the Vehicle is published.'))
-      ->setDefaultValue(TRUE);
+    $fields['status'] = BaseFieldDefinition::create('entity_reference')
+        ->setLabel(t('Status'))
+        ->setDescription(t('The status of the Vehicle'))
+        ->setRevisionable(TRUE)
+        ->setRequired(TRUE)
+        ->setSetting('target_type', 'taxonomy_term')
+        ->setSetting('handler', 'default:taxonomy_term')
+        ->setSetting('handler_settings',
+            [
+                'target_bundles' => [
+                    'vehicle_status' => 'vehicle_status'
+                ]
+            ]
+        )
+        ->setTranslatable(TRUE)
+        ->setDisplayOptions('view', [
+            'label' => 'hidden',
+            'type' => 'string',
+            'weight' => 1,
+        ])
+        ->setDisplayOptions('form', [
+            'type' => 'options_select',
+            'weight' => 1,
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
+
+    /* $fields['status'] = BaseFieldDefinition::create('boolean')
+        ->setLabel(t('Publishing status'))
+        ->setDescription(t('A boolean indicating whether the Vehicle Type is published.'))
+        ->setDefaultValue(TRUE)
+        ->setDisplayOptions('form', [
+            'type' => 'boolean_checkbox',
+            'weight' => -3,
+        ]); */
 
     $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created'))
-      ->setDescription(t('The time that the entity was created.'));
+        ->setLabel(t('Created'))
+        ->setDescription(t('The time that the entity was created.'));
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the entity was last edited.'));
+        ->setLabel(t('Changed'))
+        ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
   }
