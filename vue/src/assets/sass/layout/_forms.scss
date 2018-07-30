@@ -1,4 +1,7 @@
 form {
+  label {
+    display: block;
+  }
   ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     opacity:  0;
   }
@@ -151,5 +154,13 @@ form {
       color: $text-color;
       border-color: $text-color;
     }
+  }
+
+  input[type="text"].floating-input {
+    display: inline-block;
+    width: 75%;
+  }
+  .input-suffix {
+    float: right;
   }
 }

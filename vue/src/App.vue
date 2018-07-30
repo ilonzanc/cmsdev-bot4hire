@@ -24,7 +24,7 @@
                             <a>Dashboard</a>
                         </router-link>
                         <li @click.prevent="logOut">
-                          <a href="">Logout</a>
+                          <a class="btn smallbtn" href="">Logout</a>
                         </li>
                     </div>
                 </ul>

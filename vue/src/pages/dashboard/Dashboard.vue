@@ -8,34 +8,45 @@
           <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
         </svg>
       </header>
-      <section class="actions">
-        <h2>What do you want to do?</h2>
-        <router-link to="/dashboard/vehicles/new" class="btn">Add a new vehicle</router-link>
-        <router-link to="/dashboard/vehicles" class="btn">Manage your vehicles</router-link>
-        <router-link to="/dashboard/profile/edit" class="btn">Edit your profile</router-link>
-        <router-link to="/dashboard/rentalcontracts" class="btn">Manage your rental contracts<i v-if="gotRentalNotifications == true" class="fa fa-envelope"></i></router-link>
-      </section>
-      <section class="statistics">
-        <!-- TODO: Add graphs -->
-        <h2>Statistics</h2>
-        <section class="stat-top">
-          <article class="stat-numbers">
-            <h2>{{ availableCount }}</h2>
-            <h3>Current available vehicles</h3>
-          </article>
-          <article class="stat-numbers">
-            <h2>{{ unavailableCount }}</h2>
-            <h3>Current rented out vehicles</h3></article>
-          <article class="stat-numbers">
-            <h2>{{ popularVehicle }}</h2>
-            <h3>Most popular vehicle</h3>
-          </article>
-        </section>
-        <article class="stat-graph">
-          <h3>Rented vehicles this year</h3>
-          <div class="chart"></div>
-        </article>
-      </section>
+
+      <div class="row">
+        <div class="column column-sm-12 column-4">
+          <section class="actions">
+            <h2>What do you want to do?</h2>
+            <router-link to="/dashboard/vehicles/new" class="btn">Add a new vehicle</router-link>
+            <router-link to="/dashboard/vehicles" class="btn">Manage your vehicles</router-link>
+            <router-link to="/dashboard/profile/edit" class="btn">Edit your profile</router-link>
+            <router-link to="/dashboard/rentalcontracts" class="btn">Manage your rental contracts<i v-if="gotRentalNotifications == true" class="fa fa-envelope"></i></router-link>
+          </section>
+        </div>
+        <div class="column column-sm-12 column-8">
+          <section class="stat-top">
+            <h2>Statistics</h2>
+            <article class="stat-numbers">
+              <h2>{{ availableCount }}</h2>
+              <h3>Current available vehicles</h3>
+            </article>
+            <article class="stat-numbers">
+              <h2>{{ unavailableCount }}</h2>
+              <h3>Current rented out vehicles</h3></article>
+            <article class="stat-numbers">
+              <h2>{{ popularVehicle }}</h2>
+              <h3>Most popular vehicle</h3>
+            </article>
+          </section>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column column-sm-12 column-12">
+          <section class="graphs">
+            <h2>Graphs</h2>
+            <article class="stat-graph">
+              <h3>Rented vehicles this year</h3>
+              <div class="chart"></div>
+            </article>
+          </section>
+        </div>
+      </div>
     </div>
   </div>
 </template>

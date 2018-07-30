@@ -1,7 +1,7 @@
 header.navigation-header {
 	border-bottom: 1px solid $primary-color;
 	color: #fff;
-	padding: 1rem 0 0.8rem;
+	padding: 1.2rem 0 1rem;
 
 	h1 {
 		display: inline-block;
@@ -25,7 +25,19 @@ header.title-header {
 	svg {
 		position: absolute;
 		left: -1rem;
-		//height: 110px;
 		bottom: -20px;
+	}
+}
+
+@media (min-width: 71.25rem) {
+	header.title-header {
+		position: relative;
+		margin-bottom: 3rem;
+		svg {
+			position: absolute;
+			left: -1rem;
+			height: 40px;
+			bottom: -20px;
+		}
 	}
 }

@@ -5,13 +5,13 @@
       </section>
       <section :class="'section__vehicle ' + { hidden: !loaded, loaded: loaded}">
         <router-link :to='"overview/vehicle/" + vehicle.id'>
-          <div class="row">
-            <div class="column column-sm-3 column-12">
+          <div class="">
+            <div class="">
               <div class="image-border">
                 <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
               </div>
             </div>
-            <div class="column column-sm-9 column-12">
+            <div class="">
               <i class="fa fa-angle-right"></i>
               <h2>{{vehicle.name}}</h2>
               <p>{{vehicle.vehicle_type_name}}</p>

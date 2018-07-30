@@ -52,8 +52,7 @@
             </section>
             <div class="row important-details">
               <div class="column column-sm-6 column-2">
-                <i class="fa fa-map-marker"></i>
-                {{vehicle.location_name}}
+                <i class="vehicle-location">{{vehicle.location_name}}</i>
               </div>
               <div class="column column-sm-6 column-10">
                 <section class="vehicle-price">
@@ -70,6 +69,7 @@
             <p>Owner: <router-link :to="'/profile/' + vehicle.user_id">{{vehicle.user_name}}</router-link></p>
             <p>Seats: {{vehicle.seats}}</p>
             <p>Age: {{vehicle.age}} million year(s)</p>
+            <!-- TODO: calculte average rating -->
             <tabs>
               <tab name="specs" :selected="true">
                 <table>
@@ -120,29 +120,30 @@
           </div>
         </div>
       </section>
-      <h2>Reviews</h2>
-      <section class="review-list">
-        <section v-for="review in reviews" v-bind:key="review.id" class="section__review">
-          <div class="row">
-            <div class="column column-sm-3 column-2">
-              <router-link :to="'/profile/' + review.user_id">
-                <i class="fa fa-user-circle"></i>
-              </router-link>
-            </div>
-            <div class="column column-sm-9 column-10">
+      <div class="row">
+        <div class="column column-sm-12 column-6">
+          <h2>Reviews</h2>
+          <section class="review-list">
+            <article v-for="review in reviews" v-bind:key="review.id" class="review">
+              <div class="image-border">
+                <router-link class="review-avatar" :to="'/profile/' + review.user_id">
+                  <i class="fa fa-user-o"></i>
+                </router-link>
+              </div>
+              <i class="review-created">{{review.created}}</i>
               <h3>{{review.user_name}}</h3>
               <h3>{{review.title}}</h3>
               <section class="vehicle-rating">
                 <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i><i v-if="review.rating < 5" v-bind:key="n" v-for="n in (5 - review.rating)" class="fa fa-star-o" style="marginRight: 0.5rem; color: #c9ed8b"></i>
               </section>
-
               <p>{{review.body}}</p>
-            </div>
-          </div>
-        </section>
-        <p v-if="reviews.length == 0">This vehicle doesn't have any reviews yet.</p>
-      </section>
+            </article>
+            <p v-if="reviews.length == 0">This vehicle doesn't have any reviews yet.</p>
+          </section>
+        </div>
+        <div class="column column-sm-12 column-6"></div>
       </div>
+    </div>
   </div>
 </template>
 

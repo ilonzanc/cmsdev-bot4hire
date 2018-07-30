@@ -26,11 +26,11 @@
           <h2>Contact Information</h2>
           <dl>
             <!-- TODO: if contact field isn't filled in, hide icons -->
-            <div v-if="user.display_tel == 1" class="dr">
+            <div v-if="user.display_tel == 1 && user.tel.length > 1" class="dr">
               <dt><i class="fa fa-phone"></i></dt>
               <dd>{{user.tel}}</dd>
             </div>
-            <div v-if="user.display_comm_frequency == 1" class="dr">
+            <div v-if="user.display_comm_frequency == 1 && user.comm_frequency.length > 1" class="dr">
               <dt><i title="Comm. frequency" class="fa fa-rss"></i></dt>
               <dd>{{user.comm_frequency}}</dd>
             </div>
@@ -43,11 +43,13 @@
             <div class="column column-sm-12 column-4" v-bind:key="vehicle.id" v-for="vehicle in vehicles">
               <section class="section__vehicle">
                 <router-link :to='"/overview/vehicle/" + vehicle.id'>
-                  <div class="row">
-                    <div class="column column-sm-3 column-12">
-                      <div class="vehicle__image" :style='"background: url(" + vehicle.image + ") no-repeat center; background-size: contain"'></div>
+                  <div class="">
+                    <div class="">
+                      <div class="image-border">
+                        <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
+                       </div>
                       </div>
-                    <div class="column column-sm-9 column-12">
+                    <div class="">
                       <i class="fa fa-angle-right"></i>
                       <h2>{{vehicle.name}}</h2>
                       <p>{{vehicle.vehicle_type}}</p>

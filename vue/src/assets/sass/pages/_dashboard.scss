@@ -93,3 +93,16 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+@media (min-width: 71.25rem) {
+    .actions {
+        .btn {
+            width: 100%;
+        }
+    }
+    .stat-numbers {
+        width: calc(50% - 1rem);
+        float: left;
+        margin-right: 1rem;
+    }
+}

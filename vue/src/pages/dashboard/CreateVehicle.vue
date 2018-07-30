@@ -11,21 +11,22 @@
         <form @submit.prevent="onSubmit">
         <div class="row">
           <div class="column column-sm-12 column-6">
+            <h2>General information</h2>
             <label for="name">Name *</label>
             <input type="text" id="name" name="name" placeholder="Name of your vehicle..." v-bind:class="{ 'filled-in': vehicle.name.value }" v-model="vehicle.name.value">
             <p v-if="errors.name" class="message error">{{ errors.name }}</p>
             <label for="body">Description</label>
             <textarea id="body" name="body" placeholder="Description of your vehicle..." v-bind:class="{ 'filled-in': vehicle.description.value }" v-model="vehicle.description.value"></textarea>
             <label for="price">Price *</label>
-            <input type="number" id="price" name="price" placeholder="Price of your vehicle per day..." v-bind:class="{ 'filled-in': vehicle.price.value }" v-model="vehicle.price.value">
+            <input class="floating-input" type="text" id="price" name="price" placeholder="Price of your vehicle per day..." v-bind:class="{ 'filled-in': vehicle.price.value }" v-model="vehicle.price.value">
+            <i class="input-suffix">shanix</i>
             <p v-if="errors.price" class="message error">{{ errors.price }}</p>
-          </div>
-          <div class="column column-sm-12 column-6">
             <label for="seats">Seats *</label>
-            <input type="text" id="seats" name="seats" placeholder="Number of seats in your vehicle..." v-bind:class="{ 'filled-in': vehicle.seats.value }" v-model="vehicle.seats.value">
+            <input type="number" id="seats" name="seats" placeholder="Number of seats in your vehicle..." v-bind:class="{ 'filled-in': vehicle.seats.value }" v-model="vehicle.seats.value">
             <p v-if="errors.seats" class="message error">{{ errors.seats }}</p>
             <label for="age">Age</label>
-            <input type="text" id="age" name="age" placeholder="Age of your vehicle..." v-bind:class="{ 'filled-in': vehicle.age.value }" v-model="vehicle.age.value">
+            <input class="floating-input" type="text" id="age" name="age" placeholder="Age of your vehicle..." v-bind:class="{ 'filled-in': vehicle.age.value }" v-model="vehicle.age.value">
+            <i class="input-suffix">million year(s)</i>
             <label for="vehicle_type">Type of vehicle *</label>
             <select class="form-control" name="vehicle_type" v-model="vehicle.vehicle_type_id[0].target_id" >
               <option value="" selected disabled>- Select a type -</option>
@@ -38,9 +39,11 @@
               <option v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
             <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
+          </div>
+          <div class="column column-sm-12 column-6">
             <!-- TODO: Add cybertron map -->
             <!-- <router-link class="btn" to="/">Go to map</router-link> -->
-            <label for="image">Vehicle image *</label>
+            <h2><label for="image">Image</label></h2>
             <div class="upload-btn-wrapper">
               <!-- TODO: icon upload animation -->
               <button class="btn upload-btn">Upload a file</button>
