@@ -957,7 +957,8 @@ section.review-list {
   border-radius: 6px; }
 
 .section__vehicle {
-  padding: 0.5rem 0; }
+  padding: 0.5rem 0;
+  position: relative; }
   .section__vehicle h2 {
     margin-bottom: 0; }
   .section__vehicle .vehicle__image {
@@ -1033,6 +1034,24 @@ section.review-list {
 .icon.small-icon {
   width: 30px; }
 
+.loader {
+  margin: 0 0 2em;
+  height: 100px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); }
+  .loader svg path {
+    fill: #67b1fc; }
+
+/*
+  Set the color of the icon
+*/
 p.message {
   font-size: 0.8rem; }
   p.message.error {
@@ -1086,7 +1105,8 @@ p.message {
     color: #fff;
     font-size: 3rem;
     margin-bottom: 1rem;
-    line-height: 100%; }
+    line-height: 100%;
+    margin-left: 0; }
   #home .hero__image-text p {
     color: #fff;
     font-size: 1rem;

@@ -1,26 +1,26 @@
 // Website
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home'
-import Overview from '../components/Overview'
-import Detail from '../components/Detail'
-import Profile from '../components/Profile'
-import Login from '../components/Login'
-import Register from '../components/Register'
-import RentVehicle from '../components/RentVehicle'
+import Home from '../pages/Home'
+import Overview from '../pages/Overview'
+import Detail from '../pages/Detail'
+import Profile from '../pages/Profile'
+import Login from '../pages/Login'
+import Register from '../pages/Register'
+import RentVehicle from '../pages/RentVehicle'
 
 // Dashboard
-import Dashboard from '../components/dashboard/Dashboard'
+import Dashboard from '../pages/dashboard/Dashboard'
 
-import YourVehicles from '../components/dashboard/YourVehicles'
-import YourVehicle from '../components/dashboard/YourVehicle'
-import CreateVehicle from '../components/dashboard/CreateVehicle'
-import UpdateVehicle from '../components/dashboard/UpdateVehicle'
+import YourVehicles from '../pages/dashboard/YourVehicles'
+import YourVehicle from '../pages/dashboard/YourVehicle'
+import CreateVehicle from '../pages/dashboard/CreateVehicle'
+import UpdateVehicle from '../pages/dashboard/UpdateVehicle'
 
-import YourRentals from '../components/dashboard/YourRentals'
-import YourRental from '../components/dashboard/YourRental'
+import YourRentals from '../pages/dashboard/YourRentals'
+import YourRental from '../pages/dashboard/YourRental'
 
-import UpdateProfile from '../components/dashboard/UpdateProfile'
+import UpdateProfile from '../pages/dashboard/UpdateProfile'
 
 Vue.use(Router);
 

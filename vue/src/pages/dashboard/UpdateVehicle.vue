@@ -5,7 +5,7 @@
         <h1>Edit vehicle</h1>
         <svg version="1.1" id="title-line" x="0px" y="0px"
           viewBox="0 0 250 89" style="enable-background:new 0 0 250 89;" xml:space="preserve">
-          <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,85 40,85 25,69.9 0,69.9 "/>
+          <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
         </svg>
       </header>
       <form @submit.prevent="onSubmit">

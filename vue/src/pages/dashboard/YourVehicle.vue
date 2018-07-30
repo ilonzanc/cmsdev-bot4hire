@@ -1,7 +1,7 @@
 <template>
-  <div id="vehicle-detail">
+  <div id="your-vehicle">
       <div class="container">
-      <router-link class="breadcrumbs" to="/overview"><i class="fa fa-chevron-left"></i> back to overview</router-link>
+      <router-link class="breadcrumbs" to="/dashboard/vehicles"><i class="fa fa-chevron-left"></i> back to your vehicles</router-link>
       <section class="section__vehicle">
         <header class="title-header">
           <h1>{{vehicle.name}}</h1>
@@ -12,7 +12,6 @@
         </header>
         <div class="row">
           <div class="column column-sm-12 column-6">
-            <!-- TODO: Animate hologram -->
             <section class="vehicle-hologram">
               <div class="image-border">
                 <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
@@ -52,12 +51,12 @@
             </section>
             <div class="row important-details">
               <div class="column column-sm-6 column-2">
+                <!-- <img class="icon small-icon" src="../assets/images/marker.svg"> -->
                 <i class="fa fa-map-marker"></i>
                 {{vehicle.location_name}}
               </div>
               <div class="column column-sm-6 column-10">
                 <section class="vehicle-price">
-                  <!-- TODO: price should have thousand marker -->
                     <span class="vehicle-price-number">{{vehicle.price}}</span>
                     <span class="vehicle-price-suffix">shanix</span>
                   </section>
@@ -77,7 +76,7 @@
                     <td>power</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div v-if="vehicle.power > 0" v-bind:key="n" v-for="n in vehicle.power" class="spec-block"></div>
+                        <div v-bind:key="n" v-for="n in vehicle.power" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -85,7 +84,7 @@
                     <td>speed</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div v-if="vehicle.speed > 0" v-bind:key="n" v-for="n in vehicle.speed" class="spec-block"></div>
+                        <div v-bind:key="n" v-for="n in vehicle.speed" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -93,7 +92,7 @@
                     <td>accuracy</td>
                     <td>
                       <div class="spec-bar power-bar">
-                        <div v-if="vehicle.accuracy > 0" v-bind:key="n" v-for="n in vehicle.accuracy" class="spec-block"></div>
+                        <div v-bind:key="n" v-for="n in vehicle.accuracy" class="spec-block"></div>
                       </div>
                     </td>
                   </tr>
@@ -102,7 +101,6 @@
               <tab name="status">
                 <table>
                   <tr>
-                    <!-- TODO: add this to the db. Maybe? -->
                     <td>fuel levels</td>
                     <td>
                       <div class="spec-bar power-bar">
@@ -115,8 +113,7 @@
                 </table>
               </tab>
             </tabs>
-            <!-- TODO: Disable renting depending on rent period of contract -->
-            <router-link v-if="$parent.loggedInUser.current_user.uid !== vehicle.user_id" :to="vehicle.id + '/rent'" class="btn">Rent this vehicle</router-link>
+            <router-link v-if="this.$parent.loggedInUser.current_user.uid == vehicle.uid" :to="'/vehicle/' + vehicle.id + '/edit'" class="btn smallbtn"><i class="fa fa-pencil"></i> edit</router-link>
           </div>
         </div>
       </section>
@@ -127,13 +124,14 @@
             <div class="column column-sm-3 column-2">
               <router-link :to="'/profile/' + review.user_id">
                 <i class="fa fa-user-circle"></i>
+
               </router-link>
             </div>
             <div class="column column-sm-9 column-10">
               <h3>{{review.user_name}}</h3>
-              <h3>{{review.title}}</h3>
+              <!-- <h3>{{review.title}}</h3> -->
               <section class="vehicle-rating">
-                <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i><i v-if="review.rating < 5" v-bind:key="n" v-for="n in (5 - review.rating)" class="fa fa-star-o" style="marginRight: 0.5rem; color: #c9ed8b"></i>
+                <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i>
               </section>
 
               <p>{{review.body}}</p>
@@ -148,17 +146,19 @@
 
 <script>
 import axios from "axios";
-import Tabs from './Tabs.vue';
-import Tab from './Tab.vue';
+import Tabs from '../../components/Tabs.vue';
+import Tab from '../../components/Tab.vue';
 
 export default {
-  name: 'detail',
+  name: 'your-vehicle',
   components:{
     'tabs': Tabs,
     'tab': Tab
   },
   data () {
     return {
+      activeuser: this.$parent.user,
+      password: this.$parent.user_password,
       vehicle: {},
       reviews: [],
       newReview: {
@@ -189,18 +189,8 @@ export default {
     .then(response => {
       this.vehicle = response.data[0];
       this.vehicle.power = parseInt(this.vehicle.power);
-      if (isNaN(this.vehicle.power)) {
-        this.vehicle.power = 0;
-      }
       this.vehicle.speed = parseInt(this.vehicle.speed);
-      if (isNaN(this.vehicle.speed)) {
-        this.vehicle.speed = 0;
-      }
       this.vehicle.accuracy = parseInt(this.vehicle.accuracy);
-      if (isNaN(this.vehicle.accuracy)) {
-        this.vehicle.accuracy = 0;
-      }
-      this.newReview.vehicle_id[0].target_id = response.data[0].id;
     })
     .catch(error => {
       console.log(error);
@@ -219,6 +209,7 @@ export default {
   },
   methods: {
     onSubmit() {
+      var self = this;
       axios({
         method: 'post',
         url: apiurl + "entity/review?_format=hal_json",
@@ -228,25 +219,21 @@ export default {
           'X-CSRF-Token': this.$parent.loggedInUser.csrf_token,
         },
         auth: {
-          username: this.$parent.loggedInUser.name,
-          password: this.$parent.loggedInUser.pass
+          username: this.$parent.loggedInUser.current_user.name,
+          password: this.$parent.loggedInUser.current_user.pass
         },
-        data: this.newReview
-      }).then( (response) => {
+        data: self.newReview
+      }).then((response) => {
         console.log(response);
         location.reload();
       }).catch((error) => {
-        console.log(error.response.status);
-        console.log(error.response.headers);
-        console.log(error.response.data.message);
+        console.log(error);
       });
-    },
+    }
   }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-  .column {
-    overflow: visible;
-  }
+<style lang="scss">
+
 </style>
