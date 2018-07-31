@@ -116,7 +116,7 @@
               </tab>
             </tabs>
             <!-- TODO: Disable renting depending on rent period of contract -->
-            <router-link v-if="$parent.loggedInUser.current_user.uid !== vehicle.user_id" :to="vehicle.id + '/rent'" class="btn">Rent this vehicle</router-link>
+            <router-link v-if="isLoggedIn == true && isOwner == false" :to="vehicle.id + '/rent'" class="btn">Rent this vehicle</router-link>
           </div>
         </div>
       </section>
@@ -126,7 +126,7 @@
           <section class="review-list">
             <article v-for="review in reviews" v-bind:key="review.id" class="review">
               <div class="image-border">
-                <router-link class="review-avatar" :to="'/profile/' + review.user_id">
+                <router-link class="profile-avatar" :to="'/profile/' + review.user_id">
                   <i class="fa fa-user-o"></i>
                 </router-link>
               </div>
@@ -181,7 +181,9 @@ export default {
           target_id: "",
           target_type: "vehicle",
         }]
-      }
+      },
+      isLoggedIn: null,
+      isOwner: null
     }
   },
   mounted () {
@@ -202,6 +204,21 @@ export default {
         this.vehicle.accuracy = 0;
       }
       this.newReview.vehicle_id[0].target_id = response.data[0].id;
+
+      if (this.$parent.loggedInUser) {
+        this.isLoggedIn = true;
+        console.log("User is logged in");
+        if (this.$parent.loggedInUser.current_user.uid !== this.vehicle.user_id) {
+          this.isOwner = false;
+          console.log("This isn't the owner");
+        } else {
+          this.isOwner = true;
+          console.log("This is the owner");
+        }
+      } else {
+        this.isLoggedIn = false;
+        console.log("User isn't logged in");
+      }
     })
     .catch(error => {
       console.log(error);

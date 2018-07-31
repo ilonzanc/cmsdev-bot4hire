@@ -5,7 +5,7 @@
         <div class="hero__image-text">
           <!-- TODO: Final text and layouting -->
           <h1>Astrovia</h1>
-          <p>Robots n stff</p>
+          <p>Robots n stuff</p>
           <router-link class="btn" to="/overview">Check the catalogue</router-link>
         </div>
       </div>

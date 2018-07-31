@@ -22,6 +22,11 @@ form {
     opacity:  0;
   }
 
+  .image-border {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
   select {
     display: block;
     background: $background-color;
@@ -42,20 +47,22 @@ form {
     -webkit-appearance: none;
     appearance: none;
     height: 5px;
-    background: $primary-color;
+    background: linear-gradient(135deg, $primary-color, $secundary-color);
     outline: none;
     width: 100%;
     margin: 1.2rem 0 2rem;
     border-radius: 20px;
+    transition: all 0.3s ease-in-out;
   }
 
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    background-color: $secundary-color;
-    opacity: 0.5;
+    background-color: rgba($background-color, 0.5);
+    //opacity: 0.5;
     width: 26px;
     height: 26px;
     border-radius: 50%;
+    border: 2px solid $primary-color;
   }
 
   .range-label,
@@ -65,6 +72,7 @@ form {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 1.2rem;
+    display: inline;
   }
 
   .range-box {

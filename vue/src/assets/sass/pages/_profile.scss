@@ -1,32 +1,27 @@
 #profile {
   .section__profile {
-    .fa-user-circle {
-      font-size: 5rem;
-      margin-bottom: 1rem;
-    }
 
     .image-border {
       width: fit-content;
       margin: 0 auto 2rem;
+      display: block;
+      float: none;
+    }
+
+    .profile-avatar {
+      width: 140px;
+      height: 140px;
+
+      .fa-user-o {
+        font-size: 2rem;
+      }
     }
   }
-
-
-
-  .profile-image {
-    border-radius: 5px;
-    height: 70px;
-    width: 150px;
-    height: 150px;
-    overflow: hidden;
-    border: 1px solid #67b1fc;
-    background-repeat: no-repeat;
-    background-position: center;
-    }
 }
 
 @media (min-width: 71.25rem) {
   #profile .section__profile .image-border {
     margin-right: 1rem;
+    float: left;
   }
 }

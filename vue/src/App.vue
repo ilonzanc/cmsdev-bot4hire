@@ -14,7 +14,7 @@
                         <a>Overview</a>
                     </router-link>
                     <router-link v-if="!loggedInUser" to="/login" tag="li" exact @click.prevent="toggleNav">
-                        <a>Login</a>
+                        <a class="btn smallbtn">Sign in</a>
                     </router-link>
                     <div v-if="loggedInUser">
                         <router-link :to="'/profile/' + loggedInUser.current_user.uid" tag="li" exact @click.prevent="toggleNav">
@@ -34,6 +34,7 @@
     <main>
         <router-view></router-view>
     </main>
+    <div class="overlay"></div>
   </div>
 </template>
 

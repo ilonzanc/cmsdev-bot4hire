@@ -1,0 +1,46 @@
+#login,
+#register {
+  .login-left {
+    display: none;
+  }
+
+  .login-right {
+    form {
+      .form-bottom {
+        margin-top: 2rem;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media (min-width: 40rem) {
+  #login,
+  #register {
+    .login-panel {
+      float: left;
+      width: 50%;
+      margin-top: -2rem;
+      padding-top: 2rem;
+      height: calc(100vh - 63px);
+    }
+
+    .login-left {
+      display: block;
+    }
+
+    .login-right {
+      border-left: 1px solid $primary-color;
+      padding-left: 1rem;
+
+      form {
+        margin-left: 2rem;
+        width: 70%;
+
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

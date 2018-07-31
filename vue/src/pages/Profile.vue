@@ -14,8 +14,9 @@
             </svg>
           </header>
           <div class="image-border">
-            <!-- TODO: User can upload images -->
-            <div class="profile-image" :style='"background: url( http://localhost:8888/sites/default/files" + user.uri + ") no-repeat center; background-size: contain"'></div>
+            <div class="profile-avatar">
+              <i class="fa fa-user-o"></i>
+            </div>
           </div>
           <h2>{{user.display_name == 1 ? user.first_name + " " + user.last_name : user.username}}</h2>
           <!-- TODO: calculate average review rating -->
@@ -43,18 +44,12 @@
             <div class="column column-sm-12 column-4" v-bind:key="vehicle.id" v-for="vehicle in vehicles">
               <section class="section__vehicle">
                 <router-link :to='"/overview/vehicle/" + vehicle.id'>
-                  <div class="">
-                    <div class="">
-                      <div class="image-border">
-                        <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
-                       </div>
-                      </div>
-                    <div class="">
-                      <i class="fa fa-angle-right"></i>
-                      <h2>{{vehicle.name}}</h2>
-                      <p>{{vehicle.vehicle_type}}</p>
-                    </div>
+                  <div class="image-border">
+                    <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
                   </div>
+                  <i class="fa fa-angle-right"></i>
+                  <h2>{{vehicle.name}}</h2>
+                  <p>{{vehicle.vehicle_type}}</p>
                 </router-link>
               </section>
             </div>

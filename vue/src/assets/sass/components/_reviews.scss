@@ -12,35 +12,11 @@ article.review {
 		margin-bottom: 0;
 	}
 
-	.image-border {
-		display: inline-block;
-		float: left;
-		margin-right: 1rem;
-	}
-
-	.review-avatar {
-		width: 60px;
-		height: 60px;
-		display: block;
-		position: relative;
-		border: 1px solid $primary-color;
-		border-radius: 4px;
-
-		.fa-user-o {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%);
-		}
-	}
-
 	.review-created {
 		float: right;
 		font-size: 0.8rem;
 		font-style: normal;
 	}
-
-
 }
 
 section.review-list {

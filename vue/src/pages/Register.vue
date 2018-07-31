@@ -1,36 +1,41 @@
 <template>
   <div id="register">
-      <div class="container">
-      <header class="title-header">
-        <h1>Register new user</h1>
-        <svg version="1.1" id="title-line" x="0px" y="0px"
-          viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
-          <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
-        </svg>
-      </header>
-      <form @submit.prevent="onSubmit">
-        <!-- TODO: Upload avatar -->
-        <label for="user">Avatar</label>
-        <div class="upload-btn-wrapper">
-          <!-- TODO: icon upload animation -->
-          <button class="btn upload-btn">Upload a file</button>
-          <input id="vehicle_image" type="file" @change="uploadImage()">
-        </div>
-        <p v-if="errors.image" class="message error">{{ errors.image }}</p>
-        <div v-if="avatar" class="image-border">
-          <div  class="uploaded-image" :style='"background: url( http://localhost:8888" + avatar + ") no-repeat center; background-size: contain"'></div>
-        </div>
-        <label for="name">Username</label>
-        <input type="text" id="name" name="name" placeholder="Your username..." required v-bind:class="{ 'filled-in': user.name.value }" v-model="user.name.value">
-        <p v-if="errors.name" class="message error">{{ errors.name }}</p>
-        <label for="mail">Email Address</label>
-        <input type="email" id="mail" name="mail" placeholder="Your emailaddress..." required v-bind:class="{ 'filled-in': user.mail.value }" v-model="user.mail.value">
-        <p v-if="errors.mail" class="message error">{{ errors.mail }}</p>
-        <label for="pass">Password</label>
-        <input type="password" id="pass" name="pass" placeholder="********" required v-bind:class="{ 'filled-in': user.pass.value }" v-model="user.pass.value">
-        <button type="submit" class="btn widebtn">Register</button>
-      </form>
+    <div class="container">
+      <div class="login-panel login-left">
+        <h1>Welcome</h1>
       </div>
+      <div class="login-panel login-right">
+        <header class="title-header">
+          <h1>Register new user</h1>
+          <svg version="1.1" id="title-line" x="0px" y="0px"
+            viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
+            <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
+          </svg>
+        </header>
+        <form @submit.prevent="onSubmit">
+          <!-- TODO: Upload avatar -->
+          <!-- <label for="user">Avatar</label>
+          <div class="upload-btn-wrapper">
+            <button class="btn upload-btn">Upload a file</button>
+            <input id="vehicle_image" type="file" @change="uploadImage()">
+          </div>
+          <p v-if="errors.image" class="message error">{{ errors.image }}</p>
+          <div v-if="avatar" class="image-border">
+            <div  class="uploaded-image" :style='"background: url( http://localhost:8888" + avatar + ") no-repeat center; background-size: contain"'></div>
+          </div>
+          -->
+          <label for="name">Username</label>
+          <input type="text" id="name" name="name" placeholder="Your username..." required v-bind:class="{ 'filled-in': user.name.value }" v-model="user.name.value">
+          <p v-if="errors.name" class="message error">{{ errors.name }}</p>
+          <label for="mail">Email Address</label>
+          <input type="email" id="mail" name="mail" placeholder="Your emailaddress..." required v-bind:class="{ 'filled-in': user.mail.value }" v-model="user.mail.value">
+          <p v-if="errors.mail" class="message error">{{ errors.mail }}</p>
+          <label for="pass">Password</label>
+          <input type="password" id="pass" name="pass" placeholder="********" required v-bind:class="{ 'filled-in': user.pass.value }" v-model="user.pass.value">
+          <button type="submit" class="btn widebtn">Register</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -12,37 +12,27 @@
       <div class="row">
         <div class="column column-sm-12 column-4" v-bind:key="vehicle.id" v-for="vehicle in vehicles">
           <section class="section__vehicle">
-              <div class="row">
-                <div class="column column-sm-3 column-12">
-                  <div class="image-border">
-                    <div class="vehicle__image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
-                  </div>
-                </div>
-                <div class="column column-sm-9 column-12">
-                  <!-- TODO: more user-friendly buttons -->
-                  <router-link :to="'vehicles/' + vehicle.id"><i class="fa fa-eye"></i></router-link>
-                  <router-link :to="'vehicles/' + vehicle.id + '/edit'"><i class="fa fa-pencil"></i></router-link>
-                  <i @click.prevent="onDelete(vehicle)" class="fa fa-trash"></i>
-                  <h2>{{vehicle.name}}</h2>
-                  <p>{{vehicle.vehicle_type_name}}</p>
-                  <section class="vehicle-price">
-                    <span class="vehicle-price-number">{{vehicle.price}}</span>
-                    <span class="vehicle-price-suffix">shanix</span>
-                  </section>
-                </div>
-              </div>
+            <div class="image-border">
+              <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
+            </div>
+            <h2>{{vehicle.name}}</h2>
+            <!-- TODO: more user-friendly buttons -->
+            <section class="vehicle-actions">
+              <router-link class="action-icon" :to="'vehicles/' + vehicle.id"><i class="fa fa-eye"></i></router-link>
+              <router-link class="action-icon" :to="'vehicles/' + vehicle.id + '/edit'"><i class="fa fa-pencil"></i></router-link>
+              <a href="" class="action-icon" @click.prevent="onDelete(vehicle)"><i class="fa fa-trash"></i></a>
+            </section>
           </section>
         </div>
       </div>
       <article v-if="deleteVehicle.status" class="toast-message">
         <!-- TODO: Fancy slide in animation with darker overlay -->
-        <i @click.prevent="closeToastMessage()" class="fa fa-times"></i>
+        <a href="" @click.prevent="closeToastMessage()"><i class="fa fa-times"></i></a>
         <p>Are you sure you want to erase <em>{{deleteVehicle.vehicle_name}}</em> from the system?</p>
         <button @click.prevent="confirmDelete()" class="btn delete-btn">Erase</button>
         <button @click.prevent="closeToastMessage()" class="btn">Cancel</button>
       </article>
     </div>
-
   </div>
 </template>
 
@@ -82,11 +72,15 @@ export default {
   },
   methods: {
     closeToastMessage() {
+      let overlay = document.querySelector('.overlay');
+      overlay.classList.remove('show');
       this.deleteVehicle.status = false;
       this.deleteVehicle.vehicle_id = null;
       this.deleteVehicle.vehicle_name = null;
     },
     onDelete(currentVehicle) {
+      let overlay = document.querySelector('.overlay');
+      overlay.classList.add('show');
       this.deleteVehicle.status = true;
       this.deleteVehicle.vehicle_id = currentVehicle.id;
       this.deleteVehicle.vehicle_name = currentVehicle.name;

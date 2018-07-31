@@ -35,7 +35,10 @@
     color: $error-color;
     border-color: $error-color;
 
-
+    &:hover {
+      background: rgba($error-color, 0.2);
+      color: $error-color;
+    }
   }
 }
 

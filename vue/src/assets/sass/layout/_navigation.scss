@@ -69,13 +69,17 @@ nav {
         position: relative;
         top: 0;
         left: 0;
-        width: 800px;
+        width: fit-content;
         float: right;
         height: auto;
         padding: 0;
         transition: none;
         background: none;
         text-align: right;
+
+        div {
+            float: left;
+        }
 
 		li {
 			list-style-type: none;

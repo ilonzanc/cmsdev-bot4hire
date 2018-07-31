@@ -1,16 +1,18 @@
 <template>
   <div id="update-vehicle">
       <div class="container">
+      <router-link class="breadcrumbs" to="/dashboard/vehicles"><i class="fa fa-chevron-left"></i> back to your vehicles</router-link>
       <header class="title-header">
         <h1>Edit vehicle</h1>
         <svg version="1.1" id="title-line" x="0px" y="0px"
-          viewBox="0 0 250 89" style="enable-background:new 0 0 250 89;" xml:space="preserve">
+          viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
           <polyline style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" points="250,25 40,25 25,9.9 0,9.9 "/>
         </svg>
       </header>
       <form @submit.prevent="onSubmit">
         <div class="row">
           <div class="column column-sm-12 column-6">
+            <h2>General Information</h2>
             <label for="name">Naam</label>
             <input type="text" id="name" name="name" placeholder="Naam van je vehicle..." v-bind:class="{ 'filled-in': vehicle.name }" v-model="vehicle.name">
             <p v-if="errors.name" class="message error">{{ errors.name }}</p>
@@ -19,8 +21,6 @@
             <label for="price">Prijs (Shanix/dag)</label>
             <input type="text" id="price" name="price" placeholder="Prijs van je vehicle..." v-bind:class="{ 'filled-in': vehicle.price }" v-model="vehicle.price">
             <p v-if="errors.price" class="message error">{{ errors.price }}</p>
-          </div>
-          <div class="column column-sm-12 column-6">
             <label for="seats">Zitplaatsen</label>
             <input type="text" id="seats" name="seats" placeholder="Zitplaatsen van je vehicle..." v-bind:class="{ 'filled-in': vehicle.seats }" v-model="vehicle.seats">
             <p v-if="errors.seats" class="message error">{{ errors.seats }}</p>
@@ -37,8 +37,10 @@
               <option :selected="location.id" v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
             <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
-            <router-link class="btn" to="/">Go to map</router-link>
-            <label for="image">Vehicle image *</label>
+            <!-- <router-link class="btn" to="/">Go to map</router-link> -->
+          </div>
+          <div class="column column-sm-12 column-6">
+            <label for="image"><h2>Image</h2></label>
             <div class="upload-btn-wrapper">
               <!-- TODO: icon upload animation -->
               <button class="btn upload-btn">Upload a file</button>
@@ -46,8 +48,9 @@
             </div>
             <p v-if="errors.image[0].target_id" class="message error">{{ errors.image[0].target_id }}</p>
             <div class="image-border">
-              <div class="uploaded-image" :style='"background: url( http://localhost:8888" + vehicle.image_url + ") no-repeat center; background-size: contain"'></div>
+              <div class="uploaded-image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
             </div>
+            <h2>Statistics</h2>
             <label for="power" class="range-label">Power</label>
             <div class="range-box">
               {{ vehicle.power }}

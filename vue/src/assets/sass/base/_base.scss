@@ -11,3 +11,17 @@ main {
 .container > section {
 	margin-bottom: 3rem;
 }
+
+.overlay {
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	left: 0;
+	top: 0;
+	background: rgba($background-color, 0.7);
+	z-index: 150;
+	display: none;
+	&.show {
+		display: block;
+	}
+}
