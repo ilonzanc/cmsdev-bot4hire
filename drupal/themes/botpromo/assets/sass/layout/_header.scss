@@ -2,14 +2,57 @@
     color: #fff;
     padding: 1rem 0;
     position: relative;
-    background: $primary-color-dark;
+    border-bottom: 1px solid $primary-color;
+    height: 60px;
+
     h1 {
         font-size: 1.2rem;
         display: inline-block;
         margin: 0;
     }
+
+    .site-logo {
+      display: block;
+      line-height: 100%;
+
+      img{
+        height: 25px;
+        display: inline-block;
+      }
+    }
+
+    .block-system-branding-block {
+      float: left;
+    }
 }
 
 #block-pagetitle {
     z-index: -1;
+}
+
+.block-page-title-block {
+  position: relative;
+  margin-bottom: 3rem;
+  svg {
+    position: absolute;
+    left: -1.6rem;
+    bottom: -20px;
+  }
+}
+
+@media (min-width: 71.25rem) {
+  .block-page-title-block {
+    svg {
+      left: -1rem;
+      height: 40px;
+      bottom: -20px;
+    }
+  }
+
+  .region-header {
+    height: 71px;
+    .site-logo img {
+      height: 35px;
+    }
+  }
 }

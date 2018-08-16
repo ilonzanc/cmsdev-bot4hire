@@ -41,11 +41,8 @@
             <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
           </div>
           <div class="column column-sm-12 column-6">
-            <!-- TODO: Add cybertron map -->
-            <!-- <router-link class="btn" to="/">Go to map</router-link> -->
             <h2><label for="image">Image</label></h2>
             <div class="upload-btn-wrapper">
-              <!-- TODO: icon upload animation -->
               <button class="btn upload-btn">Upload a file</button>
               <input id="vehicle_image" type="file" @change="uploadImage()">
             </div>

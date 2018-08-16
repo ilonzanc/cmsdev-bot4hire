@@ -1074,11 +1074,7 @@ section.review-list {
 
 .section__vehicle {
   padding: 0.5rem 0;
-  padding: 0.7rem;
-  background-color: #232e4a;
-  border-radius: 5px;
-  margin-bottom: 0.7rem;
-  overflow: auto; }
+  margin-bottom: 0.7rem; }
   .section__vehicle p {
     margin-bottom: 0; }
   .section__vehicle h2 {

@@ -19,14 +19,12 @@
             </div>
           </div>
           <h2>{{user.display_name == 1 ? user.first_name + " " + user.last_name : user.username}}</h2>
-          <!-- TODO: calculate average review rating -->
           <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
           <p>{{user.bio}}</p>
         </section>
         <section class="section-contact-information">
           <h2>Contact Information</h2>
           <dl>
-            <!-- TODO: if contact field isn't filled in, hide icons -->
             <div v-if="user.display_tel == 1 && user.tel.length > 1" class="dr">
               <dt><i class="fa fa-phone"></i></dt>
               <dd>{{user.tel}}</dd>
@@ -40,7 +38,6 @@
         <section class="section__vehicles-list">
           <h2>Available vehicles</h2>
           <div class="row">
-            <!-- TODO: add missing vehicle details -->
             <div class="column column-sm-12 column-4" v-bind:key="vehicle.id" v-for="vehicle in vehicles">
               <section class="section__vehicle">
                 <router-link :to='"/overview/vehicle/" + vehicle.id'>
@@ -65,7 +62,6 @@
                 </router-link>
               </div>
               <div class="column column-sm-9 column-10">
-                <!-- TODO: also add date of publication -->
                 <h3>{{review.user_name}}</h3>
                 <h3>{{review.title}}</h3>
                 <section class="vehicle-rating">

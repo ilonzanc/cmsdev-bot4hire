@@ -12,43 +12,10 @@
         </header>
         <div class="row">
           <div class="column column-sm-12 column-6">
-            <!-- TODO: Animate hologram -->
             <section class="vehicle-hologram">
               <div class="image-border">
                 <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
               </div>
-              <svg version="1.1" id="hologram" x="0px" y="0px"
-                viewBox="0 0 836 395" style="enable-background:new 0 0 836 395;" xml:space="preserve">
-                <ellipse style="fill:#67B1FC;" cx="415.6" cy="350.5" rx="10.5" ry="3.2"/>
-                <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="415.5931" y1="353.6997" x2="415.5931" y2="10.447">
-                  <stop  offset="0" style="stop-color:#67B1FC"/>
-                  <stop  offset="2.264887e-02" style="stop-color:#62A7EE;stop-opacity:0.9774"/>
-                  <stop  offset="0.1038" style="stop-color:#5087C3;stop-opacity:0.8962"/>
-                  <stop  offset="0.1912" style="stop-color:#406B9C;stop-opacity:0.8088"/>
-                  <stop  offset="0.2837" style="stop-color:#33537B;stop-opacity:0.7163"/>
-                  <stop  offset="0.3828" style="stop-color:#284061;stop-opacity:0.6172"/>
-                  <stop  offset="0.491" style="stop-color:#20314C;stop-opacity:0.509"/>
-                  <stop  offset="0.6128" style="stop-color:#1A263E;stop-opacity:0.3872"/>
-                  <stop  offset="0.7598" style="stop-color:#172036;stop-opacity:0.2402"/>
-                  <stop  offset="1" style="stop-color:#161E33;stop-opacity:0"/>
-                </linearGradient>
-                <polygon style="opacity:0.3;fill:url(#SVGID_1_);" points="412.2,353.7 12,10.4 819.2,10.4 	"/>
-                <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="415.5931" y1="353.6997" x2="415.5931" y2="10.447">
-                  <stop  offset="0" style="stop-color:#67B1FC"/>
-                  <stop  offset="2.264887e-02" style="stop-color:#62A7EE;stop-opacity:0.9774"/>
-                  <stop  offset="0.1038" style="stop-color:#5087C3;stop-opacity:0.8962"/>
-                  <stop  offset="0.1912" style="stop-color:#406B9C;stop-opacity:0.8088"/>
-                  <stop  offset="0.2837" style="stop-color:#33537B;stop-opacity:0.7163"/>
-                  <stop  offset="0.3828" style="stop-color:#284061;stop-opacity:0.6172"/>
-                  <stop  offset="0.491" style="stop-color:#20314C;stop-opacity:0.509"/>
-                  <stop  offset="0.6128" style="stop-color:#1A263E;stop-opacity:0.3872"/>
-                  <stop  offset="0.7598" style="stop-color:#172036;stop-opacity:0.2402"/>
-                  <stop  offset="1" style="stop-color:#161E33;stop-opacity:0"/>
-                </linearGradient>
-                <polygon style="opacity:0.3;fill:url(#SVGID_2_);" points="413.8,353.7 200.2,10.4 631,10.4 	"/>
-                <ellipse style="fill:none;stroke:#67B1FC;stroke-width:3;stroke-miterlimit:10;" cx="415.6" cy="356.1" rx="94" ry="28.5"/>
-                <ellipse style="fill:none;stroke:#67B1FC;stroke-miterlimit:10;" cx="415.6" cy="350.5" rx="18.3" ry="5.5"/>
-              </svg>
             </section>
             <div class="row important-details">
               <div class="column column-sm-6 column-2">
@@ -56,7 +23,6 @@
               </div>
               <div class="column column-sm-6 column-10">
                 <section class="vehicle-price">
-                  <!-- TODO: price should have thousand marker -->
                     <span class="vehicle-price-number">{{vehicle.price}}</span>
                     <span class="vehicle-price-suffix">shanix</span>
                   </section>
@@ -69,7 +35,6 @@
             <p>Owner: <router-link :to="'/profile/' + vehicle.user_id">{{vehicle.user_name}}</router-link></p>
             <p>Seats: {{vehicle.seats}}</p>
             <p>Age: {{vehicle.age}} million year(s)</p>
-            <!-- TODO: calculte average rating -->
             <tabs>
               <tab name="specs" :selected="true">
                 <table>
@@ -102,7 +67,6 @@
               <tab name="status">
                 <table>
                   <tr>
-                    <!-- TODO: add this to the db. Maybe? -->
                     <td>fuel levels</td>
                     <td>
                       <div class="spec-bar power-bar">
@@ -115,7 +79,6 @@
                 </table>
               </tab>
             </tabs>
-            <!-- TODO: Disable renting depending on rent period of contract -->
             <router-link v-if="isLoggedIn == true && isOwner == false" :to="vehicle.id + '/rent'" class="btn">Rent this vehicle</router-link>
           </div>
         </div>

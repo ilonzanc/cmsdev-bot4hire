@@ -13,17 +13,6 @@
           </svg>
         </header>
         <form @submit.prevent="onSubmit">
-          <!-- TODO: Upload avatar -->
-          <!-- <label for="user">Avatar</label>
-          <div class="upload-btn-wrapper">
-            <button class="btn upload-btn">Upload a file</button>
-            <input id="vehicle_image" type="file" @change="uploadImage()">
-          </div>
-          <p v-if="errors.image" class="message error">{{ errors.image }}</p>
-          <div v-if="avatar" class="image-border">
-            <div  class="uploaded-image" :style='"background: url( http://localhost:8888" + avatar + ") no-repeat center; background-size: contain"'></div>
-          </div>
-          -->
           <label for="name">Username</label>
           <input type="text" id="name" name="name" placeholder="Your username..." required v-bind:class="{ 'filled-in': user.name.value }" v-model="user.name.value">
           <p v-if="errors.name" class="message error">{{ errors.name }}</p>

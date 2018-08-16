@@ -37,12 +37,10 @@
               <option :selected="location.id" v-for="location in locations" v-bind:key="location.id" :value="location.id">{{location.name}}</option>
             </select>
             <p v-if="errors.location_id" class="message error">{{ errors.location_id }}</p>
-            <!-- <router-link class="btn" to="/">Go to map</router-link> -->
           </div>
           <div class="column column-sm-12 column-6">
             <label for="image"><h2>Image</h2></label>
             <div class="upload-btn-wrapper">
-              <!-- TODO: icon upload animation -->
               <button class="btn upload-btn">Upload a file</button>
               <input id="vehicle_image" type="file" @change="uploadImage()">
             </div>

@@ -1,5 +1,29 @@
 footer {
-    background: $primary-color-dark;
-    color: #fff;
-	padding: 1rem 0;
+  border-top: 1px solid $primary-color;
+  color: #fff;
+  padding: 1rem 0;
+  background: $background-color;
+
+  #block-footer {
+    margin-bottom: 1rem;
+
+    .menu .menu-item {
+      display: block;
+      margin: 0.5rem 0;
+      a {
+        border-left: 4px solid $background-color;
+        padding: 0.5rem 1rem;
+        display: block;
+
+        &:hover {
+          border-left-color: $primary-color;
+        }
+
+        &.is-active {
+          color: $primary-color;
+          border-left-color: $primary-color;
+        }
+      }
+    }
+  }
 }

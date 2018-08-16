@@ -14,7 +14,6 @@
       <p>Owner: {{vehicle.user_name}}</p>
       <h2>Rent Details</h2>
       <form @submit.prevent="onSubmit">
-        <!-- TODO: Toast message on request send -->
         <label for="start_date">Start datum</label>
         <input type="date" min="1900-01-01" max="2050-12-31" data-drupal-date-format="Y-m-d" id="start_date" required name="start_date" value="2018-01-15" size="12" v-bind:class="{ 'filled-in': rental_details.start_date.value }" v-model="rental_details.start_date.value">
         <label for="end_date">End datum</label>

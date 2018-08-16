@@ -1,7 +1,6 @@
 <template>
   <div id="vehicle-overview">
     <div class="container">
-      <!-- TODO: add search and filters -->
       <header class="title-header">
         <h1>Overview</h1>
         <svg version="1.1" id="title-line" x="0px" y="0px"
@@ -14,7 +13,6 @@
           <section class="section__vehicle">
             <router-link :to='"overview/vehicle/" + vehicle.id'>
               <div class="image-border">
-                <!-- TODO: resize images depending on portrait/landscape -->
                 <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
               </div>
               <i class="fa fa-angle-right"></i>

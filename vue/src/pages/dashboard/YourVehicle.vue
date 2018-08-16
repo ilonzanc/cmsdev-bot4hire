@@ -51,7 +51,6 @@
             </section>
             <div class="row important-details">
               <div class="column column-sm-6 column-2">
-                <!-- <img class="icon small-icon" src="../assets/images/marker.svg"> -->
                 <i class="fa fa-map-marker"></i>
                 {{vehicle.location_name}}
               </div>
@@ -129,7 +128,6 @@
             </div>
             <div class="column column-sm-9 column-10">
               <h3>{{review.user_name}}</h3>
-              <!-- <h3>{{review.title}}</h3> -->
               <section class="vehicle-rating">
                 <i v-bind:key="n" v-for="n in review.rating" class="fa fa-star" style="marginRight: 0.5rem; color: #c9ed8b"></i>
               </section>

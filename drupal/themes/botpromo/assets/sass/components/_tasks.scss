@@ -1,0 +1,14 @@
+.block-local-tasks-block .tabs{
+  margin-bottom: 2rem;
+  li a{
+    border: 1px solid $background-color;
+    &:hover {
+      border: 1px solid $primary-color;
+      background: none;
+    }
+    &.is-active {
+      background: rgba($primary-color, 0.5);
+      border: 1px solid $primary-color;
+    }
+  }
+}

@@ -1,8 +1,10 @@
 body {
     overflow-x: hidden;
-    color: $text-color;
+    color: #fff;
+    background: $background-color;
 }
 
 main {
     padding: 1rem 0;
+    min-height: calc(100vh - 240px);
 }

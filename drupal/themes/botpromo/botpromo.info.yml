@@ -13,5 +13,4 @@ regions:
   top: 'Above header'
   header: 'Header'
   content: 'Content'
-  sidebar: 'Sidebar Right'
   footer: 'Footer'

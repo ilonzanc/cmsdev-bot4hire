@@ -9,7 +9,6 @@
         </svg>
       </header>
       <form @submit.prevent="onSubmit">
-        <!-- TODO: update avatar -->
         <label for="first_name">First Name *</label>
         <input type="text" id="first_name" name="first_name" placeholder="Your firstname..." v-bind:class="{ 'filled-in': currentUser.first_name }" v-model="currentUser.first_name">
         <p v-if="errors.name" class="message error">{{ errors.name }}</p>

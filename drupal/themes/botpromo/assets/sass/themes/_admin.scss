@@ -1,0 +1,27 @@
+.node-preview-container {
+  position: static;
+  border-bottom: 4px solid $primary-color;
+  margin-bottom: 1rem;
+
+  select {
+    margin-left: 1rem;
+  }
+
+  .node-preview-backlink {
+    font-weight: 700;
+
+    &:hover {
+      color: $secundary-color;
+    }
+
+    &:before {
+      content: "\f104";
+      font-family: 'FontAwesome';
+      font-weight: normal;
+      font-style: normal;
+      display: inline-block;
+      text-decoration: inherit;
+      margin-right: 0.5rem;
+    }
+  }
+}

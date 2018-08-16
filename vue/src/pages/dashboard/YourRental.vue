@@ -18,7 +18,6 @@
               <p>Vehicle rented: {{rental.vehicle_name}}</p>
               <p v-if="rental.renter_username != $parent.loggedInUser.current_user.name">Rented by: {{rental.renter_username}}</p>
               <p v-if="rental.vehicle_owner != $parent.loggedInUser.current_user.name">Owner: {{rental.vehicle_owner}}</p>
-              <!-- TODO: decline button -->
               <button
                 v-if="rental.vehicle_owner == $parent.loggedInUser.current_user.name && rental.accepted_by_owner == 0"
                 class="btn"
@@ -46,7 +45,6 @@
       <section v-if="rental.return_confirmed_by_owner == 1" class="section__newreview">
         <div class="row">
           <div class="column column-sm-12 column-6">
-            <!-- TODO: link review to contract? Maybe? Only show reviews posted by user -->
             <h2><i class="fa fa-plus"></i> Add a new review</h2>
             <form @submit.prevent="postReview">
               <label for="review_type">Review type *</label>

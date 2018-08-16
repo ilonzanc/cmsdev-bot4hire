@@ -2,7 +2,6 @@
   <div id="your-vehicles">
     <div class="container">
       <header class="title-header">
-        <!-- TODO: not same layout as overview. More dashboard-y... -->
         <h1>Your vehicles</h1>
         <svg version="1.1" id="title-line" x="0px" y="0px"
           viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">
@@ -16,7 +15,6 @@
               <div class="vehicle__image" :style='"background-image: url( http://localhost:8888" + vehicle.image_url + ")"'></div>
             </div>
             <h2>{{vehicle.name}}</h2>
-            <!-- TODO: more user-friendly buttons -->
             <section class="vehicle-actions">
               <router-link class="action-icon" :to="'vehicles/' + vehicle.id"><i class="fa fa-eye"></i></router-link>
               <router-link class="action-icon" :to="'vehicles/' + vehicle.id + '/edit'"><i class="fa fa-pencil"></i></router-link>
@@ -26,7 +24,6 @@
         </div>
       </div>
       <article v-if="deleteVehicle.status" class="toast-message">
-        <!-- TODO: Fancy slide in animation with darker overlay -->
         <a href="" @click.prevent="closeToastMessage()"><i class="fa fa-times"></i></a>
         <p>Are you sure you want to erase <em>{{deleteVehicle.vehicle_name}}</em> from the system?</p>
         <button @click.prevent="confirmDelete()" class="btn delete-btn">Erase</button>

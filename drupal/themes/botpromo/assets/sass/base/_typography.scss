@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,600,700,800,900|Orbitron:400,500,700,900');
+
+// 300: light
+// 400: regular
+// 500: medium
+// 600: semi-bold
+// 700: bold
+// 900: black
+
 body {
-    font-family: 'Raleway', 'Arial', sans-serif;
+    font-family: 'Fira Sans', 'Arial', sans-serif;
     line-height: 150%;
 }
 
@@ -9,10 +18,17 @@ h1 {
     text-transform: uppercase;
 }
 
-h2 {
-    font-weight: 300;
-    margin-bottom: 1.2rem;
-    color: $primary-color
+.page-title {
+  color: $text-color;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+  margin-left: 60px;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  line-height: 100%;
+  display: inline-block;
 }
 
 a {
@@ -21,5 +37,5 @@ a {
 }
 
 .text-formatted p {
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }

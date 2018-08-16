@@ -6,7 +6,6 @@
       </div>
       <div class="login-panel login-right">
         <header class="title-header">
-          <!-- TODO: fix layout a bit -->
           <h1>Login to your account</h1>
           <svg version="1.1" id="title-line" x="0px" y="0px"
             viewBox="0 0 250 29" style="enable-background:new 0 0 250 29;" xml:space="preserve">

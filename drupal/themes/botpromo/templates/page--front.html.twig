@@ -5,7 +5,10 @@
 <div id="page__front">
   <div class="grid__container">
     {% if page.content %}
-    <main>{{page.content}}</main>
+    <main>
+      {{page.content}}
+      {# <img class="svg-overlay" src="{{ directory }}/images/overlay.svg"> #}
+    </main>
     {% endif %}
   </div>
 </div>

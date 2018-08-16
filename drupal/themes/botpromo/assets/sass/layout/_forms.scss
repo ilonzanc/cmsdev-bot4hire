@@ -1,12 +1,65 @@
-.contact-form {
-	label {
-		display: block;
-		margin-bottom: 0.5rem;
-	}
-	input[type="text"],
-	textarea {
-		padding: 0.5rem;
-		display: block;
-		width: 50%;
-	}
+form.contact-form {
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+
+  }
+  input[type="text"],
+  textarea {
+    padding: 0.5rem;
+    display: block;
+    width: 100%;
+    background: none;
+    border: 1px solid $primary-color;
+    outline: none;
+    background: $background-color;
+
+    &:focus {
+      border-color: $secundary-color;
+      color: $secundary-color;
+    }
+  }
+
+  .form-type-checkbox {
+    label {
+      display: inline;
+    }
+  }
+}
+
+form {
+  .form-required:after {
+    content: '*';
+    color: $secundary-color;
+    vertical-align: initial;
+    display: inline-block;
+    background: none;
+    width: 6px;
+    height: 6px;
+    margin: 0 0.3rem;
+  }
+  select {
+    padding: 0.5rem;
+    display: inline-block;
+    background: none;
+    border: 1px solid $primary-color;
+    outline: none;
+    background: $background-color;
+
+    &:focus {
+      border-color: $secundary-color;
+      color: $secundary-color;
+    }
+  }
+}
+
+@media (min-width: 42.5rem) {
+  form.contact-form {
+    input[type="text"],
+  textarea {
+    padding: 0.5rem;
+    display: block;
+    width: 50%;
+  }
+  }
 }
